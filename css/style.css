@@ -1,0 +1,29 @@
+/* ProNet Computer Store - Official Stylesheet */
+:root {
+      --pronet-primary: #00A8FF;
+      --pronet-secondary: #38B6FF;
+      --pronet-navy: #0D1B2A;
+      --pronet-slate: #1B263B;
+      --pronet-gold: #D4AF37;
+    }
+    body {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .brand-gradient {
+      background: linear-gradient(135deg, var(--pronet-primary) 0%, var(--pronet-secondary) 100%);
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #D4AF37 0%, #F5CD5F 100%);
+    }
+    .hero-overlay {
+      background: linear-gradient(90deg, rgba(13, 27, 42, 0.94) 0%, rgba(13, 27, 42, 0.84) 60%, rgba(13, 27, 42, 0.55) 100%);
+    }
+    .glass-card {
+      backdrop-filter: blur(12px);
+    }
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: #fff !important; color: #000 !important; }
+    }
