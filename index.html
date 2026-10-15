@@ -162,13 +162,13 @@
 
       <!-- Mobile & Tablet Navigation Bar (Public Tabs Only - Admin Hidden) -->
       <div class="xl:hidden flex items-center gap-1 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0A1522] px-3 py-2 text-xs font-bold overflow-x-auto">
-        <button type="button" onclick="switchMainTab('home')" class="mobile-nav-btn px-3 py-1.5 rounded-lg bg-cyan-500/15 text-cyan-500 whitespace-nowrap">🏠 الرئيسية</button>
-        <button type="button" onclick="switchMainTab('about')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">ℹ️ من نحن</button>
-        <button type="button" onclick="switchMainTab('services')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">🛠️ مجالات العمل</button>
-        <button type="button" onclick="switchMainTab('store')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">🛍️ المتجر</button>
-        <button type="button" onclick="switchMainTab('projects')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">🏗️ المشاريع</button>
-        <button type="button" onclick="switchMainTab('posts')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">📢 المدونة</button>
-        <button type="button" onclick="switchMainTab('contact')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">💳 تواصل والدفع</button>
+        <button type="button" id="mob-nav-home" onclick="switchMainTab('home')" class="mobile-nav-btn px-3 py-1.5 rounded-lg bg-cyan-500/15 text-cyan-500 whitespace-nowrap">🏠 الرئيسية</button>
+        <button type="button" id="mob-nav-about" onclick="switchMainTab('about')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">ℹ️ من نحن</button>
+        <button type="button" id="mob-nav-services" onclick="switchMainTab('services')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">🛠️ مجالات العمل</button>
+        <button type="button" id="mob-nav-store" onclick="switchMainTab('store')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">🛍️ المتجر</button>
+        <button type="button" id="mob-nav-projects" onclick="switchMainTab('projects')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">🏗️ المشاريع</button>
+        <button type="button" id="mob-nav-posts" onclick="switchMainTab('posts')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">📢 المدونة</button>
+        <button type="button" id="mob-nav-contact" onclick="switchMainTab('contact')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap">💳 تواصل والدفع</button>
       </div>
     </header>
 
@@ -672,14 +672,14 @@
                 </div>
                 <div class="space-y-2 font-mono text-sm" dir="ltr">
                   <div class="flex items-center justify-between bg-[#0D1B2A] px-3 py-2 rounded-xl">
-                    <span class="font-bold text-white">+967 778 163 178</span>
+                    <span id="contactSalesPhone1" class="font-bold text-white">+967 778 163 178</span>
                     <div class="flex gap-1.5">
                       <a href="https://wa.me/967778163178" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-sans font-bold">واتساب</a>
                       <a href="tel:+967778163178" class="px-2.5 py-1 rounded-lg bg-cyan-600 text-white text-xs font-sans font-bold">اتصال</a>
                     </div>
                   </div>
                   <div class="flex items-center justify-between bg-[#0D1B2A] px-3 py-2 rounded-xl">
-                    <span class="font-bold text-white">+967 782 060 054</span>
+                    <span id="contactSalesPhone2" class="font-bold text-white">+967 782 060 054</span>
                     <div class="flex gap-1.5">
                       <a href="https://wa.me/967782060054" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-sans font-bold">واتساب</a>
                       <a href="tel:+967782060054" class="px-2.5 py-1 rounded-lg bg-cyan-600 text-white text-xs font-sans font-bold">اتصال</a>
@@ -695,14 +695,14 @@
                 </div>
                 <div class="space-y-2 font-mono text-sm" dir="ltr">
                   <div class="flex items-center justify-between bg-[#0D1B2A] px-3 py-2 rounded-xl">
-                    <span class="font-bold text-white">+967 775 043 020</span>
+                    <span id="contactMgmtPhone1" class="font-bold text-white">+967 775 043 020</span>
                     <div class="flex gap-1.5">
                       <a href="https://wa.me/967775043020" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-sans font-bold">واتساب</a>
                       <a href="tel:+967775043020" class="px-2.5 py-1 rounded-lg bg-amber-600 text-white text-xs font-sans font-bold">اتصال</a>
                     </div>
                   </div>
                   <div class="flex items-center justify-between bg-[#0D1B2A] px-3 py-2 rounded-xl">
-                    <span class="font-bold text-white">+967 771 992 544</span>
+                    <span id="contactMgmtPhone2" class="font-bold text-white">+967 771 992 544</span>
                     <div class="flex gap-1.5">
                       <a href="https://wa.me/967771992544" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-xs font-sans font-bold">واتساب</a>
                       <a href="tel:+967771992544" class="px-2.5 py-1 rounded-lg bg-amber-600 text-white text-xs font-sans font-bold">اتصال</a>
@@ -817,12 +817,16 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2">
         <div id="adminActiveUserBadge" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl bg-[#1B263B] border border-cyan-500/30 text-xs">
           <span id="adminUserRoleIcon">👨‍💼</span>
           <span id="adminUserDisplayName" class="font-bold text-white"></span>
           <span id="adminUserRoleBadge" class="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold"></span>
         </div>
+        <button type="button" id="adminMyAccountBtn" onclick="openMyAccountModal()" class="hidden px-3.5 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-white border border-cyan-500/40 text-xs font-bold transition flex items-center gap-1.5" title="تعديل بيانات حسابي وتغيير كلمة المرور">
+          <span>🔑</span>
+          <span>حسابي وكلمة المرور</span>
+        </button>
         <button type="button" id="adminLogoutBtn" onclick="logoutAdminUser()" class="hidden px-3.5 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 text-xs font-bold transition">
           🚪 تسجيل خروج
         </button>
@@ -845,7 +849,7 @@
 
         <div class="space-y-4">
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5">حساب المستخدم / القسم</label>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">اختيار الحساب أو القسم</label>
             <select id="loginUsernameSelect" onchange="fillLoginRoleHint()" class="w-full rounded-xl bg-[#0D1B2A] border border-slate-600 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
               <option value="designer">🎨 المصمم (designer) — كامل الصلاحية</option>
               <option value="management" selected>👨‍💼 الإدارة العامة (management) — كامل الصلاحية</option>
@@ -855,9 +859,21 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1.5">كلمة المرور</label>
-            <input id="loginPasswordInput" type="password" value="pronet2026" onkeydown="if(event.key==='Enter') handleAdminLogin()" placeholder="أدخل كلمة المرور..." dir="ltr" class="w-full rounded-xl bg-[#0D1B2A] border border-slate-600 px-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-cyan-400" />
-            <div id="loginRolePermissionsHint" class="text-[11px] text-cyan-300 mt-1.5 leading-relaxed">
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">اسم المستخدم (Username)</label>
+            <input id="loginUsernameInput" type="text" value="management" oninput="syncSelectFromLoginUsername()" onkeydown="if(event.key==='Enter') handleAdminLogin()" placeholder="اسم المستخدم (مثل management أو sales)..." dir="ltr" class="w-full rounded-xl bg-[#0D1B2A] border border-slate-600 px-4 py-2 text-sm text-cyan-300 font-mono focus:outline-none focus:border-cyan-400" />
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-bold text-slate-300">كلمة المرور (Password)</label>
+              <span class="text-[11px] text-slate-400">الافتراضية: <code class="text-amber-400 font-mono">pronet2026</code></span>
+            </div>
+            <div class="relative flex items-center">
+              <input id="loginPasswordInput" type="password" value="" onkeydown="if(event.key==='Enter') handleAdminLogin()" placeholder="أدخل كلمة مرور الحساب..." dir="ltr" class="w-full rounded-xl bg-[#0D1B2A] border border-slate-600 pl-12 pr-4 py-2.5 text-sm text-white font-mono focus:outline-none focus:border-cyan-400" />
+              <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', this)" class="absolute left-2.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300" title="إظهار / إخفاء كلمة المرور">👁️</button>
+            </div>
+            <div id="loginErrorAlert" class="hidden mt-2 p-2.5 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold"></div>
+            <div id="loginRolePermissionsHint" class="text-[11px] text-cyan-300 mt-2 leading-relaxed bg-[#0D1B2A]/60 p-2.5 rounded-xl border border-slate-700/80">
               صلاحيات الإدارة العامة: تحكم كامل (100%) في كافة الأصناف، التسعير، العملات، السلايدر، المنشورات، الحسابات البنكية، وإدارة المستخدمين.
             </div>
           </div>
@@ -868,9 +884,9 @@
         </div>
 
         <!-- Quick Role Testing Buttons for Easy Evaluation -->
-        <div class="border-t border-slate-700 pt-4 space-y-2.5">
-          <div class="text-xs font-bold text-amber-400 text-center">⚡ دخول سريع لمعاينة الصلاحيات الأربع:</div>
-          <div class="grid grid-cols-2 gap-2 text-xs">
+        <div id="quickLoginDemoBox" class="border-t border-slate-700 pt-4 space-y-2.5">
+          <div class="text-xs font-bold text-amber-400 text-center">⚡ دخول سريع لمعاينة الحسابات والصلاحيات:</div>
+          <div id="quickLoginButtonsGrid" class="grid grid-cols-2 gap-2 text-xs">
             <button type="button" onclick="quickLoginAsRole('designer')" class="py-2 px-2.5 rounded-xl bg-[#0D1B2A] hover:bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 font-bold transition">
               🎨 دخول كـ المصمم (كامل)
             </button>
@@ -956,6 +972,9 @@
         <button type="button" id="adm-tab-github" onclick="switchAdminSubTab('github')" class="adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-slate-200 whitespace-nowrap">
           🚀 النشر والمزامنة (GitHub)
         </button>
+        <button type="button" id="adm-tab-profile" onclick="switchAdminSubTab('profile')" class="adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-cyan-300 border border-cyan-500/30 whitespace-nowrap">
+          🔐 حسابي وكلمة المرور
+        </button>
       </div>
 
       <!-- ADMIN SUB-VIEW 1: PRODUCTS & PRICING -->
@@ -1038,6 +1057,17 @@
           </div>
           <div id="adminPostsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </div>
+
+        <div class="bg-[#1B263B] border border-slate-700 rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-lg font-extrabold text-cyan-400">🏗️ إدارة سجل المشاريع والمنظومات المنفذة</h3>
+              <p class="text-xs text-slate-400">إضافة أو تعديل المشاريع المعروضة في تبويب المشاريع والمناقصات</p>
+            </div>
+            <button type="button" onclick="openProjectEditorModal()" class="px-4 py-2 rounded-xl brand-gradient text-white font-bold text-xs sm:text-sm">➕ إضافة مشروع منفذ</button>
+          </div>
+          <div id="adminProjectsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
       </div>
 
       <!-- ADMIN SUB-VIEW 4: TECHNICAL SUPPORT & TICKETS -->
@@ -1048,7 +1078,7 @@
               <h3 class="text-lg font-extrabold text-cyan-400">🛠️ قسم الدعم الفني والصيانة والحلول الهندسية</h3>
               <p class="text-xs text-slate-300">متابعة تذاكر الصيانة، برمجة شبكات المايكروتيك، تركيب ستارلينك، وكاميرات المراقبة</p>
             </div>
-            <button type="button" onclick="addDemoSupportTicket()" class="px-4 py-2 rounded-xl brand-gradient text-white font-bold text-xs">➕ تسجيل تذكرة صيانة / دعم فني</button>
+            <button type="button" onclick="openSupportTicketModal()" class="px-4 py-2 rounded-xl brand-gradient text-white font-bold text-xs">➕ تسجيل تذكرة صيانة / دعم فني جديدة</button>
           </div>
           <div id="adminSupportTicketsList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </div>
@@ -1116,11 +1146,20 @@
 
       <!-- ADMIN SUB-VIEW 6: USERS & PERMISSIONS MATRIX (المستخدمين والصلاحيات) -->
       <div id="admin-subview-users" class="hidden space-y-6">
-        <div class="bg-[#1B263B] border border-slate-700 rounded-2xl p-6 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-lg font-black text-cyan-400">👥 إدارة المستخدمين ومصفوفة الصلاحيات (RBAC)</h3>
-              <p class="text-xs text-slate-300">تخصيص حسابات الدخول وصلاحيات كل دور وظيفي في صفحة <code class="text-amber-400">admin</code></p>
+        <div class="bg-[#1B263B] border border-slate-700 rounded-2xl p-6 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-700/80 pb-4">
+            <div class="space-y-1">
+              <h3 class="text-lg sm:text-xl font-black text-cyan-400">👥 إدارة المستخدمين، بيانات الحسابات، وكلمات المرور والصلاحيات (RBAC)</h3>
+              <p class="text-xs sm:text-sm text-slate-300">يمكن للإدارة والمصمم تعديل بيانات أي مستخدم، تغيير اسم الدخول أو كلمة المرور، تخصيص الأقسام المسموحة، أو إضافة حسابات موظفين جديدة.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#0D1B2A] border border-slate-700 text-xs font-bold text-slate-200 cursor-pointer">
+                <input id="admShowQuickLoginDemo" type="checkbox" onchange="toggleQuickLoginDemoSetting(this.checked)" class="w-4 h-4 accent-cyan-500" />
+                <span>إظهار أزرار المعاينة السريعة في صفحة الدخول</span>
+              </label>
+              <button type="button" onclick="openAdminUserEditorModal()" class="px-4 py-2.5 rounded-xl brand-gradient text-white font-extrabold text-xs sm:text-sm shadow-md hover:opacity-95 transition">
+                ➕ إضافة مستخدم / موظف جديد
+              </button>
             </div>
           </div>
           <div id="adminUsersPermissionsTable" class="overflow-x-auto"></div>
@@ -1177,6 +1216,91 @@
             </button>
           </div>
           <div id="githubSyncStatusBox" class="hidden p-4 rounded-xl bg-slate-900 border border-cyan-500/40 text-xs font-mono text-cyan-300"></div>
+        </div>
+      </div>
+
+      <!-- ADMIN SUB-VIEW 8: SELF-SERVICE ACCOUNT & PASSWORD MANAGEMENT (حسابي وكلمة المرور - متاح لكل مستخدم) -->
+      <div id="admin-subview-profile" class="hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Profile Info Card -->
+          <div class="lg:col-span-5 bg-[#1B263B] border border-cyan-500/30 rounded-2xl p-6 space-y-5">
+            <div class="flex items-center gap-3 border-b border-slate-700 pb-4">
+              <div id="profileTabIcon" class="w-14 h-14 rounded-2xl bg-[#0D1B2A] border border-cyan-500/40 flex items-center justify-center text-3xl">👨‍💼</div>
+              <div>
+                <div class="text-xs font-bold text-cyan-400">بيانات الحساب المسجل حالياً</div>
+                <h3 id="profileTabDisplayName" class="text-lg font-black text-white">-</h3>
+                <div id="profileTabRoleTitle" class="text-xs font-bold text-amber-400">-</div>
+              </div>
+            </div>
+
+            <div class="space-y-3 text-xs sm:text-sm">
+              <div>
+                <label class="block font-bold text-slate-300 mb-1">الاسم المعروض في اللوحة *</label>
+                <input id="profileSelfDisplayName" type="text" class="w-full rounded-xl bg-[#0D1B2A] border border-slate-700 px-3.5 py-2.5 text-white focus:outline-none focus:border-cyan-400" />
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 mb-1">اسم المستخدم للدخول (Username) *</label>
+                <input id="profileSelfUsername" type="text" dir="ltr" class="w-full rounded-xl bg-[#0D1B2A] border border-slate-700 px-3.5 py-2.5 text-cyan-300 font-mono focus:outline-none focus:border-cyan-400" />
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 mb-1">رقم التواصل / الجوال</label>
+                <input id="profileSelfPhone" type="text" dir="ltr" class="w-full rounded-xl bg-[#0D1B2A] border border-slate-700 px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-cyan-400" />
+              </div>
+              <div class="p-3 rounded-xl bg-[#0D1B2A] border border-slate-800 space-y-1">
+                <div class="text-xs font-bold text-cyan-400">نطاق صلاحيات حسابك:</div>
+                <p id="profileTabPermissionsDesc" class="text-xs text-slate-300 leading-relaxed"></p>
+              </div>
+            </div>
+
+            <button type="button" onclick="saveSelfProfileData('tab')" class="w-full py-2.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-white border border-cyan-500/40 font-extrabold text-xs sm:text-sm transition">
+              💾 حفظ تحديثات البيانات الشخصية
+            </button>
+          </div>
+
+          <!-- Self Password Change Card -->
+          <div class="lg:col-span-7 bg-[#1B263B] border-2 border-amber-500/30 rounded-2xl p-6 space-y-5">
+            <div class="border-b border-slate-700 pb-4 space-y-1">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 text-xs font-extrabold">🔑 أمان الحساب الشخصي</div>
+              <h3 class="text-lg sm:text-xl font-black text-white">تغيير كلمة المرور الخاصة بحسابك</h3>
+              <p class="text-xs text-slate-300">يمكنك تحديث كلمة المرور الخاصة بحسابك في أي وقت. يرجى إدخال كلمة المرور الحالية أولاً للتحقق من هويتك.</p>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm">
+              <div>
+                <label class="block font-bold text-slate-300 mb-1.5">كلمة المرور الحالية *</label>
+                <div class="relative flex items-center">
+                  <input id="tabSelfCurrentPassword" type="password" dir="ltr" placeholder="أدخل كلمة المرور الحالية..." class="w-full rounded-xl bg-[#0D1B2A] border border-slate-700 pl-12 pr-4 py-2.5 text-white font-mono focus:outline-none focus:border-cyan-400" />
+                  <button type="button" onclick="togglePasswordVisibility('tabSelfCurrentPassword', this)" class="absolute left-2.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300">👁️</button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-bold text-slate-300 mb-1.5">كلمة المرور الجديدة *</label>
+                  <div class="relative flex items-center">
+                    <input id="tabSelfNewPassword" type="password" dir="ltr" placeholder="كلمة المرور الجديدة (4 خانات فأكثر)..." class="w-full rounded-xl bg-[#0D1B2A] border border-slate-700 pl-12 pr-4 py-2.5 text-emerald-300 font-mono focus:outline-none focus:border-cyan-400" />
+                    <button type="button" onclick="togglePasswordVisibility('tabSelfNewPassword', this)" class="absolute left-2.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300">👁️</button>
+                  </div>
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-300 mb-1.5">تأكيد كلمة المرور الجديدة *</label>
+                  <div class="relative flex items-center">
+                    <input id="tabSelfConfirmPassword" type="password" dir="ltr" placeholder="أعد كتابة كلمة المرور الجديدة..." class="w-full rounded-xl bg-[#0D1B2A] border border-slate-700 pl-12 pr-4 py-2.5 text-emerald-300 font-mono focus:outline-none focus:border-cyan-400" />
+                    <button type="button" onclick="togglePasswordVisibility('tabSelfConfirmPassword', this)" class="absolute left-2.5 px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300">👁️</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="tabSelfPasswordFeedback" class="hidden p-3 rounded-xl text-xs font-bold"></div>
+
+              <div class="pt-2 flex flex-wrap items-center justify-between gap-3">
+                <span class="text-[11px] text-slate-400">💡 يتم حفظ كلمة المرور الجديدة فوراً وتطبيقها عند تسجيل الدخول القادم.</span>
+                <button type="button" onclick="changeOwnPassword('tab')" class="px-6 py-3 rounded-xl brand-gradient text-white font-black text-xs sm:text-sm shadow-lg shadow-cyan-500/20 hover:opacity-95 transition">
+                  🔐 تحديث وحفظ كلمة المرور الجديدة
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1315,9 +1439,15 @@
             <option value="storage">💾 وحدات تخزين وإكسسوارات</option>
           </select>
         </div>
-        <div class="sm:col-span-2 flex items-center gap-2 pt-1">
-          <input id="editProdHidePrice" type="checkbox" class="w-4 h-4 accent-cyan-500" />
-          <label for="editProdHidePrice" class="font-bold">إخفاء الرقم السعري لهذا الصنف والاكتفاء بزر "تواصل لمعرفة السعر"</label>
+        <div class="sm:col-span-2 flex flex-wrap items-center gap-5 pt-1">
+          <label class="flex items-center gap-2 font-bold cursor-pointer">
+            <input id="editProdHidePrice" type="checkbox" class="w-4 h-4 accent-cyan-500" />
+            <span>إخفاء الرقم السعري والاكتفاء بزر "تواصل لمعرفة السعر"</span>
+          </label>
+          <label class="flex items-center gap-2 font-bold text-amber-400 cursor-pointer">
+            <input id="editProdFeatured" type="checkbox" checked class="w-4 h-4 accent-amber-500" />
+            <span>⭐ تمييز الصنف في الصفحة الرئيسية</span>
+          </label>
         </div>
         <div class="sm:col-span-2">
           <label class="block font-bold mb-1">المواصفات الفنية (افصل بين كل ميزة بسطر جديد أو فاصلة)</label>
@@ -1435,6 +1565,282 @@
     </div>
   </div>
 
+  <!-- 7. Self-Service My Account & Change Own Password Modal (متاح لكل مستخدم) -->
+  <div id="myAccountModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 glass-card flex items-center justify-center p-3 sm:p-6 no-print">
+    <div class="bg-white dark:bg-[#1B263B] text-slate-900 dark:text-white border-2 border-cyan-500/40 rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto shadow-2xl p-5 sm:p-6 space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <div class="flex items-center gap-2.5">
+          <span id="modalMyAccIcon" class="text-2xl">🔑</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-cyan-400">حسابي الشخصي وتغيير كلمة المرور</h3>
+            <p id="modalMyAccRoleBadge" class="text-xs text-amber-400 font-bold"></p>
+          </div>
+        </div>
+        <button type="button" onclick="closeMyAccountModal()" class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-sm font-bold">✕</button>
+      </div>
+
+      <!-- Personal Profile Section -->
+      <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-200 dark:border-slate-800 space-y-3 text-xs sm:text-sm">
+        <div class="font-extrabold text-cyan-400">👤 بيانات الحساب الأساسية:</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="sm:col-span-2">
+            <label class="block font-bold mb-1">الاسم المعروض *</label>
+            <input id="modalSelfDisplayName" type="text" class="w-full rounded-xl bg-white dark:bg-[#1B263B] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+          </div>
+          <div>
+            <label class="block font-bold mb-1">اسم المستخدم للدخول (Username) *</label>
+            <input id="modalSelfUsername" type="text" dir="ltr" class="w-full rounded-xl bg-white dark:bg-[#1B263B] border border-slate-300 dark:border-slate-700 px-3 py-2 font-mono text-cyan-400" />
+          </div>
+          <div>
+            <label class="block font-bold mb-1">رقم التواصل / الجوال</label>
+            <input id="modalSelfPhone" type="text" dir="ltr" class="w-full rounded-xl bg-white dark:bg-[#1B263B] border border-slate-300 dark:border-slate-700 px-3 py-2 font-mono" />
+          </div>
+        </div>
+        <div class="flex justify-end pt-1">
+          <button type="button" onclick="saveSelfProfileData('modal')" class="px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-400 hover:text-white border border-cyan-500/40 font-bold text-xs transition">
+            💾 حفظ بيانات الملف الشخصي
+          </button>
+        </div>
+      </div>
+
+      <!-- Password Change Section -->
+      <div class="p-4 rounded-2xl bg-slate-50 dark:bg-[#0D1B2A] border-2 border-amber-500/30 space-y-3 text-xs sm:text-sm">
+        <div class="font-extrabold text-amber-400">🔐 تغيير كلمة المرور الخاصة بحسابك:</div>
+        <div>
+          <label class="block font-bold mb-1">كلمة المرور الحالية *</label>
+          <div class="relative flex items-center">
+            <input id="modalSelfCurrentPassword" type="password" dir="ltr" placeholder="أدخل كلمة المرور الحالية للتحقق..." class="w-full rounded-xl bg-white dark:bg-[#1B263B] border border-slate-300 dark:border-slate-700 pl-12 pr-3 py-2 font-mono" />
+            <button type="button" onclick="togglePasswordVisibility('modalSelfCurrentPassword', this)" class="absolute left-2 px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs">👁️</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">كلمة المرور الجديدة *</label>
+            <div class="relative flex items-center">
+              <input id="modalSelfNewPassword" type="password" dir="ltr" placeholder="كلمة المرور الجديدة..." class="w-full rounded-xl bg-white dark:bg-[#1B263B] border border-slate-300 dark:border-slate-700 pl-12 pr-3 py-2 font-mono text-emerald-400" />
+              <button type="button" onclick="togglePasswordVisibility('modalSelfNewPassword', this)" class="absolute left-2 px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs">👁️</button>
+            </div>
+          </div>
+          <div>
+            <label class="block font-bold mb-1">تأكيد كلمة المرور الجديدة *</label>
+            <div class="relative flex items-center">
+              <input id="modalSelfConfirmPassword" type="password" dir="ltr" placeholder="تأكيد كلمة المرور..." class="w-full rounded-xl bg-white dark:bg-[#1B263B] border border-slate-300 dark:border-slate-700 pl-12 pr-3 py-2 font-mono text-emerald-400" />
+              <button type="button" onclick="togglePasswordVisibility('modalSelfConfirmPassword', this)" class="absolute left-2 px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs">👁️</button>
+            </div>
+          </div>
+        </div>
+        <div id="modalSelfPasswordFeedback" class="hidden p-2.5 rounded-xl text-xs font-bold"></div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" onclick="closeMyAccountModal()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold">إغلاق</button>
+          <button type="button" onclick="changeOwnPassword('modal')" class="px-5 py-2.5 rounded-xl brand-gradient text-white font-extrabold text-xs sm:text-sm shadow-md">
+            🔑 تحديث كلمة المرور الآن
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Admin Full User & Permissions Editor Modal (إضافة / تعديل بيانات المستخدمين وكلمات المرور والصلاحيات) -->
+  <div id="adminUserEditorModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 glass-card flex items-center justify-center p-3 sm:p-6 no-print">
+    <div class="bg-white dark:bg-[#1B263B] text-slate-900 dark:text-white border-2 border-cyan-500/40 rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl p-5 sm:p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <h3 id="adminUserEditorTitle" class="text-lg font-black text-cyan-400">👤 تعديل بيانات وصلاحيات المستخدم</h3>
+        <button type="button" onclick="closeAdminUserEditorModal()" class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-sm font-bold">✕</button>
+      </div>
+
+      <input type="hidden" id="editUserId" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+        <div>
+          <label class="block font-bold mb-1">اسم الموظف / المسؤول المعروض *</label>
+          <input id="editUserDisplayName" type="text" placeholder="مثال: م. عمار محمد سعيد الأسدي" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1">المسمى الوظيفي / عنوان الدور *</label>
+          <input id="editUserRoleTitle" type="text" placeholder="مثال: المبيعات — الأصناف والتسعير" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1">اسم المستخدم للدخول (Username) *</label>
+          <input id="editUserUsername" type="text" dir="ltr" placeholder="management / sales / ahmad" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2 font-mono text-cyan-400" />
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-bold">كلمة المرور (Password) *</label>
+            <button type="button" onclick="generateStrongPasswordForField('editUserPassword')" class="text-[11px] text-amber-400 hover:underline font-bold">🎲 توليد تلقائي</button>
+          </div>
+          <div class="relative flex items-center">
+            <input id="editUserPassword" type="text" dir="ltr" placeholder="كلمة مرور الحساب..." class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 pl-12 pr-3 py-2 font-mono text-emerald-400" />
+            <button type="button" onclick="togglePasswordVisibility('editUserPassword', this)" class="absolute left-2 px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs">👁️</button>
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold mb-1">رقم الجوال / التواصل</label>
+          <input id="editUserPhone" type="text" dir="ltr" placeholder="+967 77xxxxxxx" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2 font-mono" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold mb-1">الأيقونة</label>
+            <select id="editUserIcon" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-2 py-2">
+              <option value="👨‍💼">👨‍💼 إدارة</option>
+              <option value="🎨">🎨 مصمم</option>
+              <option value="💼">💼 مبيعات</option>
+              <option value="🛠️">🛠️ دعم فني</option>
+              <option value="🛡️">🛡️ مشرف أمن</option>
+              <option value="👤">👤 موظف</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold mb-1">لون الشارة</label>
+            <select id="editUserBadgeClass" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-2 py-2">
+              <option value="bg-amber-500 text-slate-950">ذهبي (الإدارة)</option>
+              <option value="bg-cyan-500 text-white">سماوي (المصمم)</option>
+              <option value="bg-emerald-500 text-white">أخضر (المبيعات)</option>
+              <option value="bg-purple-500 text-white">بنفسجي (الدعم)</option>
+              <option value="bg-blue-500 text-white">أزرق</option>
+            </select>
+          </div>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block font-bold mb-1">وصف المهام والصلاحيات</label>
+          <textarea id="editUserDescription" rows="2" placeholder="وصف مختصر لصلاحيات هذا المستخدم..." class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2"></textarea>
+        </div>
+
+        <!-- Allowed Tabs Checkboxes -->
+        <div class="sm:col-span-2 p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-200 dark:border-slate-800 space-y-2">
+          <div class="font-extrabold text-cyan-400 text-xs">🗂️ الأقسام والتبويبات المسموحة لهذا الحساب في لوحة التحكم:</div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="adm-user-tab-chk w-4 h-4 accent-cyan-500" value="products" checked /> <span>📦 الأصناف والتسعير</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="adm-user-tab-chk w-4 h-4 accent-cyan-500" value="categories" /> <span>🗂️ الأقسام والماركات</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="adm-user-tab-chk w-4 h-4 accent-cyan-500" value="posts" /> <span>🖼️ السلايدر والمنشورات</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="adm-user-tab-chk w-4 h-4 accent-cyan-500" value="support" /> <span>🛠️ الدعم الفني والصيانة</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="adm-user-tab-chk w-4 h-4 accent-cyan-500" value="settings" /> <span>🎨 الهوية والعملات</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="adm-user-tab-chk w-4 h-4 accent-cyan-500" value="users" /> <span>👥 إدارة المستخدمين</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="adm-user-tab-chk w-4 h-4 accent-cyan-500" value="github" /> <span>🚀 المزامنة والتصدير</span></label>
+            <label class="flex items-center gap-2 opacity-80"><input type="checkbox" checked disabled class="w-4 h-4 accent-emerald-500" /> <span>🔐 حسابي وكلمة المرور (دائماً)</span></label>
+          </div>
+        </div>
+
+        <!-- Action Permissions Checkboxes -->
+        <div class="sm:col-span-2 p-3.5 rounded-2xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-200 dark:border-slate-800 space-y-2">
+          <div class="font-extrabold text-amber-400 text-xs">⚡ صلاحيات العمليات الحساسة:</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <label class="flex items-center gap-2 cursor-pointer"><input id="editUserCanEditPrices" type="checkbox" class="w-4 h-4 accent-cyan-500" /> <span>💰 السماح بتعديل الأسعار وإظهارها/إخفائها</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input id="editUserCanDeleteItems" type="checkbox" class="w-4 h-4 accent-rose-500" /> <span>🗑️ السماح بحذف الأصناف والمنشورات</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input id="editUserCanExportSite" type="checkbox" class="w-4 h-4 accent-emerald-500" /> <span>💾 السماح بتصدير الموقع الكامل وقاعدة البيانات</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input id="editUserActive" type="checkbox" checked class="w-4 h-4 accent-emerald-500" /> <span>✅ الحساب نشط (مسموح له بتسجيل الدخول)</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+        <button type="button" onclick="closeAdminUserEditorModal()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold">إلغاء</button>
+        <button type="button" onclick="saveAdminUserFromModal()" class="px-6 py-2.5 rounded-xl brand-gradient text-white font-extrabold text-xs sm:text-sm shadow-md">💾 حفظ بيانات وصلاحيات المستخدم</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Admin Quick Password Reset Modal (تعديل سريع لكلمة مرور مستخدم من قبل المدير) -->
+  <div id="quickPasswordModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 glass-card flex items-center justify-center p-3 sm:p-6 no-print">
+    <div class="bg-white dark:bg-[#1B263B] text-slate-900 dark:text-white border-2 border-amber-500/40 rounded-3xl max-w-md w-full p-5 sm:p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <h3 class="text-base sm:text-lg font-black text-amber-400">🔑 تعديل كلمة مرور المستخدم</h3>
+        <button type="button" onclick="closeQuickPasswordModal()" class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-sm font-bold">✕</button>
+      </div>
+      <input type="hidden" id="quickPassUserId" />
+      <div class="p-3 rounded-xl bg-slate-100 dark:bg-[#0D1B2A] border border-slate-200 dark:border-slate-800 text-xs space-y-1">
+        <div>الموظف / الحساب: <strong id="quickPassUserDisplay" class="text-cyan-400"></strong></div>
+        <div>اسم المستخدم (Username): <code id="quickPassUsername" class="font-mono text-amber-400"></code></div>
+      </div>
+      <div class="space-y-2 text-xs sm:text-sm">
+        <div class="flex items-center justify-between">
+          <label class="font-bold">كلمة المرور الجديدة *</label>
+          <button type="button" onclick="generateStrongPasswordForField('quickPassNewInput')" class="text-xs text-amber-400 hover:underline font-bold">🎲 توليد كلمة مرور قوية</button>
+        </div>
+        <div class="relative flex items-center">
+          <input id="quickPassNewInput" type="text" dir="ltr" placeholder="أدخل كلمة المرور الجديدة..." class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 pl-12 pr-3 py-2.5 font-mono text-emerald-400" />
+          <button type="button" onclick="togglePasswordVisibility('quickPassNewInput', this)" class="absolute left-2 px-2 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs">👁️</button>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeQuickPasswordModal()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold">إلغاء</button>
+        <button type="button" onclick="saveQuickPasswordFromModal()" class="px-5 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-extrabold text-xs sm:text-sm">💾 اعتماد كلمة المرور الجديدة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Support Ticket Add/Edit Modal -->
+  <div id="supportTicketModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 glass-card flex items-center justify-center p-3 sm:p-6 no-print">
+    <div class="bg-white dark:bg-[#1B263B] text-slate-900 dark:text-white border border-slate-200 dark:border-cyan-500/40 rounded-3xl max-w-lg w-full p-5 sm:p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <h3 id="supportTicketModalTitle" class="text-lg font-black text-cyan-400">🛠️ تسجيل / تعديل تذكرة دعم فني وصيانة</h3>
+        <button type="button" onclick="closeSupportTicketModal()" class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-sm font-bold">✕</button>
+      </div>
+      <input type="hidden" id="editTicketId" />
+      <div class="space-y-3 text-xs sm:text-sm">
+        <div>
+          <label class="block font-bold mb-1">عنوان مهمة الصيانة / الجهاز / الشبكة *</label>
+          <input id="editTicketTitle" type="text" placeholder="مثال: برمجة راوتر MikroTik RB5009 ودمج خطين..." class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1">اسم العميل / الجهة *</label>
+          <input id="editTicketClient" type="text" placeholder="اسم العميل أو المؤسسة..." class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">المهندس / القسم المختص</label>
+            <input id="editTicketEngineer" type="text" placeholder="فريق الدعم الفني والشبكات" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+          </div>
+          <div>
+            <label class="block font-bold mb-1">حالة الإنجاز</label>
+            <select id="editTicketStatus" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2">
+              <option value="قيد التنفيذ ⏳">قيد التنفيذ ⏳</option>
+              <option value="مكتمل ✅">مكتمل ✅</option>
+              <option value="بانتظار الفحص 🔧">بانتظار الفحص 🔧</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-3">
+        <button type="button" onclick="closeSupportTicketModal()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold">إلغاء</button>
+        <button type="button" onclick="saveSupportTicketFromModal()" class="px-5 py-2.5 rounded-xl brand-gradient text-white font-extrabold text-xs sm:text-sm">💾 حفظ التذكرة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Project Add/Edit Modal -->
+  <div id="projectEditorModal" class="hidden fixed inset-0 z-50 bg-slate-950/75 glass-card flex items-center justify-center p-3 sm:p-6 no-print">
+    <div class="bg-white dark:bg-[#1B263B] text-slate-900 dark:text-white border border-slate-200 dark:border-cyan-500/40 rounded-3xl max-w-lg w-full p-5 sm:p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <h3 id="projectEditorModalTitle" class="text-lg font-black text-cyan-400">🏗️ إضافة / تعديل مشروع منفذ</h3>
+        <button type="button" onclick="closeProjectEditorModal()" class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-sm font-bold">✕</button>
+      </div>
+      <input type="hidden" id="editProjId" />
+      <div class="space-y-3 text-xs sm:text-sm">
+        <div>
+          <label class="block font-bold mb-1">عنوان المشروع المنفذ *</label>
+          <input id="editProjTitle" type="text" placeholder="مثال: توريد وتركيب شبكة ربط لاسلكي ومراقبة..." class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">تصنيف المشروع</label>
+            <input id="editProjCategory" type="text" placeholder="شبكات وأنظمة مراقبة" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+          </div>
+          <div>
+            <label class="block font-bold mb-1">الموقع / المدينة</label>
+            <input id="editProjLocation" type="text" placeholder="عدن - المعلا" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2" />
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold mb-1">تفاصيل المشروع المنفذ *</label>
+          <textarea id="editProjDesc" rows="3" class="w-full rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-3 py-2"></textarea>
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-3">
+        <button type="button" onclick="closeProjectEditorModal()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-bold">إلغاء</button>
+        <button type="button" onclick="saveProjectFromModal()" class="px-5 py-2.5 rounded-xl brand-gradient text-white font-extrabold text-xs sm:text-sm">💾 حفظ المشروع</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toastBox" class="hidden fixed bottom-5 left-5 z-50 px-5 py-3 rounded-2xl bg-[#0D1B2A] border-2 border-cyan-400 text-white font-bold text-xs sm:text-sm shadow-2xl no-print"></div>
 
@@ -1463,8 +1869,79 @@
         mgmtWhatsapp2: '967771992544',
         landline: '02-241004',
         email: 'prontech.co@gmail.com',
-        address: 'اليمن - عدن - المعلا - الشارع الرئيسي (شارع الشهيد مدرم) - أمام بنك الكريمي'
+        address: 'اليمن - عدن - المعلا - الشارع الرئيسي (شارع الشهيد مدرم) - أمام بنك الكريمي',
+        showQuickLoginDemo: true
       },
+      users: [
+        {
+          id: 'u_designer',
+          roleKey: 'designer',
+          username: 'designer',
+          password: 'pronet2026',
+          displayName: 'المصمم والمهندس المطور',
+          roleTitle: 'المصمم — كامل الصلاحية',
+          phone: '+967 778 163 178',
+          icon: '🎨',
+          badgeClass: 'bg-cyan-500 text-white',
+          description: 'كامل الصلاحية (100%): إدارة التصميم والهوية البصرية، السلايدر، شريط الماركات، الأقسام والأصناف والتسعير، المنشورات، المستخدمين، والمزامنة البرمجية مع GitHub.',
+          allowedTabs: ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github', 'profile'],
+          canEditPrices: true,
+          canDeleteItems: true,
+          canExportSite: true,
+          active: true
+        },
+        {
+          id: 'u_management',
+          roleKey: 'management',
+          username: 'management',
+          password: 'pronet2026',
+          displayName: 'م. عمار محمد سعيد الأسدي',
+          roleTitle: 'الإدارة العامة — كامل الصلاحية',
+          phone: '+967 775 043 020',
+          icon: '👨‍💼',
+          badgeClass: 'bg-amber-500 text-slate-950',
+          description: 'كامل الصلاحية (100%): المدير التنفيذي - تحكم شامل في الأصناف، التسعير، العملات وسعر الصرف، الأقسام والماركات، المنشورات، المستخدمين والصلاحيات، والتصدير.',
+          allowedTabs: ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github', 'profile'],
+          canEditPrices: true,
+          canDeleteItems: true,
+          canExportSite: true,
+          active: true
+        },
+        {
+          id: 'u_sales',
+          roleKey: 'sales',
+          username: 'sales',
+          password: 'pronet2026',
+          displayName: 'موظف قسم المبيعات',
+          roleTitle: 'المبيعات — الأصناف والتسعير والعروض',
+          phone: '+967 778 163 178',
+          icon: '💼',
+          badgeClass: 'bg-emerald-500 text-white',
+          description: 'صلاحيات المبيعات: إدارة الأصناف والتسعير والخصومات، تحديث حالة التوفر، وإضافة المنشورات والعروض الترويجية للعملاء.',
+          allowedTabs: ['products', 'categories', 'posts', 'profile'],
+          canEditPrices: true,
+          canDeleteItems: false,
+          canExportSite: false,
+          active: true
+        },
+        {
+          id: 'u_support',
+          roleKey: 'support',
+          username: 'support',
+          password: 'pronet2026',
+          displayName: 'مهندس الدعم الفني والصيانة',
+          roleTitle: 'الدعم الفني — المواصفات والمشاريع والصيانة',
+          phone: '+967 782 060 054',
+          icon: '🛠️',
+          badgeClass: 'bg-purple-500 text-white',
+          description: 'صلاحيات الدعم الفني: تحديث المواصفات الفنية للأجهزة، متابعة تذاكر الصيانة والتركيبات الهندسية، ونشر الإرشادات التقنية (بدون صلاحية تعديل الأسعار).',
+          allowedTabs: ['products', 'support', 'posts', 'profile'],
+          canEditPrices: false,
+          canDeleteItems: false,
+          canExportSite: false,
+          active: true
+        }
+      ],
       slides: [
         {
           id: 's1',
@@ -1873,6 +2350,34 @@
     let cart = [];
     let compareList = [];
     let currentAdminUser = null; // null when logged out
+    let revealedUserPasswords = {}; // tracks revealed passwords in admin users table
+
+    function normalizeUsersArray(usersList) {
+      const defaults = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.users));
+      if (!Array.isArray(usersList) || usersList.length === 0) return defaults;
+      return usersList.map((u, idx) => {
+        const fallback = defaults.find(d => d.username === u.username || d.roleKey === u.roleKey) || defaults[idx] || defaults[0];
+        const tabs = Array.isArray(u.allowedTabs) ? [...u.allowedTabs] : [...(fallback.allowedTabs || ['products', 'profile'])];
+        if (!tabs.includes('profile')) tabs.push('profile');
+        return {
+          id: u.id || fallback.id || ('u_' + Date.now() + '_' + idx),
+          roleKey: u.roleKey || u.username || fallback.roleKey || 'staff',
+          username: (u.username || fallback.username || ('user' + idx)).trim(),
+          password: (u.password !== undefined && String(u.password).trim() !== '') ? String(u.password) : 'pronet2026',
+          displayName: u.displayName || fallback.displayName || 'مستخدم النظام',
+          roleTitle: u.roleTitle || fallback.roleTitle || 'موظف — صلاحية مخصصة',
+          phone: u.phone !== undefined ? u.phone : (fallback.phone || ''),
+          icon: u.icon || fallback.icon || '👤',
+          badgeClass: u.badgeClass || fallback.badgeClass || 'bg-cyan-500 text-white',
+          description: u.description || fallback.description || 'صلاحيات مخصصة في لوحة التحكم.',
+          allowedTabs: tabs,
+          canEditPrices: u.canEditPrices !== undefined ? !!u.canEditPrices : !!fallback.canEditPrices,
+          canDeleteItems: u.canDeleteItems !== undefined ? !!u.canDeleteItems : !!fallback.canDeleteItems,
+          canExportSite: u.canExportSite !== undefined ? !!u.canExportSite : !!fallback.canExportSite,
+          active: u.active !== undefined ? !!u.active : true
+        };
+      });
+    }
 
     function loadStoreData() {
       try {
@@ -1884,11 +2389,32 @@
             if (!parsed.businessAreas) parsed.businessAreas = DEFAULT_STORE_DATA.businessAreas;
             if (!parsed.projects) parsed.projects = DEFAULT_STORE_DATA.projects;
             if (!parsed.supportTickets) parsed.supportTickets = DEFAULT_STORE_DATA.supportTickets;
+            if (parsed.settings.showQuickLoginDemo === undefined) parsed.settings.showQuickLoginDemo = true;
+            parsed.users = normalizeUsersArray(parsed.users);
             return parsed;
           }
         }
       } catch (e) {}
-      return JSON.parse(JSON.stringify(DEFAULT_STORE_DATA));
+      const fresh = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA));
+      fresh.users = normalizeUsersArray(fresh.users);
+      return fresh;
+    }
+
+    function getUsersList() {
+      if (!storeData.users || !Array.isArray(storeData.users)) {
+        storeData.users = normalizeUsersArray([]);
+      }
+      return storeData.users;
+    }
+
+    function findUserByIdentifier(ident) {
+      if (!ident) return null;
+      const clean = String(ident).trim().toLowerCase();
+      return getUsersList().find(u =>
+        String(u.id).toLowerCase() === clean ||
+        String(u.username).toLowerCase() === clean ||
+        String(u.roleKey || '').toLowerCase() === clean
+      ) || null;
     }
 
     function saveStoreData() {
@@ -2222,6 +2748,12 @@
             ? 'nav-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-cyan-500 text-white shadow-sm'
             : 'nav-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-slate-700 dark:text-slate-200 hover:text-cyan-500';
         }
+        const mobBtn = document.getElementById('mob-nav-' + v);
+        if (mobBtn) {
+          mobBtn.className = v === tab
+            ? 'mobile-nav-btn px-3 py-1.5 rounded-lg bg-cyan-500 text-white whitespace-nowrap shadow-sm'
+            : 'mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap';
+        }
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -2233,6 +2765,7 @@
       if (pub) pub.classList.add('hidden');
       if (adm) adm.classList.remove('hidden');
       try { history.replaceState(null, '', '#/admin'); } catch (e) {}
+      renderLoginUsersOptions();
       renderAdminAuthView();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -2246,38 +2779,151 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function renderLoginUsersOptions() {
+      const users = getUsersList().filter(u => u.active !== false);
+      const sel = document.getElementById('loginUsernameSelect');
+      if (sel && users.length > 0) {
+        const curVal = sel.value;
+        sel.innerHTML = users.map(u => `<option value="${u.username}">${u.icon} ${u.displayName} (${u.username}) — ${u.roleTitle}</option>`).join('');
+        if (users.some(u => u.username === curVal)) sel.value = curVal;
+        else {
+          const mgmt = users.find(u => u.username === 'management') || users[0];
+          sel.value = mgmt.username;
+        }
+      }
+      const demoBox = document.getElementById('quickLoginDemoBox');
+      if (demoBox) {
+        demoBox.classList.toggle('hidden', storeData.settings.showQuickLoginDemo === false);
+      }
+      const grid = document.getElementById('quickLoginButtonsGrid');
+      if (grid) {
+        grid.innerHTML = users.map(u => `
+          <button type="button" onclick="quickLoginAsRole('${u.username}')" class="py-2 px-2.5 rounded-xl bg-[#0D1B2A] hover:bg-cyan-500/20 border border-slate-700 hover:border-cyan-400 text-slate-200 font-bold transition text-right truncate">
+            <span>${u.icon}</span> <span>${u.displayName}</span> <span class="text-[10px] font-mono text-cyan-400">(${u.username})</span>
+          </button>
+        `).join('');
+      }
+    }
+
     function fillLoginRoleHint() {
-      const roleKey = document.getElementById('loginUsernameSelect')?.value || 'management';
-      const cfg = ADMIN_ROLES_CONFIG[roleKey] || ADMIN_ROLES_CONFIG.management;
+      const username = document.getElementById('loginUsernameSelect')?.value || 'management';
+      const userInp = document.getElementById('loginUsernameInput');
+      if (userInp) userInp.value = username;
+      const u = findUserByIdentifier(username) || getUsersList()[0];
       const hintEl = document.getElementById('loginRolePermissionsHint');
-      if (hintEl) hintEl.textContent = cfg.description;
+      if (hintEl && u) {
+        hintEl.textContent = `${u.icon} ${u.displayName} (${u.roleTitle}): ${u.description}`;
+      }
+      const errEl = document.getElementById('loginErrorAlert');
+      if (errEl) errEl.classList.add('hidden');
+    }
+
+    function syncSelectFromLoginUsername() {
+      const typed = (document.getElementById('loginUsernameInput')?.value || '').trim();
+      const u = findUserByIdentifier(typed);
+      const sel = document.getElementById('loginUsernameSelect');
+      const hintEl = document.getElementById('loginRolePermissionsHint');
+      if (u) {
+        if (sel) sel.value = u.username;
+        if (hintEl) hintEl.textContent = `${u.icon} ${u.displayName} (${u.roleTitle}): ${u.description}`;
+      }
+      const errEl = document.getElementById('loginErrorAlert');
+      if (errEl) errEl.classList.add('hidden');
+    }
+
+    function togglePasswordVisibility(inputId, btnEl) {
+      const inp = document.getElementById(inputId);
+      if (!inp) return;
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        if (btnEl) btnEl.textContent = '🙈';
+      } else {
+        inp.type = 'password';
+        if (btnEl) btnEl.textContent = '👁️';
+      }
     }
 
     function handleAdminLogin() {
-      const roleKey = document.getElementById('loginUsernameSelect')?.value || 'management';
+      const typedUser = (document.getElementById('loginUsernameInput')?.value || document.getElementById('loginUsernameSelect')?.value || '').trim();
       const pass = (document.getElementById('loginPasswordInput')?.value || '').trim();
+      const errEl = document.getElementById('loginErrorAlert');
+
+      if (!typedUser) {
+        if (errEl) {
+          errEl.textContent = '⚠️ يرجى إدخال أو اختيار اسم المستخدم أولاً.';
+          errEl.classList.remove('hidden');
+        }
+        showToast('يرجى إدخال اسم المستخدم');
+        return;
+      }
+
+      const user = findUserByIdentifier(typedUser);
+      if (!user) {
+        if (errEl) {
+          errEl.textContent = `❌ لا يوجد حساب مسجل باسم المستخدم "${typedUser}".`;
+          errEl.classList.remove('hidden');
+        }
+        showToast('اسم المستخدم غير موجود');
+        return;
+      }
+
+      if (user.active === false) {
+        if (errEl) {
+          errEl.textContent = '⛔ هذا الحساب موقوف حالياً من قبل الإدارة العامة.';
+          errEl.classList.remove('hidden');
+        }
+        showToast('هذا الحساب موقوف حالياً');
+        return;
+      }
+
       if (!pass) {
+        if (errEl) {
+          errEl.textContent = '⚠️ يرجى إدخال كلمة المرور الخاصة بالحساب للدخول.';
+          errEl.classList.remove('hidden');
+        }
         showToast('يرجى إدخال كلمة المرور للدخول إلى لوحة التحكم');
         return;
       }
-      loginWithRoleKey(roleKey);
+
+      if (pass !== String(user.password)) {
+        if (errEl) {
+          errEl.textContent = '❌ كلمة المرور غير صحيحة لهذا الحساب! يرجى التأكد من كلمة المرور والمحاولة مجدداً.';
+          errEl.classList.remove('hidden');
+        }
+        showToast('كلمة المرور غير صحيحة ❌');
+        return;
+      }
+
+      if (errEl) errEl.classList.add('hidden');
+      const passInp = document.getElementById('loginPasswordInput');
+      if (passInp) passInp.value = '';
+      loginWithUserObject(user);
     }
 
-    function quickLoginAsRole(roleKey) {
+    function quickLoginAsRole(roleKeyOrUsername) {
+      const user = findUserByIdentifier(roleKeyOrUsername) || getUsersList()[0];
+      if (!user) return;
+      if (user.active === false) {
+        showToast('هذا الحساب موقوف حالياً — قم بتفعيله من إدارة المستخدمين');
+        return;
+      }
       const sel = document.getElementById('loginUsernameSelect');
-      if (sel) sel.value = roleKey;
-      loginWithRoleKey(roleKey);
+      if (sel) sel.value = user.username;
+      const userInp = document.getElementById('loginUsernameInput');
+      if (userInp) userInp.value = user.username;
+      loginWithUserObject(user);
     }
 
-    function loginWithRoleKey(roleKey) {
-      const cfg = ADMIN_ROLES_CONFIG[roleKey] || ADMIN_ROLES_CONFIG.management;
-      currentAdminUser = cfg;
+    function loginWithUserObject(user) {
+      currentAdminUser = user;
+      try { sessionStorage.setItem('pronet_active_admin_id', user.id); } catch (e) {}
       renderAdminAuthView();
-      showToast(`مرحباً بك في لوحة التحكم (${cfg.roleTitle})`);
+      showToast(`مرحباً بك: ${user.displayName} (${user.roleTitle}) ✅`);
     }
 
     function logoutAdminUser() {
       currentAdminUser = null;
+      try { sessionStorage.removeItem('pronet_active_admin_id'); } catch (e) {}
       renderAdminAuthView();
       showToast('تم تسجيل الخروج من لوحة التحكم بنجاح');
     }
@@ -2286,12 +2932,26 @@
       const loginBox = document.getElementById('adminLoginScreen');
       const dashBox = document.getElementById('adminDashboardContent');
       const userBadge = document.getElementById('adminActiveUserBadge');
+      const myAccBtn = document.getElementById('adminMyAccountBtn');
       const logoutBtn = document.getElementById('adminLogoutBtn');
+
+      renderLoginUsersOptions();
+
+      if (currentAdminUser) {
+        // Refresh currentAdminUser reference from storeData.users
+        const freshUser = findUserByIdentifier(currentAdminUser.id) || findUserByIdentifier(currentAdminUser.username);
+        if (freshUser && freshUser.active !== false) {
+          currentAdminUser = freshUser;
+        } else {
+          currentAdminUser = null;
+        }
+      }
 
       if (!currentAdminUser) {
         if (loginBox) loginBox.classList.remove('hidden');
         if (dashBox) dashBox.classList.add('hidden');
         if (userBadge) userBadge.classList.add('hidden');
+        if (myAccBtn) myAccBtn.classList.add('hidden');
         if (logoutBtn) logoutBtn.classList.add('hidden');
         fillLoginRoleHint();
         return;
@@ -2303,6 +2963,7 @@
         userBadge.classList.remove('hidden');
         userBadge.classList.add('flex');
       }
+      if (myAccBtn) myAccBtn.classList.remove('hidden');
       if (logoutBtn) logoutBtn.classList.remove('hidden');
 
       document.getElementById('adminUserRoleIcon').textContent = currentAdminUser.icon;
@@ -2316,40 +2977,52 @@
       }
       document.getElementById('admHeaderPermissionsDesc').textContent = currentAdminUser.description;
 
+      // Ensure 'profile' is always accessible to every logged-in user
+      if (!currentAdminUser.allowedTabs.includes('profile')) {
+        currentAdminUser.allowedTabs.push('profile');
+      }
+
       // Show/Hide Admin Sub-Tabs based on Role Permissions
-      const allTabs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'];
+      const allTabs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github', 'profile'];
       allTabs.forEach(t => {
         const btn = document.getElementById('adm-tab-' + t);
         if (btn) {
-          const allowed = currentAdminUser.allowedTabs.includes(t);
+          const allowed = t === 'profile' || currentAdminUser.allowedTabs.includes(t);
           btn.classList.toggle('hidden', !allowed);
         }
       });
 
       const btnExport = document.getElementById('btnQuickExportSite');
       if (btnExport) btnExport.classList.toggle('hidden', !currentAdminUser.canExportSite);
+      const btnAddProd = document.getElementById('btnQuickAddProduct');
+      if (btnAddProd) btnAddProd.classList.toggle('hidden', !currentAdminUser.allowedTabs.includes('products'));
+      const btnAddPost = document.getElementById('btnQuickAddPost');
+      if (btnAddPost) btnAddPost.classList.toggle('hidden', !currentAdminUser.allowedTabs.includes('posts'));
 
       const noteEl = document.getElementById('adminProductsRoleNote');
       if (noteEl) {
         noteEl.textContent = currentAdminUser.canEditPrices
           ? 'لديك صلاحية كاملة لتعديل الأسعار، المواصفات، وحالة التوفر.'
-          : 'صلاحية الدعم الفني: يمكنك تحديث المواصفات الفنية وحالة التوفر (تعديل الأسعار مخصص للإدارة والمبيعات والمصمم).';
+          : 'صلاحية مخصصة: يمكنك تحديث المواصفات الفنية وحالة التوفر (تعديل الأسعار مقفل لحسابك).';
       }
 
       populateAdminInputs();
-      switchAdminSubTab(currentAdminUser.allowedTabs[0] || 'products');
+      const defaultTab = currentAdminUser.allowedTabs.find(t => t !== 'profile') || 'profile';
+      switchAdminSubTab(defaultTab);
     }
 
     function switchAdminSubTab(sub) {
-      const subs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'];
+      const subs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github', 'profile'];
       subs.forEach(s => {
         const box = document.getElementById('admin-subview-' + s);
         if (box) box.classList.toggle('hidden', s !== sub);
         const btn = document.getElementById('adm-tab-' + s);
         if (btn && !btn.classList.contains('hidden')) {
           btn.className = s === sub
-            ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-500 text-white whitespace-nowrap'
-            : 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-slate-200 whitespace-nowrap';
+            ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-500 text-white whitespace-nowrap shadow-sm'
+            : (s === 'profile'
+                ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-cyan-300 border border-cyan-500/30 whitespace-nowrap'
+                : 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-slate-200 whitespace-nowrap');
         }
       });
     }
@@ -2860,17 +3533,22 @@
       const chk = document.getElementById('admShowPricesGlobal');
       if (chk) chk.checked = !!s.showPricesGlobal;
 
+      const chkDemo = document.getElementById('admShowQuickLoginDemo');
+      if (chkDemo) chkDemo.checked = s.showQuickLoginDemo !== false;
+
       // KPIs
       document.getElementById('kpiTotalProducts').textContent = storeData.products.length;
       document.getElementById('kpiTotalCategories').textContent = `${storeData.categories.length} أقسام / ${storeData.brands.length} ماركة`;
-      document.getElementById('kpiTotalPosts').textContent = storeData.posts.length;
+      document.getElementById('kpiTotalPosts').textContent = `${storeData.posts.length} منشور / ${(storeData.projects || []).length} مشروع`;
       document.getElementById('kpiExchangeRate').textContent = `${s.rateYER} ر.ي`;
 
       renderAdminProductsTable();
       renderAdminCategoriesAndBrands();
       renderAdminPostsList();
+      renderAdminProjectsList();
       renderAdminSupportTickets();
       renderUsersPermissionsMatrix();
+      populateSelfProfileInputs();
     }
 
     function renderAdminProductsTable() {
@@ -2943,6 +3621,8 @@
       document.getElementById('editProdBadge').value = p ? (p.badge || 'متوفر') : 'متوفر';
       document.getElementById('editProdIconType').value = p ? (p.iconType || 'router') : 'router';
       document.getElementById('editProdHidePrice').checked = p ? !!p.hidePrice : false;
+      const featChk = document.getElementById('editProdFeatured');
+      if (featChk) featChk.checked = p ? !!p.featured : true;
       document.getElementById('editProdSpecs').value = p ? (p.specs || []).join('\n') : '';
       document.getElementById('editProdDesc').value = p ? (p.desc || '') : '';
       document.getElementById('editProdImageUrl').value = p ? (p.imageUrl || '') : '';
@@ -2950,6 +3630,7 @@
       const canPrice = !currentAdminUser || currentAdminUser.canEditPrices;
       document.getElementById('editProdPrice').disabled = !canPrice;
       document.getElementById('editProdOldPrice').disabled = !canPrice;
+      document.getElementById('editProdHidePrice').disabled = !canPrice;
 
       document.getElementById('productEditorModal').classList.remove('hidden');
     }
@@ -2979,20 +3660,24 @@
       const specsRaw = document.getElementById('editProdSpecs').value;
       const specs = specsRaw.split(/\n|،|,/).map(s => s.trim()).filter(Boolean);
 
+      const existingProd = storeData.products.find(x => x.id === id);
+      const canPrice = !currentAdminUser || currentAdminUser.canEditPrices;
+      const featChk = document.getElementById('editProdFeatured');
+
       const prodObj = {
         id,
         name,
         category: document.getElementById('editProdCategory').value,
         brand: document.getElementById('editProdBrand').value,
-        price: Number(document.getElementById('editProdPrice').value) || 0,
-        oldPrice: Number(document.getElementById('editProdOldPrice').value) || 0,
+        price: canPrice ? (Number(document.getElementById('editProdPrice').value) || 0) : (existingProd ? existingProd.price : 0),
+        oldPrice: canPrice ? (Number(document.getElementById('editProdOldPrice').value) || 0) : (existingProd ? existingProd.oldPrice : 0),
         badge: document.getElementById('editProdBadge').value,
         iconType: document.getElementById('editProdIconType').value,
-        hidePrice: document.getElementById('editProdHidePrice').checked,
+        hidePrice: canPrice ? document.getElementById('editProdHidePrice').checked : (existingProd ? !!existingProd.hidePrice : false),
         specs: specs.length ? specs : ['ضمان وجودة برونت كمبيوتر'],
         desc: document.getElementById('editProdDesc').value.trim(),
         imageUrl: document.getElementById('editProdImageUrl').value.trim(),
-        featured: true
+        featured: featChk ? featChk.checked : true
       };
 
       const existingIdx = storeData.products.findIndex(x => x.id === id);
@@ -3140,21 +3825,96 @@
       showToast('تم حذف المنشور');
     }
 
+    // Projects Management in Admin
+    function renderAdminProjectsList() {
+      const box = document.getElementById('adminProjectsList');
+      if (!box) return;
+      if (!storeData.projects) storeData.projects = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.projects));
+      const canDel = !currentAdminUser || currentAdminUser.canDeleteItems;
+      box.innerHTML = storeData.projects.map(pr => `
+        <div class="p-4 rounded-xl bg-[#0D1B2A] border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-400 font-bold">${pr.category}</span>
+            <span class="text-amber-400 font-semibold">📍 ${pr.location}</span>
+          </div>
+          <div class="font-extrabold text-sm text-white">${pr.title}</div>
+          <p class="text-xs text-slate-400 line-clamp-2">${pr.desc}</p>
+          <div class="flex gap-2 pt-2">
+            <button type="button" onclick="openProjectEditorModal('${pr.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">✏️ تعديل</button>
+            ${canDel ? `<button type="button" onclick="deleteProject('${pr.id}')" class="px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs font-bold">🗑️ حذف</button>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openProjectEditorModal(projId) {
+      if (!storeData.projects) storeData.projects = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.projects));
+      const pr = projId ? storeData.projects.find(x => x.id === projId) : null;
+      document.getElementById('projectEditorModalTitle').textContent = pr ? '✏️ تعديل بيانات المشروع المنفذ' : '➕ إضافة مشروع منفذ جديد';
+      document.getElementById('editProjId').value = pr ? pr.id : '';
+      document.getElementById('editProjTitle').value = pr ? pr.title : '';
+      document.getElementById('editProjCategory').value = pr ? pr.category : 'شبكات وأنظمة مراقبة';
+      document.getElementById('editProjLocation').value = pr ? pr.location : 'عدن';
+      document.getElementById('editProjDesc').value = pr ? pr.desc : '';
+      document.getElementById('projectEditorModal').classList.remove('hidden');
+    }
+
+    function closeProjectEditorModal() {
+      document.getElementById('projectEditorModal').classList.add('hidden');
+    }
+
+    function saveProjectFromModal() {
+      const title = document.getElementById('editProjTitle').value.trim();
+      const desc = document.getElementById('editProjDesc').value.trim();
+      if (!title || !desc) {
+        showToast('يرجى إدخال عنوان وتفاصيل المشروع المنفذ');
+        return;
+      }
+      if (!storeData.projects) storeData.projects = [];
+      const id = document.getElementById('editProjId').value || ('proj' + Date.now());
+      const obj = {
+        id,
+        title,
+        category: document.getElementById('editProjCategory').value.trim() || 'مشاريع برونت',
+        location: document.getElementById('editProjLocation').value.trim() || 'عدن',
+        desc
+      };
+      const idx = storeData.projects.findIndex(x => x.id === id);
+      if (idx > -1) storeData.projects[idx] = obj;
+      else storeData.projects.unshift(obj);
+
+      saveStoreData();
+      populateAdminInputs();
+      closeProjectEditorModal();
+      showToast('تم حفظ بيانات المشروع المنفذ بنجاح!');
+    }
+
+    function deleteProject(projId) {
+      storeData.projects = (storeData.projects || []).filter(x => x.id !== projId);
+      saveStoreData();
+      populateAdminInputs();
+      showToast('تم حذف المشروع');
+    }
+
     // Technical Support Tickets in Admin
     function renderAdminSupportTickets() {
       const box = document.getElementById('adminSupportTicketsList');
       if (!box) return;
-      const tickets = storeData.supportTickets || DEFAULT_STORE_DATA.supportTickets;
+      if (!storeData.supportTickets) storeData.supportTickets = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.supportTickets));
+      const tickets = storeData.supportTickets;
+      const canDel = !currentAdminUser || currentAdminUser.canDeleteItems;
       box.innerHTML = tickets.map((t, idx) => `
         <div class="p-4 rounded-xl bg-[#0D1B2A] border border-slate-800 space-y-2">
           <div class="flex items-center justify-between text-xs">
-            <span class="font-bold text-cyan-400">${t.engineer}</span>
-            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">${t.status}</span>
+            <span class="font-bold text-cyan-400">👨‍🔧 ${t.engineer}</span>
+            <span class="px-2.5 py-0.5 rounded-full ${t.status.includes('مكتمل') ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'} font-bold">${t.status}</span>
           </div>
           <div class="font-extrabold text-sm text-white">${t.title}</div>
-          <div class="text-xs text-slate-400">العميل / الجهة: ${t.client}</div>
-          <div class="pt-2">
-            <button type="button" onclick="toggleTicketStatus(${idx})" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">🔄 تبديل حالة الإنجاز</button>
+          <div class="text-xs text-slate-400">العميل / الجهة: <strong class="text-slate-200">${t.client}</strong></div>
+          <div class="pt-2 flex flex-wrap gap-2">
+            <button type="button" onclick="toggleTicketStatus(${idx})" class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-xs font-bold">🔄 تبديل الإنجاز</button>
+            <button type="button" onclick="openSupportTicketModal('${t.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">✏️ تعديل</button>
+            ${canDel ? `<button type="button" onclick="deleteSupportTicket('${t.id}')" class="px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs font-bold">🗑️ حذف</button>` : ''}
           </div>
         </div>
       `).join('');
@@ -3170,51 +3930,456 @@
       showToast('تم تحديث حالة تذكرة الدعم الفني');
     }
 
-    function addDemoSupportTicket() {
-      if (!storeData.supportTickets) storeData.supportTickets = [];
-      storeData.supportTickets.unshift({
-        id: 't' + Date.now(),
-        title: 'فحص وصيانة دورية لشبكة وأجهزة مؤسسة — عدن',
-        client: 'عميل قسم الدعم الفني',
-        status: 'قيد التنفيذ ⏳',
-        engineer: 'مهندس الدعم الفني والشبكات'
-      });
-      saveStoreData();
-      populateAdminInputs();
-      showToast('تمت إضافة تذكرة صيانة ودعم فني جديدة');
+    function openSupportTicketModal(ticketId) {
+      if (!storeData.supportTickets) storeData.supportTickets = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.supportTickets));
+      const t = ticketId ? storeData.supportTickets.find(x => x.id === ticketId) : null;
+      document.getElementById('supportTicketModalTitle').textContent = t ? '✏️ تعديل تذكرة الدعم الفني والصيانة' : '➕ تسجيل تذكرة صيانة / دعم فني جديدة';
+      document.getElementById('editTicketId').value = t ? t.id : '';
+      document.getElementById('editTicketTitle').value = t ? t.title : '';
+      document.getElementById('editTicketClient').value = t ? t.client : '';
+      document.getElementById('editTicketEngineer').value = t ? t.engineer : 'فريق الدعم الفني والشبكات';
+      document.getElementById('editTicketStatus').value = t ? t.status : 'قيد التنفيذ ⏳';
+      document.getElementById('supportTicketModal').classList.remove('hidden');
     }
 
-    // Users & Permissions Matrix in Admin
+    function closeSupportTicketModal() {
+      document.getElementById('supportTicketModal').classList.add('hidden');
+    }
+
+    function saveSupportTicketFromModal() {
+      const title = document.getElementById('editTicketTitle').value.trim();
+      const client = document.getElementById('editTicketClient').value.trim();
+      if (!title || !client) {
+        showToast('يرجى إدخال عنوان المهمة واسم العميل');
+        return;
+      }
+      if (!storeData.supportTickets) storeData.supportTickets = [];
+      const id = document.getElementById('editTicketId').value || ('t' + Date.now());
+      const obj = {
+        id,
+        title,
+        client,
+        engineer: document.getElementById('editTicketEngineer').value.trim() || 'فريق الدعم الفني والشبكات',
+        status: document.getElementById('editTicketStatus').value || 'قيد التنفيذ ⏳'
+      };
+      const idx = storeData.supportTickets.findIndex(x => x.id === id);
+      if (idx > -1) storeData.supportTickets[idx] = obj;
+      else storeData.supportTickets.unshift(obj);
+
+      saveStoreData();
+      populateAdminInputs();
+      closeSupportTicketModal();
+      showToast('تم حفظ تذكرة الدعم الفني والصيانة بنجاح!');
+    }
+
+    function deleteSupportTicket(ticketId) {
+      storeData.supportTickets = (storeData.supportTickets || []).filter(x => x.id !== ticketId);
+      saveStoreData();
+      populateAdminInputs();
+      showToast('تم حذف تذكرة الصيانة');
+    }
+
+    // ==================== USERS, PASSWORDS & RBAC MANAGEMENT (ADMIN) ====================
+    const TAB_LABELS_MAP = {
+      products: '📦 الأصناف',
+      categories: '🗂️ الأقسام',
+      posts: '🖼️ المنشورات',
+      support: '🛠️ الدعم الفني',
+      settings: '🎨 الإعدادات',
+      users: '👥 المستخدمين',
+      github: '🚀 GitHub',
+      profile: '🔐 حسابي'
+    };
+
     function renderUsersPermissionsMatrix() {
       const box = document.getElementById('adminUsersPermissionsTable');
       if (!box) return;
-      const roles = Object.values(ADMIN_ROLES_CONFIG);
+      const users = getUsersList();
       box.innerHTML = `
         <table class="w-full text-right text-xs sm:text-sm border-collapse">
           <thead>
             <tr class="border-b border-slate-700 text-slate-400">
-              <th class="py-3 px-3">الدور الوظيفي</th>
-              <th class="py-3 px-3">اسم الحساب</th>
-              <th class="py-3 px-3">مستوى الصلاحية</th>
-              <th class="py-3 px-3">الأقسام المسموحة في اللوحة</th>
-              <th class="py-3 px-3">معاينة فورية</th>
+              <th class="py-3 px-3">الموظف / الدور الوظيفي</th>
+              <th class="py-3 px-3">اسم المستخدم (Username)</th>
+              <th class="py-3 px-3">كلمة المرور (Password)</th>
+              <th class="py-3 px-3">الأقسام والصلاحيات الممنوحة</th>
+              <th class="py-3 px-3">الحالة</th>
+              <th class="py-3 px-3">إجراءات التحكم والتعديل</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800">
-            ${roles.map(r => `
-              <tr>
-                <td class="py-3 px-3 font-black text-white">${r.icon} ${r.roleTitle}</td>
-                <td class="py-3 px-3 font-mono text-cyan-400">${r.username}</td>
-                <td class="py-3 px-3"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${r.badgeClass}">${r.canExportSite ? 'كامل الصلاحية (Full)' : 'صلاحية مخصصة'}</span></td>
-                <td class="py-3 px-3 text-xs text-slate-300">${r.description}</td>
-                <td class="py-3 px-3">
-                  <button type="button" onclick="quickLoginAsRole('${r.username}')" class="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-white font-bold text-xs transition">تبديل لهذا الحساب</button>
+            ${users.map(u => {
+              const isCurrent = currentAdminUser && currentAdminUser.id === u.id;
+              const isRevealed = !!revealedUserPasswords[u.id];
+              const tabBadges = (u.allowedTabs || []).map(t => `<span class="inline-block px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 text-[11px] font-bold border border-slate-700">${TAB_LABELS_MAP[t] || t}</span>`).join(' ');
+              return `
+              <tr class="hover:bg-slate-800/40 ${u.active === false ? 'opacity-60' : ''}">
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">${u.icon || '👤'}</span>
+                    <div>
+                      <div class="font-black text-white flex items-center gap-1.5">
+                        <span>${u.displayName}</span>
+                        ${isCurrent ? '<span class="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/40">حسابك الحالي</span>' : ''}
+                      </div>
+                      <div class="text-xs font-bold text-amber-400">${u.roleTitle}</div>
+                      ${u.phone ? `<div class="text-[11px] text-slate-400 font-mono" dir="ltr">${u.phone}</div>` : ''}
+                    </div>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <code class="px-2.5 py-1 rounded-lg bg-[#0D1B2A] border border-slate-700 font-mono font-bold text-cyan-400">${u.username}</code>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1.5">
+                    <code class="px-2.5 py-1 rounded-lg bg-[#0D1B2A] border border-slate-700 font-mono font-bold ${isRevealed ? 'text-emerald-400' : 'text-slate-400'}" dir="ltr">${isRevealed ? u.password : '••••••••'}</code>
+                    <button type="button" onclick="toggleTablePasswordReveal('${u.id}')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs" title="إظهار / إخفاء كلمة المرور">${isRevealed ? '🙈' : '👁️'}</button>
+                    <button type="button" onclick="openQuickPasswordModal('${u.id}')" class="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 font-bold text-xs transition" title="تغيير سريع لكلمة المرور">🔑 تغيير</button>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 space-y-1.5 max-w-xs">
+                  <div class="flex flex-wrap gap-1">${tabBadges}</div>
+                  <div class="flex flex-wrap gap-1 text-[10px]">
+                    <span class="px-2 py-0.5 rounded ${u.canEditPrices ? 'bg-emerald-500/15 text-emerald-300' : 'bg-slate-800 text-slate-500'}">${u.canEditPrices ? '✔️ تعديل الأسعار' : '🔒 الأسعار مقفلة'}</span>
+                    <span class="px-2 py-0.5 rounded ${u.canDeleteItems ? 'bg-rose-500/15 text-rose-300' : 'bg-slate-800 text-slate-500'}">${u.canDeleteItems ? '✔️ صلاحية الحذف' : '🔒 بدون حذف'}</span>
+                    <span class="px-2 py-0.5 rounded ${u.canExportSite ? 'bg-cyan-500/15 text-cyan-300' : 'bg-slate-800 text-slate-500'}">${u.canExportSite ? '✔️ التصدير الكامل' : '🔒 بدون تصدير'}</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${u.active !== false ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${u.active !== false ? 'نشط ✅' : 'موقوف ⛔'}</span>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <button type="button" onclick="openAdminUserEditorModal('${u.id}')" class="px-2.5 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-white font-bold text-xs transition">✏️ تعديل البيانات</button>
+                    <button type="button" onclick="openQuickPasswordModal('${u.id}')" class="px-2.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 font-bold text-xs transition">🔑 كلمة المرور</button>
+                    <button type="button" onclick="quickLoginAsRole('${u.username}')" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition" title="التبديل لهذا الحساب لمعاينة صلاحياته">🔄 معاينة</button>
+                    ${!isCurrent ? `<button type="button" onclick="deleteAdminUser('${u.id}')" class="px-2.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white font-bold text-xs transition" title="حذف الحساب">🗑️</button>` : ''}
+                  </div>
                 </td>
               </tr>
-            `).join('')}
+              `;
+            }).join('')}
           </tbody>
         </table>
       `;
+    }
+
+    function toggleTablePasswordReveal(userId) {
+      revealedUserPasswords[userId] = !revealedUserPasswords[userId];
+      renderUsersPermissionsMatrix();
+    }
+
+    function toggleQuickLoginDemoSetting(checked) {
+      storeData.settings.showQuickLoginDemo = !!checked;
+      saveStoreData();
+      renderLoginUsersOptions();
+      showToast(checked ? 'تم تفعيل أزرار المعاينة السريعة في شاشة الدخول' : 'تم إخفاء أزرار المعاينة السريعة لتعزيز الأمان');
+    }
+
+    function generateStrongPasswordForField(inputId) {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+      let rand = '';
+      for (let i = 0; i < 5; i++) {
+        rand += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      const generated = `ProNet@${rand}`;
+      const inp = document.getElementById(inputId);
+      if (inp) {
+        inp.type = 'text';
+        inp.value = generated;
+      }
+      showToast(`تم توليد كلمة مرور جديدة: ${generated}`);
+    }
+
+    function openAdminUserEditorModal(userId) {
+      const u = userId ? findUserByIdentifier(userId) : null;
+      document.getElementById('adminUserEditorTitle').textContent = u ? `✏️ تعديل بيانات وصلاحيات: ${u.displayName}` : '➕ إضافة مستخدم / موظف جديد للوحة التحكم';
+      document.getElementById('editUserId').value = u ? u.id : '';
+      document.getElementById('editUserDisplayName').value = u ? u.displayName : '';
+      document.getElementById('editUserRoleTitle').value = u ? u.roleTitle : '';
+      document.getElementById('editUserUsername').value = u ? u.username : '';
+      const passInp = document.getElementById('editUserPassword');
+      if (passInp) {
+        passInp.type = 'text';
+        passInp.value = u ? u.password : 'pronet2026';
+      }
+      document.getElementById('editUserPhone').value = u ? (u.phone || '') : '';
+      document.getElementById('editUserIcon').value = u ? (u.icon || '👤') : '👤';
+      document.getElementById('editUserBadgeClass').value = u ? (u.badgeClass || 'bg-cyan-500 text-white') : 'bg-cyan-500 text-white';
+      document.getElementById('editUserDescription').value = u ? (u.description || '') : '';
+
+      const allowed = u ? (u.allowedTabs || ['products', 'profile']) : ['products', 'posts', 'profile'];
+      document.querySelectorAll('.adm-user-tab-chk').forEach(chk => {
+        chk.checked = allowed.includes(chk.value);
+      });
+
+      document.getElementById('editUserCanEditPrices').checked = u ? !!u.canEditPrices : true;
+      document.getElementById('editUserCanDeleteItems').checked = u ? !!u.canDeleteItems : false;
+      document.getElementById('editUserCanExportSite').checked = u ? !!u.canExportSite : false;
+      document.getElementById('editUserActive').checked = u ? (u.active !== false) : true;
+
+      document.getElementById('adminUserEditorModal').classList.remove('hidden');
+    }
+
+    function closeAdminUserEditorModal() {
+      document.getElementById('adminUserEditorModal').classList.add('hidden');
+    }
+
+    function saveAdminUserFromModal() {
+      const id = document.getElementById('editUserId').value || ('u_' + Date.now());
+      const displayName = document.getElementById('editUserDisplayName').value.trim();
+      const roleTitle = document.getElementById('editUserRoleTitle').value.trim();
+      const username = document.getElementById('editUserUsername').value.trim();
+      const password = document.getElementById('editUserPassword').value.trim();
+      const phone = document.getElementById('editUserPhone').value.trim();
+      const icon = document.getElementById('editUserIcon').value;
+      const badgeClass = document.getElementById('editUserBadgeClass').value;
+      const description = document.getElementById('editUserDescription').value.trim();
+
+      if (!displayName || !username || !password) {
+        showToast('⚠️ يرجى إدخال اسم الموظف، اسم المستخدم، وكلمة المرور');
+        return;
+      }
+      if (password.length < 4) {
+        showToast('⚠️ كلمة المرور يجب أن تكون 4 خانات على الأقل');
+        return;
+      }
+
+      const users = getUsersList();
+      const duplicate = users.find(x => x.id !== id && x.username.toLowerCase() === username.toLowerCase());
+      if (duplicate) {
+        showToast(`⚠️ اسم المستخدم "${username}" مستخدم بالفعل لحساب آخر!`);
+        return;
+      }
+
+      const selectedTabs = [];
+      document.querySelectorAll('.adm-user-tab-chk').forEach(chk => {
+        if (chk.checked) selectedTabs.push(chk.value);
+      });
+      if (!selectedTabs.includes('profile')) selectedTabs.push('profile');
+
+      const active = document.getElementById('editUserActive').checked;
+
+      // Prevent locking out the last active user with 'users' management permission
+      const otherAdmins = users.filter(x => x.id !== id && x.active !== false && (x.allowedTabs || []).includes('users'));
+      if (otherAdmins.length === 0 && (!active || !selectedTabs.includes('users'))) {
+        showToast('⚠️ لا يمكن إلغاء صلاحية إدارة المستخدمين أو إيقاف آخر حساب مدير في النظام!');
+        return;
+      }
+
+      const existingIdx = users.findIndex(x => x.id === id);
+      const userObj = {
+        id,
+        roleKey: existingIdx > -1 ? (users[existingIdx].roleKey || username) : username,
+        username,
+        password,
+        displayName,
+        roleTitle: roleTitle || 'موظف — صلاحية مخصصة',
+        phone,
+        icon,
+        badgeClass,
+        description: description || `صلاحيات الحساب (${roleTitle || displayName}) في لوحة التحكم.`,
+        allowedTabs: selectedTabs,
+        canEditPrices: document.getElementById('editUserCanEditPrices').checked,
+        canDeleteItems: document.getElementById('editUserCanDeleteItems').checked,
+        canExportSite: document.getElementById('editUserCanExportSite').checked,
+        active
+      };
+
+      if (existingIdx > -1) users[existingIdx] = userObj;
+      else users.push(userObj);
+
+      if (currentAdminUser && currentAdminUser.id === id) {
+        currentAdminUser = userObj;
+      }
+
+      saveStoreData();
+      closeAdminUserEditorModal();
+      renderAdminAuthView();
+      switchAdminSubTab('users');
+      showToast(`تم حفظ بيانات وصلاحيات وكلمة مرور "${displayName}" بنجاح ✅`);
+    }
+
+    function openQuickPasswordModal(userId) {
+      const u = findUserByIdentifier(userId);
+      if (!u) return;
+      document.getElementById('quickPassUserId').value = u.id;
+      document.getElementById('quickPassUserDisplay').textContent = `${u.icon} ${u.displayName} (${u.roleTitle})`;
+      document.getElementById('quickPassUsername').textContent = u.username;
+      const inp = document.getElementById('quickPassNewInput');
+      if (inp) {
+        inp.type = 'text';
+        inp.value = u.password;
+      }
+      document.getElementById('quickPasswordModal').classList.remove('hidden');
+    }
+
+    function closeQuickPasswordModal() {
+      document.getElementById('quickPasswordModal').classList.add('hidden');
+    }
+
+    function saveQuickPasswordFromModal() {
+      const id = document.getElementById('quickPassUserId').value;
+      const newPass = (document.getElementById('quickPassNewInput').value || '').trim();
+      if (!newPass || newPass.length < 4) {
+        showToast('⚠️ يرجى إدخال كلمة مرور لا تقل عن 4 خانات');
+        return;
+      }
+      const u = findUserByIdentifier(id);
+      if (!u) return;
+      u.password = newPass;
+      if (currentAdminUser && currentAdminUser.id === u.id) {
+        currentAdminUser.password = newPass;
+      }
+      saveStoreData();
+      populateAdminInputs();
+      closeQuickPasswordModal();
+      showToast(`تم تحديث كلمة مرور الحساب (${u.displayName}) بنجاح 🔑`);
+    }
+
+    function deleteAdminUser(userId) {
+      const u = findUserByIdentifier(userId);
+      if (!u) return;
+      if (currentAdminUser && currentAdminUser.id === u.id) {
+        showToast('⚠️ لا يمكنك حذف الحساب الذي تسجل الدخول به حالياً');
+        return;
+      }
+      const users = getUsersList();
+      const remainingAdmins = users.filter(x => x.id !== u.id && x.active !== false && (x.allowedTabs || []).includes('users'));
+      if (remainingAdmins.length === 0) {
+        showToast('⚠️ لا يمكن حذف آخر حساب يمتلك صلاحية إدارة المستخدمين');
+        return;
+      }
+      storeData.users = users.filter(x => x.id !== u.id);
+      saveStoreData();
+      populateAdminInputs();
+      renderLoginUsersOptions();
+      showToast(`تم حذف حساب "${u.displayName}" من النظام`);
+    }
+
+    // ==================== SELF-SERVICE ACCOUNT & PASSWORD CHANGE (EVERY USER) ====================
+    function populateSelfProfileInputs() {
+      if (!currentAdminUser) return;
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+      const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v || ''; };
+
+      setTxt('profileTabIcon', currentAdminUser.icon || '👤');
+      setTxt('profileTabDisplayName', currentAdminUser.displayName);
+      setTxt('profileTabRoleTitle', currentAdminUser.roleTitle);
+      setTxt('profileTabPermissionsDesc', currentAdminUser.description);
+      setVal('profileSelfDisplayName', currentAdminUser.displayName);
+      setVal('profileSelfUsername', currentAdminUser.username);
+      setVal('profileSelfPhone', currentAdminUser.phone || '');
+
+      setTxt('modalMyAccIcon', currentAdminUser.icon || '🔑');
+      setTxt('modalMyAccRoleBadge', `${currentAdminUser.displayName} — ${currentAdminUser.roleTitle}`);
+      setVal('modalSelfDisplayName', currentAdminUser.displayName);
+      setVal('modalSelfUsername', currentAdminUser.username);
+      setVal('modalSelfPhone', currentAdminUser.phone || '');
+    }
+
+    function openMyAccountModal() {
+      if (!currentAdminUser) return;
+      populateSelfProfileInputs();
+      ['modalSelfCurrentPassword', 'modalSelfNewPassword', 'modalSelfConfirmPassword'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      const fb = document.getElementById('modalSelfPasswordFeedback');
+      if (fb) fb.classList.add('hidden');
+      document.getElementById('myAccountModal').classList.remove('hidden');
+    }
+
+    function closeMyAccountModal() {
+      document.getElementById('myAccountModal').classList.add('hidden');
+    }
+
+    function saveSelfProfileData(source) {
+      if (!currentAdminUser) return;
+      const prefix = source === 'modal' ? 'modalSelf' : 'profileSelf';
+      const displayName = (document.getElementById(prefix + 'DisplayName')?.value || '').trim();
+      const username = (document.getElementById(prefix + 'Username')?.value || '').trim();
+      const phone = (document.getElementById(prefix + 'Phone')?.value || '').trim();
+
+      if (!displayName || !username) {
+        showToast('⚠️ يرجى إدخال الاسم المعروض واسم المستخدم');
+        return;
+      }
+
+      const users = getUsersList();
+      const dup = users.find(x => x.id !== currentAdminUser.id && x.username.toLowerCase() === username.toLowerCase());
+      if (dup) {
+        showToast(`⚠️ اسم المستخدم "${username}" محجوز لحساب آخر`);
+        return;
+      }
+
+      const target = users.find(x => x.id === currentAdminUser.id);
+      if (target) {
+        target.displayName = displayName;
+        target.username = username;
+        target.phone = phone;
+        currentAdminUser = target;
+      }
+
+      saveStoreData();
+      populateAdminInputs();
+      document.getElementById('adminUserDisplayName').textContent = currentAdminUser.displayName;
+      showToast('تم تحديث بيانات حسابك الشخصي بنجاح ✅');
+    }
+
+    function showPasswordFeedback(elId, msg, isSuccess) {
+      const fb = document.getElementById(elId);
+      if (!fb) return;
+      fb.textContent = msg;
+      fb.className = isSuccess
+        ? 'p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold'
+        : 'p-3 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold';
+      fb.classList.remove('hidden');
+    }
+
+    function changeOwnPassword(source) {
+      if (!currentAdminUser) return;
+      const prefix = source === 'modal' ? 'modalSelf' : 'tabSelf';
+      const fbId = prefix + 'PasswordFeedback';
+      const curPass = (document.getElementById(prefix + 'CurrentPassword')?.value || '').trim();
+      const newPass = (document.getElementById(prefix + 'NewPassword')?.value || '').trim();
+      const confPass = (document.getElementById(prefix + 'ConfirmPassword')?.value || '').trim();
+
+      if (!curPass) {
+        showPasswordFeedback(fbId, '⚠️ يرجى إدخال كلمة المرور الحالية للتحقق من هويتك.', false);
+        showToast('أدخل كلمة المرور الحالية أولاً');
+        return;
+      }
+      if (curPass !== String(currentAdminUser.password)) {
+        showPasswordFeedback(fbId, '❌ كلمة المرور الحالية غير صحيحة! يرجى التأكد والمحاولة مرة أخرى.', false);
+        showToast('كلمة المرور الحالية غير صحيحة ❌');
+        return;
+      }
+      if (!newPass || newPass.length < 4) {
+        showPasswordFeedback(fbId, '⚠️ كلمة المرور الجديدة يجب أن تتكون من 4 خانات أو أحرف على الأقل.', false);
+        showToast('كلمة المرور الجديدة قصيرة جداً');
+        return;
+      }
+      if (newPass !== confPass) {
+        showPasswordFeedback(fbId, '⚠️ كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين!', false);
+        showToast('تأكيد كلمة المرور غير متطابق');
+        return;
+      }
+
+      const target = getUsersList().find(x => x.id === currentAdminUser.id);
+      if (target) {
+        target.password = newPass;
+        currentAdminUser = target;
+      }
+
+      saveStoreData();
+      populateAdminInputs();
+      ['CurrentPassword', 'NewPassword', 'ConfirmPassword'].forEach(suffix => {
+        const el = document.getElementById(prefix + suffix);
+        if (el) el.value = '';
+      });
+      showPasswordFeedback(fbId, '✅ تم تغيير كلمة مرور حسابك وحفظها بنجاح!', true);
+      showToast('تم تغيير كلمة مرور حسابك بنجاح! 🔐✅');
     }
 
     function applyThemePreset(primary, secondary, navy) {
@@ -3422,10 +4587,18 @@
     window.addEventListener('hashchange', checkHashForAdminRoute);
 
     window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedUserId = sessionStorage.getItem('pronet_active_admin_id');
+        if (savedUserId) {
+          const found = findUserByIdentifier(savedUserId);
+          if (found && found.active !== false) currentAdminUser = found;
+        }
+      } catch (e) {}
       applySiteSettingsToDOM();
       const sel = document.getElementById('currencySelect');
       if (sel) sel.value = activeCurrency;
       renderAllViews();
+      renderLoginUsersOptions();
       restartHeroSliderTimer();
       checkHashForAdminRoute();
     });

@@ -1,4 +1,3 @@
-
     // Role-Based Access Control (RBAC) Configuration for Separate /admin Page
     const ADMIN_ROLES_CONFIG = {
       designer: {
@@ -61,6 +60,34 @@
     let cart = [];
     let compareList = [];
     let currentAdminUser = null; // null when logged out
+    let revealedUserPasswords = {}; // tracks revealed passwords in admin users table
+
+    function normalizeUsersArray(usersList) {
+      const defaults = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.users));
+      if (!Array.isArray(usersList) || usersList.length === 0) return defaults;
+      return usersList.map((u, idx) => {
+        const fallback = defaults.find(d => d.username === u.username || d.roleKey === u.roleKey) || defaults[idx] || defaults[0];
+        const tabs = Array.isArray(u.allowedTabs) ? [...u.allowedTabs] : [...(fallback.allowedTabs || ['products', 'profile'])];
+        if (!tabs.includes('profile')) tabs.push('profile');
+        return {
+          id: u.id || fallback.id || ('u_' + Date.now() + '_' + idx),
+          roleKey: u.roleKey || u.username || fallback.roleKey || 'staff',
+          username: (u.username || fallback.username || ('user' + idx)).trim(),
+          password: (u.password !== undefined && String(u.password).trim() !== '') ? String(u.password) : 'pronet2026',
+          displayName: u.displayName || fallback.displayName || 'مستخدم النظام',
+          roleTitle: u.roleTitle || fallback.roleTitle || 'موظف — صلاحية مخصصة',
+          phone: u.phone !== undefined ? u.phone : (fallback.phone || ''),
+          icon: u.icon || fallback.icon || '👤',
+          badgeClass: u.badgeClass || fallback.badgeClass || 'bg-cyan-500 text-white',
+          description: u.description || fallback.description || 'صلاحيات مخصصة في لوحة التحكم.',
+          allowedTabs: tabs,
+          canEditPrices: u.canEditPrices !== undefined ? !!u.canEditPrices : !!fallback.canEditPrices,
+          canDeleteItems: u.canDeleteItems !== undefined ? !!u.canDeleteItems : !!fallback.canDeleteItems,
+          canExportSite: u.canExportSite !== undefined ? !!u.canExportSite : !!fallback.canExportSite,
+          active: u.active !== undefined ? !!u.active : true
+        };
+      });
+    }
 
     function loadStoreData() {
       try {
@@ -72,11 +99,32 @@
             if (!parsed.businessAreas) parsed.businessAreas = DEFAULT_STORE_DATA.businessAreas;
             if (!parsed.projects) parsed.projects = DEFAULT_STORE_DATA.projects;
             if (!parsed.supportTickets) parsed.supportTickets = DEFAULT_STORE_DATA.supportTickets;
+            if (parsed.settings.showQuickLoginDemo === undefined) parsed.settings.showQuickLoginDemo = true;
+            parsed.users = normalizeUsersArray(parsed.users);
             return parsed;
           }
         }
       } catch (e) {}
-      return JSON.parse(JSON.stringify(DEFAULT_STORE_DATA));
+      const fresh = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA));
+      fresh.users = normalizeUsersArray(fresh.users);
+      return fresh;
+    }
+
+    function getUsersList() {
+      if (!storeData.users || !Array.isArray(storeData.users)) {
+        storeData.users = normalizeUsersArray([]);
+      }
+      return storeData.users;
+    }
+
+    function findUserByIdentifier(ident) {
+      if (!ident) return null;
+      const clean = String(ident).trim().toLowerCase();
+      return getUsersList().find(u =>
+        String(u.id).toLowerCase() === clean ||
+        String(u.username).toLowerCase() === clean ||
+        String(u.roleKey || '').toLowerCase() === clean
+      ) || null;
     }
 
     function saveStoreData() {
@@ -410,6 +458,12 @@
             ? 'nav-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-cyan-500 text-white shadow-sm'
             : 'nav-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-slate-700 dark:text-slate-200 hover:text-cyan-500';
         }
+        const mobBtn = document.getElementById('mob-nav-' + v);
+        if (mobBtn) {
+          mobBtn.className = v === tab
+            ? 'mobile-nav-btn px-3 py-1.5 rounded-lg bg-cyan-500 text-white whitespace-nowrap shadow-sm'
+            : 'mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 whitespace-nowrap';
+        }
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -421,6 +475,7 @@
       if (pub) pub.classList.add('hidden');
       if (adm) adm.classList.remove('hidden');
       try { history.replaceState(null, '', '#/admin'); } catch (e) {}
+      renderLoginUsersOptions();
       renderAdminAuthView();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -434,38 +489,151 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function renderLoginUsersOptions() {
+      const users = getUsersList().filter(u => u.active !== false);
+      const sel = document.getElementById('loginUsernameSelect');
+      if (sel && users.length > 0) {
+        const curVal = sel.value;
+        sel.innerHTML = users.map(u => `<option value="${u.username}">${u.icon} ${u.displayName} (${u.username}) — ${u.roleTitle}</option>`).join('');
+        if (users.some(u => u.username === curVal)) sel.value = curVal;
+        else {
+          const mgmt = users.find(u => u.username === 'management') || users[0];
+          sel.value = mgmt.username;
+        }
+      }
+      const demoBox = document.getElementById('quickLoginDemoBox');
+      if (demoBox) {
+        demoBox.classList.toggle('hidden', storeData.settings.showQuickLoginDemo === false);
+      }
+      const grid = document.getElementById('quickLoginButtonsGrid');
+      if (grid) {
+        grid.innerHTML = users.map(u => `
+          <button type="button" onclick="quickLoginAsRole('${u.username}')" class="py-2 px-2.5 rounded-xl bg-[#0D1B2A] hover:bg-cyan-500/20 border border-slate-700 hover:border-cyan-400 text-slate-200 font-bold transition text-right truncate">
+            <span>${u.icon}</span> <span>${u.displayName}</span> <span class="text-[10px] font-mono text-cyan-400">(${u.username})</span>
+          </button>
+        `).join('');
+      }
+    }
+
     function fillLoginRoleHint() {
-      const roleKey = document.getElementById('loginUsernameSelect')?.value || 'management';
-      const cfg = ADMIN_ROLES_CONFIG[roleKey] || ADMIN_ROLES_CONFIG.management;
+      const username = document.getElementById('loginUsernameSelect')?.value || 'management';
+      const userInp = document.getElementById('loginUsernameInput');
+      if (userInp) userInp.value = username;
+      const u = findUserByIdentifier(username) || getUsersList()[0];
       const hintEl = document.getElementById('loginRolePermissionsHint');
-      if (hintEl) hintEl.textContent = cfg.description;
+      if (hintEl && u) {
+        hintEl.textContent = `${u.icon} ${u.displayName} (${u.roleTitle}): ${u.description}`;
+      }
+      const errEl = document.getElementById('loginErrorAlert');
+      if (errEl) errEl.classList.add('hidden');
+    }
+
+    function syncSelectFromLoginUsername() {
+      const typed = (document.getElementById('loginUsernameInput')?.value || '').trim();
+      const u = findUserByIdentifier(typed);
+      const sel = document.getElementById('loginUsernameSelect');
+      const hintEl = document.getElementById('loginRolePermissionsHint');
+      if (u) {
+        if (sel) sel.value = u.username;
+        if (hintEl) hintEl.textContent = `${u.icon} ${u.displayName} (${u.roleTitle}): ${u.description}`;
+      }
+      const errEl = document.getElementById('loginErrorAlert');
+      if (errEl) errEl.classList.add('hidden');
+    }
+
+    function togglePasswordVisibility(inputId, btnEl) {
+      const inp = document.getElementById(inputId);
+      if (!inp) return;
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        if (btnEl) btnEl.textContent = '🙈';
+      } else {
+        inp.type = 'password';
+        if (btnEl) btnEl.textContent = '👁️';
+      }
     }
 
     function handleAdminLogin() {
-      const roleKey = document.getElementById('loginUsernameSelect')?.value || 'management';
+      const typedUser = (document.getElementById('loginUsernameInput')?.value || document.getElementById('loginUsernameSelect')?.value || '').trim();
       const pass = (document.getElementById('loginPasswordInput')?.value || '').trim();
+      const errEl = document.getElementById('loginErrorAlert');
+
+      if (!typedUser) {
+        if (errEl) {
+          errEl.textContent = '⚠️ يرجى إدخال أو اختيار اسم المستخدم أولاً.';
+          errEl.classList.remove('hidden');
+        }
+        showToast('يرجى إدخال اسم المستخدم');
+        return;
+      }
+
+      const user = findUserByIdentifier(typedUser);
+      if (!user) {
+        if (errEl) {
+          errEl.textContent = `❌ لا يوجد حساب مسجل باسم المستخدم "${typedUser}".`;
+          errEl.classList.remove('hidden');
+        }
+        showToast('اسم المستخدم غير موجود');
+        return;
+      }
+
+      if (user.active === false) {
+        if (errEl) {
+          errEl.textContent = '⛔ هذا الحساب موقوف حالياً من قبل الإدارة العامة.';
+          errEl.classList.remove('hidden');
+        }
+        showToast('هذا الحساب موقوف حالياً');
+        return;
+      }
+
       if (!pass) {
+        if (errEl) {
+          errEl.textContent = '⚠️ يرجى إدخال كلمة المرور الخاصة بالحساب للدخول.';
+          errEl.classList.remove('hidden');
+        }
         showToast('يرجى إدخال كلمة المرور للدخول إلى لوحة التحكم');
         return;
       }
-      loginWithRoleKey(roleKey);
+
+      if (pass !== String(user.password)) {
+        if (errEl) {
+          errEl.textContent = '❌ كلمة المرور غير صحيحة لهذا الحساب! يرجى التأكد من كلمة المرور والمحاولة مجدداً.';
+          errEl.classList.remove('hidden');
+        }
+        showToast('كلمة المرور غير صحيحة ❌');
+        return;
+      }
+
+      if (errEl) errEl.classList.add('hidden');
+      const passInp = document.getElementById('loginPasswordInput');
+      if (passInp) passInp.value = '';
+      loginWithUserObject(user);
     }
 
-    function quickLoginAsRole(roleKey) {
+    function quickLoginAsRole(roleKeyOrUsername) {
+      const user = findUserByIdentifier(roleKeyOrUsername) || getUsersList()[0];
+      if (!user) return;
+      if (user.active === false) {
+        showToast('هذا الحساب موقوف حالياً — قم بتفعيله من إدارة المستخدمين');
+        return;
+      }
       const sel = document.getElementById('loginUsernameSelect');
-      if (sel) sel.value = roleKey;
-      loginWithRoleKey(roleKey);
+      if (sel) sel.value = user.username;
+      const userInp = document.getElementById('loginUsernameInput');
+      if (userInp) userInp.value = user.username;
+      loginWithUserObject(user);
     }
 
-    function loginWithRoleKey(roleKey) {
-      const cfg = ADMIN_ROLES_CONFIG[roleKey] || ADMIN_ROLES_CONFIG.management;
-      currentAdminUser = cfg;
+    function loginWithUserObject(user) {
+      currentAdminUser = user;
+      try { sessionStorage.setItem('pronet_active_admin_id', user.id); } catch (e) {}
       renderAdminAuthView();
-      showToast(`مرحباً بك في لوحة التحكم (${cfg.roleTitle})`);
+      showToast(`مرحباً بك: ${user.displayName} (${user.roleTitle}) ✅`);
     }
 
     function logoutAdminUser() {
       currentAdminUser = null;
+      try { sessionStorage.removeItem('pronet_active_admin_id'); } catch (e) {}
       renderAdminAuthView();
       showToast('تم تسجيل الخروج من لوحة التحكم بنجاح');
     }
@@ -474,12 +642,26 @@
       const loginBox = document.getElementById('adminLoginScreen');
       const dashBox = document.getElementById('adminDashboardContent');
       const userBadge = document.getElementById('adminActiveUserBadge');
+      const myAccBtn = document.getElementById('adminMyAccountBtn');
       const logoutBtn = document.getElementById('adminLogoutBtn');
+
+      renderLoginUsersOptions();
+
+      if (currentAdminUser) {
+        // Refresh currentAdminUser reference from storeData.users
+        const freshUser = findUserByIdentifier(currentAdminUser.id) || findUserByIdentifier(currentAdminUser.username);
+        if (freshUser && freshUser.active !== false) {
+          currentAdminUser = freshUser;
+        } else {
+          currentAdminUser = null;
+        }
+      }
 
       if (!currentAdminUser) {
         if (loginBox) loginBox.classList.remove('hidden');
         if (dashBox) dashBox.classList.add('hidden');
         if (userBadge) userBadge.classList.add('hidden');
+        if (myAccBtn) myAccBtn.classList.add('hidden');
         if (logoutBtn) logoutBtn.classList.add('hidden');
         fillLoginRoleHint();
         return;
@@ -491,6 +673,7 @@
         userBadge.classList.remove('hidden');
         userBadge.classList.add('flex');
       }
+      if (myAccBtn) myAccBtn.classList.remove('hidden');
       if (logoutBtn) logoutBtn.classList.remove('hidden');
 
       document.getElementById('adminUserRoleIcon').textContent = currentAdminUser.icon;
@@ -504,40 +687,52 @@
       }
       document.getElementById('admHeaderPermissionsDesc').textContent = currentAdminUser.description;
 
+      // Ensure 'profile' is always accessible to every logged-in user
+      if (!currentAdminUser.allowedTabs.includes('profile')) {
+        currentAdminUser.allowedTabs.push('profile');
+      }
+
       // Show/Hide Admin Sub-Tabs based on Role Permissions
-      const allTabs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'];
+      const allTabs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github', 'profile'];
       allTabs.forEach(t => {
         const btn = document.getElementById('adm-tab-' + t);
         if (btn) {
-          const allowed = currentAdminUser.allowedTabs.includes(t);
+          const allowed = t === 'profile' || currentAdminUser.allowedTabs.includes(t);
           btn.classList.toggle('hidden', !allowed);
         }
       });
 
       const btnExport = document.getElementById('btnQuickExportSite');
       if (btnExport) btnExport.classList.toggle('hidden', !currentAdminUser.canExportSite);
+      const btnAddProd = document.getElementById('btnQuickAddProduct');
+      if (btnAddProd) btnAddProd.classList.toggle('hidden', !currentAdminUser.allowedTabs.includes('products'));
+      const btnAddPost = document.getElementById('btnQuickAddPost');
+      if (btnAddPost) btnAddPost.classList.toggle('hidden', !currentAdminUser.allowedTabs.includes('posts'));
 
       const noteEl = document.getElementById('adminProductsRoleNote');
       if (noteEl) {
         noteEl.textContent = currentAdminUser.canEditPrices
           ? 'لديك صلاحية كاملة لتعديل الأسعار، المواصفات، وحالة التوفر.'
-          : 'صلاحية الدعم الفني: يمكنك تحديث المواصفات الفنية وحالة التوفر (تعديل الأسعار مخصص للإدارة والمبيعات والمصمم).';
+          : 'صلاحية مخصصة: يمكنك تحديث المواصفات الفنية وحالة التوفر (تعديل الأسعار مقفل لحسابك).';
       }
 
       populateAdminInputs();
-      switchAdminSubTab(currentAdminUser.allowedTabs[0] || 'products');
+      const defaultTab = currentAdminUser.allowedTabs.find(t => t !== 'profile') || 'profile';
+      switchAdminSubTab(defaultTab);
     }
 
     function switchAdminSubTab(sub) {
-      const subs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'];
+      const subs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github', 'profile'];
       subs.forEach(s => {
         const box = document.getElementById('admin-subview-' + s);
         if (box) box.classList.toggle('hidden', s !== sub);
         const btn = document.getElementById('adm-tab-' + s);
         if (btn && !btn.classList.contains('hidden')) {
           btn.className = s === sub
-            ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-500 text-white whitespace-nowrap'
-            : 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-slate-200 whitespace-nowrap';
+            ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-500 text-white whitespace-nowrap shadow-sm'
+            : (s === 'profile'
+                ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-cyan-300 border border-cyan-500/30 whitespace-nowrap'
+                : 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-slate-200 whitespace-nowrap');
         }
       });
     }
@@ -1048,17 +1243,22 @@
       const chk = document.getElementById('admShowPricesGlobal');
       if (chk) chk.checked = !!s.showPricesGlobal;
 
+      const chkDemo = document.getElementById('admShowQuickLoginDemo');
+      if (chkDemo) chkDemo.checked = s.showQuickLoginDemo !== false;
+
       // KPIs
       document.getElementById('kpiTotalProducts').textContent = storeData.products.length;
       document.getElementById('kpiTotalCategories').textContent = `${storeData.categories.length} أقسام / ${storeData.brands.length} ماركة`;
-      document.getElementById('kpiTotalPosts').textContent = storeData.posts.length;
+      document.getElementById('kpiTotalPosts').textContent = `${storeData.posts.length} منشور / ${(storeData.projects || []).length} مشروع`;
       document.getElementById('kpiExchangeRate').textContent = `${s.rateYER} ر.ي`;
 
       renderAdminProductsTable();
       renderAdminCategoriesAndBrands();
       renderAdminPostsList();
+      renderAdminProjectsList();
       renderAdminSupportTickets();
       renderUsersPermissionsMatrix();
+      populateSelfProfileInputs();
     }
 
     function renderAdminProductsTable() {
@@ -1131,6 +1331,8 @@
       document.getElementById('editProdBadge').value = p ? (p.badge || 'متوفر') : 'متوفر';
       document.getElementById('editProdIconType').value = p ? (p.iconType || 'router') : 'router';
       document.getElementById('editProdHidePrice').checked = p ? !!p.hidePrice : false;
+      const featChk = document.getElementById('editProdFeatured');
+      if (featChk) featChk.checked = p ? !!p.featured : true;
       document.getElementById('editProdSpecs').value = p ? (p.specs || []).join('\n') : '';
       document.getElementById('editProdDesc').value = p ? (p.desc || '') : '';
       document.getElementById('editProdImageUrl').value = p ? (p.imageUrl || '') : '';
@@ -1138,6 +1340,7 @@
       const canPrice = !currentAdminUser || currentAdminUser.canEditPrices;
       document.getElementById('editProdPrice').disabled = !canPrice;
       document.getElementById('editProdOldPrice').disabled = !canPrice;
+      document.getElementById('editProdHidePrice').disabled = !canPrice;
 
       document.getElementById('productEditorModal').classList.remove('hidden');
     }
@@ -1167,20 +1370,24 @@
       const specsRaw = document.getElementById('editProdSpecs').value;
       const specs = specsRaw.split(/\n|،|,/).map(s => s.trim()).filter(Boolean);
 
+      const existingProd = storeData.products.find(x => x.id === id);
+      const canPrice = !currentAdminUser || currentAdminUser.canEditPrices;
+      const featChk = document.getElementById('editProdFeatured');
+
       const prodObj = {
         id,
         name,
         category: document.getElementById('editProdCategory').value,
         brand: document.getElementById('editProdBrand').value,
-        price: Number(document.getElementById('editProdPrice').value) || 0,
-        oldPrice: Number(document.getElementById('editProdOldPrice').value) || 0,
+        price: canPrice ? (Number(document.getElementById('editProdPrice').value) || 0) : (existingProd ? existingProd.price : 0),
+        oldPrice: canPrice ? (Number(document.getElementById('editProdOldPrice').value) || 0) : (existingProd ? existingProd.oldPrice : 0),
         badge: document.getElementById('editProdBadge').value,
         iconType: document.getElementById('editProdIconType').value,
-        hidePrice: document.getElementById('editProdHidePrice').checked,
+        hidePrice: canPrice ? document.getElementById('editProdHidePrice').checked : (existingProd ? !!existingProd.hidePrice : false),
         specs: specs.length ? specs : ['ضمان وجودة برونت كمبيوتر'],
         desc: document.getElementById('editProdDesc').value.trim(),
         imageUrl: document.getElementById('editProdImageUrl').value.trim(),
-        featured: true
+        featured: featChk ? featChk.checked : true
       };
 
       const existingIdx = storeData.products.findIndex(x => x.id === id);
@@ -1328,21 +1535,96 @@
       showToast('تم حذف المنشور');
     }
 
+    // Projects Management in Admin
+    function renderAdminProjectsList() {
+      const box = document.getElementById('adminProjectsList');
+      if (!box) return;
+      if (!storeData.projects) storeData.projects = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.projects));
+      const canDel = !currentAdminUser || currentAdminUser.canDeleteItems;
+      box.innerHTML = storeData.projects.map(pr => `
+        <div class="p-4 rounded-xl bg-[#0D1B2A] border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-400 font-bold">${pr.category}</span>
+            <span class="text-amber-400 font-semibold">📍 ${pr.location}</span>
+          </div>
+          <div class="font-extrabold text-sm text-white">${pr.title}</div>
+          <p class="text-xs text-slate-400 line-clamp-2">${pr.desc}</p>
+          <div class="flex gap-2 pt-2">
+            <button type="button" onclick="openProjectEditorModal('${pr.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">✏️ تعديل</button>
+            ${canDel ? `<button type="button" onclick="deleteProject('${pr.id}')" class="px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs font-bold">🗑️ حذف</button>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openProjectEditorModal(projId) {
+      if (!storeData.projects) storeData.projects = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.projects));
+      const pr = projId ? storeData.projects.find(x => x.id === projId) : null;
+      document.getElementById('projectEditorModalTitle').textContent = pr ? '✏️ تعديل بيانات المشروع المنفذ' : '➕ إضافة مشروع منفذ جديد';
+      document.getElementById('editProjId').value = pr ? pr.id : '';
+      document.getElementById('editProjTitle').value = pr ? pr.title : '';
+      document.getElementById('editProjCategory').value = pr ? pr.category : 'شبكات وأنظمة مراقبة';
+      document.getElementById('editProjLocation').value = pr ? pr.location : 'عدن';
+      document.getElementById('editProjDesc').value = pr ? pr.desc : '';
+      document.getElementById('projectEditorModal').classList.remove('hidden');
+    }
+
+    function closeProjectEditorModal() {
+      document.getElementById('projectEditorModal').classList.add('hidden');
+    }
+
+    function saveProjectFromModal() {
+      const title = document.getElementById('editProjTitle').value.trim();
+      const desc = document.getElementById('editProjDesc').value.trim();
+      if (!title || !desc) {
+        showToast('يرجى إدخال عنوان وتفاصيل المشروع المنفذ');
+        return;
+      }
+      if (!storeData.projects) storeData.projects = [];
+      const id = document.getElementById('editProjId').value || ('proj' + Date.now());
+      const obj = {
+        id,
+        title,
+        category: document.getElementById('editProjCategory').value.trim() || 'مشاريع برونت',
+        location: document.getElementById('editProjLocation').value.trim() || 'عدن',
+        desc
+      };
+      const idx = storeData.projects.findIndex(x => x.id === id);
+      if (idx > -1) storeData.projects[idx] = obj;
+      else storeData.projects.unshift(obj);
+
+      saveStoreData();
+      populateAdminInputs();
+      closeProjectEditorModal();
+      showToast('تم حفظ بيانات المشروع المنفذ بنجاح!');
+    }
+
+    function deleteProject(projId) {
+      storeData.projects = (storeData.projects || []).filter(x => x.id !== projId);
+      saveStoreData();
+      populateAdminInputs();
+      showToast('تم حذف المشروع');
+    }
+
     // Technical Support Tickets in Admin
     function renderAdminSupportTickets() {
       const box = document.getElementById('adminSupportTicketsList');
       if (!box) return;
-      const tickets = storeData.supportTickets || DEFAULT_STORE_DATA.supportTickets;
+      if (!storeData.supportTickets) storeData.supportTickets = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.supportTickets));
+      const tickets = storeData.supportTickets;
+      const canDel = !currentAdminUser || currentAdminUser.canDeleteItems;
       box.innerHTML = tickets.map((t, idx) => `
         <div class="p-4 rounded-xl bg-[#0D1B2A] border border-slate-800 space-y-2">
           <div class="flex items-center justify-between text-xs">
-            <span class="font-bold text-cyan-400">${t.engineer}</span>
-            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">${t.status}</span>
+            <span class="font-bold text-cyan-400">👨‍🔧 ${t.engineer}</span>
+            <span class="px-2.5 py-0.5 rounded-full ${t.status.includes('مكتمل') ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'} font-bold">${t.status}</span>
           </div>
           <div class="font-extrabold text-sm text-white">${t.title}</div>
-          <div class="text-xs text-slate-400">العميل / الجهة: ${t.client}</div>
-          <div class="pt-2">
-            <button type="button" onclick="toggleTicketStatus(${idx})" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">🔄 تبديل حالة الإنجاز</button>
+          <div class="text-xs text-slate-400">العميل / الجهة: <strong class="text-slate-200">${t.client}</strong></div>
+          <div class="pt-2 flex flex-wrap gap-2">
+            <button type="button" onclick="toggleTicketStatus(${idx})" class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-xs font-bold">🔄 تبديل الإنجاز</button>
+            <button type="button" onclick="openSupportTicketModal('${t.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">✏️ تعديل</button>
+            ${canDel ? `<button type="button" onclick="deleteSupportTicket('${t.id}')" class="px-3 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs font-bold">🗑️ حذف</button>` : ''}
           </div>
         </div>
       `).join('');
@@ -1358,51 +1640,456 @@
       showToast('تم تحديث حالة تذكرة الدعم الفني');
     }
 
-    function addDemoSupportTicket() {
-      if (!storeData.supportTickets) storeData.supportTickets = [];
-      storeData.supportTickets.unshift({
-        id: 't' + Date.now(),
-        title: 'فحص وصيانة دورية لشبكة وأجهزة مؤسسة — عدن',
-        client: 'عميل قسم الدعم الفني',
-        status: 'قيد التنفيذ ⏳',
-        engineer: 'مهندس الدعم الفني والشبكات'
-      });
-      saveStoreData();
-      populateAdminInputs();
-      showToast('تمت إضافة تذكرة صيانة ودعم فني جديدة');
+    function openSupportTicketModal(ticketId) {
+      if (!storeData.supportTickets) storeData.supportTickets = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.supportTickets));
+      const t = ticketId ? storeData.supportTickets.find(x => x.id === ticketId) : null;
+      document.getElementById('supportTicketModalTitle').textContent = t ? '✏️ تعديل تذكرة الدعم الفني والصيانة' : '➕ تسجيل تذكرة صيانة / دعم فني جديدة';
+      document.getElementById('editTicketId').value = t ? t.id : '';
+      document.getElementById('editTicketTitle').value = t ? t.title : '';
+      document.getElementById('editTicketClient').value = t ? t.client : '';
+      document.getElementById('editTicketEngineer').value = t ? t.engineer : 'فريق الدعم الفني والشبكات';
+      document.getElementById('editTicketStatus').value = t ? t.status : 'قيد التنفيذ ⏳';
+      document.getElementById('supportTicketModal').classList.remove('hidden');
     }
 
-    // Users & Permissions Matrix in Admin
+    function closeSupportTicketModal() {
+      document.getElementById('supportTicketModal').classList.add('hidden');
+    }
+
+    function saveSupportTicketFromModal() {
+      const title = document.getElementById('editTicketTitle').value.trim();
+      const client = document.getElementById('editTicketClient').value.trim();
+      if (!title || !client) {
+        showToast('يرجى إدخال عنوان المهمة واسم العميل');
+        return;
+      }
+      if (!storeData.supportTickets) storeData.supportTickets = [];
+      const id = document.getElementById('editTicketId').value || ('t' + Date.now());
+      const obj = {
+        id,
+        title,
+        client,
+        engineer: document.getElementById('editTicketEngineer').value.trim() || 'فريق الدعم الفني والشبكات',
+        status: document.getElementById('editTicketStatus').value || 'قيد التنفيذ ⏳'
+      };
+      const idx = storeData.supportTickets.findIndex(x => x.id === id);
+      if (idx > -1) storeData.supportTickets[idx] = obj;
+      else storeData.supportTickets.unshift(obj);
+
+      saveStoreData();
+      populateAdminInputs();
+      closeSupportTicketModal();
+      showToast('تم حفظ تذكرة الدعم الفني والصيانة بنجاح!');
+    }
+
+    function deleteSupportTicket(ticketId) {
+      storeData.supportTickets = (storeData.supportTickets || []).filter(x => x.id !== ticketId);
+      saveStoreData();
+      populateAdminInputs();
+      showToast('تم حذف تذكرة الصيانة');
+    }
+
+    // ==================== USERS, PASSWORDS & RBAC MANAGEMENT (ADMIN) ====================
+    const TAB_LABELS_MAP = {
+      products: '📦 الأصناف',
+      categories: '🗂️ الأقسام',
+      posts: '🖼️ المنشورات',
+      support: '🛠️ الدعم الفني',
+      settings: '🎨 الإعدادات',
+      users: '👥 المستخدمين',
+      github: '🚀 GitHub',
+      profile: '🔐 حسابي'
+    };
+
     function renderUsersPermissionsMatrix() {
       const box = document.getElementById('adminUsersPermissionsTable');
       if (!box) return;
-      const roles = Object.values(ADMIN_ROLES_CONFIG);
+      const users = getUsersList();
       box.innerHTML = `
         <table class="w-full text-right text-xs sm:text-sm border-collapse">
           <thead>
             <tr class="border-b border-slate-700 text-slate-400">
-              <th class="py-3 px-3">الدور الوظيفي</th>
-              <th class="py-3 px-3">اسم الحساب</th>
-              <th class="py-3 px-3">مستوى الصلاحية</th>
-              <th class="py-3 px-3">الأقسام المسموحة في اللوحة</th>
-              <th class="py-3 px-3">معاينة فورية</th>
+              <th class="py-3 px-3">الموظف / الدور الوظيفي</th>
+              <th class="py-3 px-3">اسم المستخدم (Username)</th>
+              <th class="py-3 px-3">كلمة المرور (Password)</th>
+              <th class="py-3 px-3">الأقسام والصلاحيات الممنوحة</th>
+              <th class="py-3 px-3">الحالة</th>
+              <th class="py-3 px-3">إجراءات التحكم والتعديل</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800">
-            ${roles.map(r => `
-              <tr>
-                <td class="py-3 px-3 font-black text-white">${r.icon} ${r.roleTitle}</td>
-                <td class="py-3 px-3 font-mono text-cyan-400">${r.username}</td>
-                <td class="py-3 px-3"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${r.badgeClass}">${r.canExportSite ? 'كامل الصلاحية (Full)' : 'صلاحية مخصصة'}</span></td>
-                <td class="py-3 px-3 text-xs text-slate-300">${r.description}</td>
-                <td class="py-3 px-3">
-                  <button type="button" onclick="quickLoginAsRole('${r.username}')" class="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-white font-bold text-xs transition">تبديل لهذا الحساب</button>
+            ${users.map(u => {
+              const isCurrent = currentAdminUser && currentAdminUser.id === u.id;
+              const isRevealed = !!revealedUserPasswords[u.id];
+              const tabBadges = (u.allowedTabs || []).map(t => `<span class="inline-block px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 text-[11px] font-bold border border-slate-700">${TAB_LABELS_MAP[t] || t}</span>`).join(' ');
+              return `
+              <tr class="hover:bg-slate-800/40 ${u.active === false ? 'opacity-60' : ''}">
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">${u.icon || '👤'}</span>
+                    <div>
+                      <div class="font-black text-white flex items-center gap-1.5">
+                        <span>${u.displayName}</span>
+                        ${isCurrent ? '<span class="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/40">حسابك الحالي</span>' : ''}
+                      </div>
+                      <div class="text-xs font-bold text-amber-400">${u.roleTitle}</div>
+                      ${u.phone ? `<div class="text-[11px] text-slate-400 font-mono" dir="ltr">${u.phone}</div>` : ''}
+                    </div>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <code class="px-2.5 py-1 rounded-lg bg-[#0D1B2A] border border-slate-700 font-mono font-bold text-cyan-400">${u.username}</code>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex items-center gap-1.5">
+                    <code class="px-2.5 py-1 rounded-lg bg-[#0D1B2A] border border-slate-700 font-mono font-bold ${isRevealed ? 'text-emerald-400' : 'text-slate-400'}" dir="ltr">${isRevealed ? u.password : '••••••••'}</code>
+                    <button type="button" onclick="toggleTablePasswordReveal('${u.id}')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs" title="إظهار / إخفاء كلمة المرور">${isRevealed ? '🙈' : '👁️'}</button>
+                    <button type="button" onclick="openQuickPasswordModal('${u.id}')" class="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 font-bold text-xs transition" title="تغيير سريع لكلمة المرور">🔑 تغيير</button>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3 space-y-1.5 max-w-xs">
+                  <div class="flex flex-wrap gap-1">${tabBadges}</div>
+                  <div class="flex flex-wrap gap-1 text-[10px]">
+                    <span class="px-2 py-0.5 rounded ${u.canEditPrices ? 'bg-emerald-500/15 text-emerald-300' : 'bg-slate-800 text-slate-500'}">${u.canEditPrices ? '✔️ تعديل الأسعار' : '🔒 الأسعار مقفلة'}</span>
+                    <span class="px-2 py-0.5 rounded ${u.canDeleteItems ? 'bg-rose-500/15 text-rose-300' : 'bg-slate-800 text-slate-500'}">${u.canDeleteItems ? '✔️ صلاحية الحذف' : '🔒 بدون حذف'}</span>
+                    <span class="px-2 py-0.5 rounded ${u.canExportSite ? 'bg-cyan-500/15 text-cyan-300' : 'bg-slate-800 text-slate-500'}">${u.canExportSite ? '✔️ التصدير الكامل' : '🔒 بدون تصدير'}</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-3">
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${u.active !== false ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${u.active !== false ? 'نشط ✅' : 'موقوف ⛔'}</span>
+                </td>
+                <td class="py-3.5 px-3">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <button type="button" onclick="openAdminUserEditorModal('${u.id}')" class="px-2.5 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-white font-bold text-xs transition">✏️ تعديل البيانات</button>
+                    <button type="button" onclick="openQuickPasswordModal('${u.id}')" class="px-2.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 font-bold text-xs transition">🔑 كلمة المرور</button>
+                    <button type="button" onclick="quickLoginAsRole('${u.username}')" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition" title="التبديل لهذا الحساب لمعاينة صلاحياته">🔄 معاينة</button>
+                    ${!isCurrent ? `<button type="button" onclick="deleteAdminUser('${u.id}')" class="px-2.5 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-600 text-rose-300 hover:text-white font-bold text-xs transition" title="حذف الحساب">🗑️</button>` : ''}
+                  </div>
                 </td>
               </tr>
-            `).join('')}
+              `;
+            }).join('')}
           </tbody>
         </table>
       `;
+    }
+
+    function toggleTablePasswordReveal(userId) {
+      revealedUserPasswords[userId] = !revealedUserPasswords[userId];
+      renderUsersPermissionsMatrix();
+    }
+
+    function toggleQuickLoginDemoSetting(checked) {
+      storeData.settings.showQuickLoginDemo = !!checked;
+      saveStoreData();
+      renderLoginUsersOptions();
+      showToast(checked ? 'تم تفعيل أزرار المعاينة السريعة في شاشة الدخول' : 'تم إخفاء أزرار المعاينة السريعة لتعزيز الأمان');
+    }
+
+    function generateStrongPasswordForField(inputId) {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+      let rand = '';
+      for (let i = 0; i < 5; i++) {
+        rand += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      const generated = `ProNet@${rand}`;
+      const inp = document.getElementById(inputId);
+      if (inp) {
+        inp.type = 'text';
+        inp.value = generated;
+      }
+      showToast(`تم توليد كلمة مرور جديدة: ${generated}`);
+    }
+
+    function openAdminUserEditorModal(userId) {
+      const u = userId ? findUserByIdentifier(userId) : null;
+      document.getElementById('adminUserEditorTitle').textContent = u ? `✏️ تعديل بيانات وصلاحيات: ${u.displayName}` : '➕ إضافة مستخدم / موظف جديد للوحة التحكم';
+      document.getElementById('editUserId').value = u ? u.id : '';
+      document.getElementById('editUserDisplayName').value = u ? u.displayName : '';
+      document.getElementById('editUserRoleTitle').value = u ? u.roleTitle : '';
+      document.getElementById('editUserUsername').value = u ? u.username : '';
+      const passInp = document.getElementById('editUserPassword');
+      if (passInp) {
+        passInp.type = 'text';
+        passInp.value = u ? u.password : 'pronet2026';
+      }
+      document.getElementById('editUserPhone').value = u ? (u.phone || '') : '';
+      document.getElementById('editUserIcon').value = u ? (u.icon || '👤') : '👤';
+      document.getElementById('editUserBadgeClass').value = u ? (u.badgeClass || 'bg-cyan-500 text-white') : 'bg-cyan-500 text-white';
+      document.getElementById('editUserDescription').value = u ? (u.description || '') : '';
+
+      const allowed = u ? (u.allowedTabs || ['products', 'profile']) : ['products', 'posts', 'profile'];
+      document.querySelectorAll('.adm-user-tab-chk').forEach(chk => {
+        chk.checked = allowed.includes(chk.value);
+      });
+
+      document.getElementById('editUserCanEditPrices').checked = u ? !!u.canEditPrices : true;
+      document.getElementById('editUserCanDeleteItems').checked = u ? !!u.canDeleteItems : false;
+      document.getElementById('editUserCanExportSite').checked = u ? !!u.canExportSite : false;
+      document.getElementById('editUserActive').checked = u ? (u.active !== false) : true;
+
+      document.getElementById('adminUserEditorModal').classList.remove('hidden');
+    }
+
+    function closeAdminUserEditorModal() {
+      document.getElementById('adminUserEditorModal').classList.add('hidden');
+    }
+
+    function saveAdminUserFromModal() {
+      const id = document.getElementById('editUserId').value || ('u_' + Date.now());
+      const displayName = document.getElementById('editUserDisplayName').value.trim();
+      const roleTitle = document.getElementById('editUserRoleTitle').value.trim();
+      const username = document.getElementById('editUserUsername').value.trim();
+      const password = document.getElementById('editUserPassword').value.trim();
+      const phone = document.getElementById('editUserPhone').value.trim();
+      const icon = document.getElementById('editUserIcon').value;
+      const badgeClass = document.getElementById('editUserBadgeClass').value;
+      const description = document.getElementById('editUserDescription').value.trim();
+
+      if (!displayName || !username || !password) {
+        showToast('⚠️ يرجى إدخال اسم الموظف، اسم المستخدم، وكلمة المرور');
+        return;
+      }
+      if (password.length < 4) {
+        showToast('⚠️ كلمة المرور يجب أن تكون 4 خانات على الأقل');
+        return;
+      }
+
+      const users = getUsersList();
+      const duplicate = users.find(x => x.id !== id && x.username.toLowerCase() === username.toLowerCase());
+      if (duplicate) {
+        showToast(`⚠️ اسم المستخدم "${username}" مستخدم بالفعل لحساب آخر!`);
+        return;
+      }
+
+      const selectedTabs = [];
+      document.querySelectorAll('.adm-user-tab-chk').forEach(chk => {
+        if (chk.checked) selectedTabs.push(chk.value);
+      });
+      if (!selectedTabs.includes('profile')) selectedTabs.push('profile');
+
+      const active = document.getElementById('editUserActive').checked;
+
+      // Prevent locking out the last active user with 'users' management permission
+      const otherAdmins = users.filter(x => x.id !== id && x.active !== false && (x.allowedTabs || []).includes('users'));
+      if (otherAdmins.length === 0 && (!active || !selectedTabs.includes('users'))) {
+        showToast('⚠️ لا يمكن إلغاء صلاحية إدارة المستخدمين أو إيقاف آخر حساب مدير في النظام!');
+        return;
+      }
+
+      const existingIdx = users.findIndex(x => x.id === id);
+      const userObj = {
+        id,
+        roleKey: existingIdx > -1 ? (users[existingIdx].roleKey || username) : username,
+        username,
+        password,
+        displayName,
+        roleTitle: roleTitle || 'موظف — صلاحية مخصصة',
+        phone,
+        icon,
+        badgeClass,
+        description: description || `صلاحيات الحساب (${roleTitle || displayName}) في لوحة التحكم.`,
+        allowedTabs: selectedTabs,
+        canEditPrices: document.getElementById('editUserCanEditPrices').checked,
+        canDeleteItems: document.getElementById('editUserCanDeleteItems').checked,
+        canExportSite: document.getElementById('editUserCanExportSite').checked,
+        active
+      };
+
+      if (existingIdx > -1) users[existingIdx] = userObj;
+      else users.push(userObj);
+
+      if (currentAdminUser && currentAdminUser.id === id) {
+        currentAdminUser = userObj;
+      }
+
+      saveStoreData();
+      closeAdminUserEditorModal();
+      renderAdminAuthView();
+      switchAdminSubTab('users');
+      showToast(`تم حفظ بيانات وصلاحيات وكلمة مرور "${displayName}" بنجاح ✅`);
+    }
+
+    function openQuickPasswordModal(userId) {
+      const u = findUserByIdentifier(userId);
+      if (!u) return;
+      document.getElementById('quickPassUserId').value = u.id;
+      document.getElementById('quickPassUserDisplay').textContent = `${u.icon} ${u.displayName} (${u.roleTitle})`;
+      document.getElementById('quickPassUsername').textContent = u.username;
+      const inp = document.getElementById('quickPassNewInput');
+      if (inp) {
+        inp.type = 'text';
+        inp.value = u.password;
+      }
+      document.getElementById('quickPasswordModal').classList.remove('hidden');
+    }
+
+    function closeQuickPasswordModal() {
+      document.getElementById('quickPasswordModal').classList.add('hidden');
+    }
+
+    function saveQuickPasswordFromModal() {
+      const id = document.getElementById('quickPassUserId').value;
+      const newPass = (document.getElementById('quickPassNewInput').value || '').trim();
+      if (!newPass || newPass.length < 4) {
+        showToast('⚠️ يرجى إدخال كلمة مرور لا تقل عن 4 خانات');
+        return;
+      }
+      const u = findUserByIdentifier(id);
+      if (!u) return;
+      u.password = newPass;
+      if (currentAdminUser && currentAdminUser.id === u.id) {
+        currentAdminUser.password = newPass;
+      }
+      saveStoreData();
+      populateAdminInputs();
+      closeQuickPasswordModal();
+      showToast(`تم تحديث كلمة مرور الحساب (${u.displayName}) بنجاح 🔑`);
+    }
+
+    function deleteAdminUser(userId) {
+      const u = findUserByIdentifier(userId);
+      if (!u) return;
+      if (currentAdminUser && currentAdminUser.id === u.id) {
+        showToast('⚠️ لا يمكنك حذف الحساب الذي تسجل الدخول به حالياً');
+        return;
+      }
+      const users = getUsersList();
+      const remainingAdmins = users.filter(x => x.id !== u.id && x.active !== false && (x.allowedTabs || []).includes('users'));
+      if (remainingAdmins.length === 0) {
+        showToast('⚠️ لا يمكن حذف آخر حساب يمتلك صلاحية إدارة المستخدمين');
+        return;
+      }
+      storeData.users = users.filter(x => x.id !== u.id);
+      saveStoreData();
+      populateAdminInputs();
+      renderLoginUsersOptions();
+      showToast(`تم حذف حساب "${u.displayName}" من النظام`);
+    }
+
+    // ==================== SELF-SERVICE ACCOUNT & PASSWORD CHANGE (EVERY USER) ====================
+    function populateSelfProfileInputs() {
+      if (!currentAdminUser) return;
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+      const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v || ''; };
+
+      setTxt('profileTabIcon', currentAdminUser.icon || '👤');
+      setTxt('profileTabDisplayName', currentAdminUser.displayName);
+      setTxt('profileTabRoleTitle', currentAdminUser.roleTitle);
+      setTxt('profileTabPermissionsDesc', currentAdminUser.description);
+      setVal('profileSelfDisplayName', currentAdminUser.displayName);
+      setVal('profileSelfUsername', currentAdminUser.username);
+      setVal('profileSelfPhone', currentAdminUser.phone || '');
+
+      setTxt('modalMyAccIcon', currentAdminUser.icon || '🔑');
+      setTxt('modalMyAccRoleBadge', `${currentAdminUser.displayName} — ${currentAdminUser.roleTitle}`);
+      setVal('modalSelfDisplayName', currentAdminUser.displayName);
+      setVal('modalSelfUsername', currentAdminUser.username);
+      setVal('modalSelfPhone', currentAdminUser.phone || '');
+    }
+
+    function openMyAccountModal() {
+      if (!currentAdminUser) return;
+      populateSelfProfileInputs();
+      ['modalSelfCurrentPassword', 'modalSelfNewPassword', 'modalSelfConfirmPassword'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      const fb = document.getElementById('modalSelfPasswordFeedback');
+      if (fb) fb.classList.add('hidden');
+      document.getElementById('myAccountModal').classList.remove('hidden');
+    }
+
+    function closeMyAccountModal() {
+      document.getElementById('myAccountModal').classList.add('hidden');
+    }
+
+    function saveSelfProfileData(source) {
+      if (!currentAdminUser) return;
+      const prefix = source === 'modal' ? 'modalSelf' : 'profileSelf';
+      const displayName = (document.getElementById(prefix + 'DisplayName')?.value || '').trim();
+      const username = (document.getElementById(prefix + 'Username')?.value || '').trim();
+      const phone = (document.getElementById(prefix + 'Phone')?.value || '').trim();
+
+      if (!displayName || !username) {
+        showToast('⚠️ يرجى إدخال الاسم المعروض واسم المستخدم');
+        return;
+      }
+
+      const users = getUsersList();
+      const dup = users.find(x => x.id !== currentAdminUser.id && x.username.toLowerCase() === username.toLowerCase());
+      if (dup) {
+        showToast(`⚠️ اسم المستخدم "${username}" محجوز لحساب آخر`);
+        return;
+      }
+
+      const target = users.find(x => x.id === currentAdminUser.id);
+      if (target) {
+        target.displayName = displayName;
+        target.username = username;
+        target.phone = phone;
+        currentAdminUser = target;
+      }
+
+      saveStoreData();
+      populateAdminInputs();
+      document.getElementById('adminUserDisplayName').textContent = currentAdminUser.displayName;
+      showToast('تم تحديث بيانات حسابك الشخصي بنجاح ✅');
+    }
+
+    function showPasswordFeedback(elId, msg, isSuccess) {
+      const fb = document.getElementById(elId);
+      if (!fb) return;
+      fb.textContent = msg;
+      fb.className = isSuccess
+        ? 'p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold'
+        : 'p-3 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold';
+      fb.classList.remove('hidden');
+    }
+
+    function changeOwnPassword(source) {
+      if (!currentAdminUser) return;
+      const prefix = source === 'modal' ? 'modalSelf' : 'tabSelf';
+      const fbId = prefix + 'PasswordFeedback';
+      const curPass = (document.getElementById(prefix + 'CurrentPassword')?.value || '').trim();
+      const newPass = (document.getElementById(prefix + 'NewPassword')?.value || '').trim();
+      const confPass = (document.getElementById(prefix + 'ConfirmPassword')?.value || '').trim();
+
+      if (!curPass) {
+        showPasswordFeedback(fbId, '⚠️ يرجى إدخال كلمة المرور الحالية للتحقق من هويتك.', false);
+        showToast('أدخل كلمة المرور الحالية أولاً');
+        return;
+      }
+      if (curPass !== String(currentAdminUser.password)) {
+        showPasswordFeedback(fbId, '❌ كلمة المرور الحالية غير صحيحة! يرجى التأكد والمحاولة مرة أخرى.', false);
+        showToast('كلمة المرور الحالية غير صحيحة ❌');
+        return;
+      }
+      if (!newPass || newPass.length < 4) {
+        showPasswordFeedback(fbId, '⚠️ كلمة المرور الجديدة يجب أن تتكون من 4 خانات أو أحرف على الأقل.', false);
+        showToast('كلمة المرور الجديدة قصيرة جداً');
+        return;
+      }
+      if (newPass !== confPass) {
+        showPasswordFeedback(fbId, '⚠️ كلمة المرور الجديدة وتأكيد كلمة المرور غير متطابقين!', false);
+        showToast('تأكيد كلمة المرور غير متطابق');
+        return;
+      }
+
+      const target = getUsersList().find(x => x.id === currentAdminUser.id);
+      if (target) {
+        target.password = newPass;
+        currentAdminUser = target;
+      }
+
+      saveStoreData();
+      populateAdminInputs();
+      ['CurrentPassword', 'NewPassword', 'ConfirmPassword'].forEach(suffix => {
+        const el = document.getElementById(prefix + suffix);
+        if (el) el.value = '';
+      });
+      showPasswordFeedback(fbId, '✅ تم تغيير كلمة مرور حسابك وحفظها بنجاح!', true);
+      showToast('تم تغيير كلمة مرور حسابك بنجاح! 🔐✅');
     }
 
     function applyThemePreset(primary, secondary, navy) {
@@ -1610,13 +2297,18 @@
     window.addEventListener('hashchange', checkHashForAdminRoute);
 
     window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedUserId = sessionStorage.getItem('pronet_active_admin_id');
+        if (savedUserId) {
+          const found = findUserByIdentifier(savedUserId);
+          if (found && found.active !== false) currentAdminUser = found;
+        }
+      } catch (e) {}
       applySiteSettingsToDOM();
       const sel = document.getElementById('currencySelect');
       if (sel) sel.value = activeCurrency;
       renderAllViews();
+      renderLoginUsersOptions();
       restartHeroSliderTimer();
       checkHashForAdminRoute();
     });
-  </script>
-</body>
-</html>
