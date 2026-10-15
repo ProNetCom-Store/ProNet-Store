@@ -1,260 +1,66 @@
-// ProNet Computer Store & Admin CMS - Main Application Script
-const STORAGE_KEY = 'pronet_store_cms_v1';
 
-    // Default Official Data from ProNet Computer Facebook Page & Brand Identity
-    const DEFAULT_STORE_DATA = {
-      settings: {
-        brandName: 'برونت كمبيوتر',
-        slogan: 'خدمات بإتقان • حلول تقنية متكاملة',
-        announcement: 'برونت كمبيوتر - عدن المعلا: وصلت دفعة جديدة من أجهزة الشبكات واللابتوبات ومنظومات ستارلينك!',
-        heroBadge: 'المركز المتخصص الأول للكمبيوتر والشبكات والأنظمة الأمنية في عدن',
-        heroTitle: 'برونت كمبيوتر ProNet — حلول تقنية متكاملة وخدمات بإتقان',
-        heroSubtitle: 'نوفر أحدث أجهزة اللابتوب والكمبيوتر المكتبي، معدات الشبكات الاحترافية (MikroTik & Ubiquiti & WiFi 6)، خدمات الإنترنت الفضائي Starlink، منظومات كاميرات المراقبة، والطابعات مع ضمان موثوق ودعم فني هندسي متخصص للأفراد والشركات.',
-        defaultCurrency: 'USD',
-        rateYER: 2050,
-        rateSAR: 3.75,
-        showPricesGlobal: true,
-        primaryColor: '#00A8FF',
-        secondaryColor: '#38B6FF',
-        navyColor: '#0D1B2A',
-        whatsappNumber: '967775043020',
-        secondaryWhatsapp: '967778163178',
-        landline: '02-241004',
-        email: 'prontech.co@gmail.com',
-        address: 'اليمن - عدن - المعلا - الشارع الرئيسي (شارع الشهيد مدرم) - أمام بنك الكريمي - جوار مطعم آيس بالاس'
+    // Role-Based Access Control (RBAC) Configuration for Separate /admin Page
+    const ADMIN_ROLES_CONFIG = {
+      designer: {
+        username: 'designer',
+        displayName: 'المصمم والمهندس المطور',
+        roleTitle: 'المصمم — كامل الصلاحية',
+        icon: '🎨',
+        badgeClass: 'bg-cyan-500 text-white',
+        description: 'كامل الصلاحية (100%): إدارة التصميم والهوية البصرية، السلايدر، شريط الماركات، الأقسام والأصناف والتسعير، المنشورات، المستخدمين، والمزامنة البرمجية مع GitHub.',
+        allowedTabs: ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'],
+        canEditPrices: true,
+        canDeleteItems: true,
+        canExportSite: true
       },
-      categories: [
-        'الشبكات والربط الخارجي',
-        'لابتوبات وكمبيوترات',
-        'الطابعات ومستلزماتها',
-        'الإنترنت الفضائي Starlink',
-        'كاميرات المراقبة والأمن',
-        'الطاقة والحماية الكهربائية',
-        'الإكسسوارات والتخزين'
-      ],
-      brands: [
-        'HP', 'Dell', 'Lenovo', 'Asus', 'MikroTik', 'Ubiquiti', 'TP-Link', 'Moon Link', 'Speeder', 'Starlink', 'Hikvision', 'Power Maxma', 'Delux'
-      ],
-      products: [
-        {
-          id: 'p1',
-          name: 'جهاز البث والاستقبال الخارجي Moon Link (ML-WA360) WiFi 6',
-          category: 'الشبكات والربط الخارجي',
-          brand: 'Moon Link',
-          price: 95,
-          oldPrice: 115,
-          hidePrice: false,
-          badge: 'وصل حديثاً',
-          iconType: 'router',
-          featured: true,
-          specs: ['تقنية WiFi 6 (AX1800) ببينج منخفض ومستقر', 'أنتن داخلي مزدوج 16dBi لترددي 2.4GHz و5.8GHz', 'منفذ جيجابت يدعم PoE لمسافات طويلة', 'عازل كامل مقاوم للرطوبة والحرارة والأمطار'],
-          desc: 'وحش الربط والبث الخارجي المصمم لأصحاب الشبكات والموزعين في عدن لتحمل ضغط العمل والحرارة العالية مع استقرار فائق للإشارة.',
-          imageUrl: ''
-        },
-        {
-          id: 'p2',
-          name: 'طابعة ليزر ملونة متكاملة HP Color LaserJet Pro MFP M479fdw',
-          category: 'الطابعات ومستلزماتها',
-          brand: 'HP',
-          price: 640,
-          oldPrice: 690,
-          hidePrice: false,
-          badge: 'عرض خاص',
-          iconType: 'printer',
-          featured: true,
-          specs: ['4 وظائف متكاملة: طباعة، مسح ضوئي، نسخ، فاكس', 'شاشة لمس ملونة ذكية وسهلة التحكم', 'طباعة تلقائية على الوجهين Duplex سريعة', 'اتصال WiFi ثنائي النطاق وEthernet للشركات'],
-          desc: 'الشريك المثالي للشركات والمكاتب الذكية في عدن؛ تمنحك مخرجات ألوان احترافية وسرعة فائقة تلبي ضغط العمل اليومي.',
-          imageUrl: ''
-        },
-        {
-          id: 'p3',
-          name: 'جهاز حماية وتنظيم الجهد الكهربائي Power Maxma 2500VA AVR',
-          category: 'الطاقة والحماية الكهربائية',
-          brand: 'Power Maxma',
-          price: 110,
-          oldPrice: 125,
-          hidePrice: false,
-          badge: 'متوفر',
-          iconType: 'ups',
-          featured: true,
-          specs: ['قدرة 2500VA لحماية الأجهزة الحساسة والسيرفرات', 'تنظيم تلقائي للجهد الكهربائي (AVR)', 'إدارة ذكية للبطارية وحماية من التذبذب المفاجئ', 'شاشة رقمية لعرض الفولتية وحالة الحمل'],
-          desc: 'حماية فائقة لأجهزة الكمبيوتر والشبكات والمكاتب من انقطاع وتذبذب التيار الكهربائي.',
-          imageUrl: ''
-        },
-        {
-          id: 'p4',
-          name: 'قاعدة ستارلينك الجدارية الاحترافية (Starlink Wall Mount)',
-          category: 'الإنترنت الفضائي Starlink',
-          brand: 'Starlink',
-          price: 28,
-          oldPrice: 35,
-          hidePrice: false,
-          badge: 'متوفر',
-          iconType: 'starlink',
-          featured: false,
-          specs: ['تثبيت جداري آمن للراوتر والمحول', 'تنظيم مثالي للكابلات ومنع التشابك', 'حماية من الصدمات والسقوط', 'تصميم عصري أنيق للمكاتب والمنازل'],
-          desc: 'الحل المتكامل لترتيب وحماية جهاز راوتر ومحول ستارلينك بأناقة وأمان تام.',
-          imageUrl: ''
-        },
-        {
-          id: 'p5',
-          name: 'راوتر متنقل TP-Link M7000 4G LTE MiFi',
-          category: 'الشبكات والربط الخارجي',
-          brand: 'TP-Link',
-          price: 49,
-          oldPrice: 58,
-          hidePrice: false,
-          badge: 'متوفر',
-          iconType: 'router',
-          featured: false,
-          specs: ['سرعة 4G LTE تصل إلى 150Mbps', 'بطارية 2000mAh تدوم حتى 8 ساعات متواصلة', 'يدعم توصيل حتى 10 أجهزة في نفس الوقت', 'إدارة كاملة عبر تطبيق tpMiFi من الجوال'],
-          desc: 'وفر طاقة جوالك وابقَ متصلاً بالإنترنت في كل مكان مع راوتر TP-Link M7000 المتنقل.',
-          imageUrl: ''
-        },
-        {
-          id: 'p6',
-          name: 'سويتش شبكات جيجابت Speeder (A500-5G) - 5 منافذ',
-          category: 'الشبكات والربط الخارجي',
-          brand: 'Speeder',
-          price: 22,
-          oldPrice: 28,
-          hidePrice: false,
-          badge: 'متوفر',
-          iconType: 'router',
-          featured: false,
-          specs: ['5 منافذ سرعة جيجابت (10/100/1000Mbps)', 'معالج قوي 500MHz وباندويث 10Gbps', 'توصيل حتى 150 متر لكابلات Cat5 وCat6', 'إطار معدني يتحمل حرارة حتى 55° مئوية وفولتية 5V-15V'],
-          desc: 'سويتش معدني فائق التحمل لأصحاب الشبكات والمكاتب يعمل باستقرار عالٍ تحت ضغط التحميل المستمر.',
-          imageUrl: ''
-        },
-        {
-          id: 'p7',
-          name: 'علبة هارد خارجي ذكية M.2 SSD Enclosure (NVMe & SATA 10Gbps)',
-          category: 'الإكسسوارات والتخزين',
-          brand: 'Delux',
-          price: 19,
-          oldPrice: 25,
-          hidePrice: false,
-          badge: 'عرض خاص',
-          iconType: 'storage',
-          featured: false,
-          specs: ['سرعة نقل بيانات خارقة 10Gbps عبر منفذ Type-C', 'تدعم بروتوكولات NVMe وSATA ومقاسات متعددة', 'هيكل ألمنيوم أنيق لتشتيت الحرارة وحماية القرص', 'تشغيل فوري Plug & Play بدون تعريف'],
-          desc: 'حوّل قرص M.2 SSD الداخلي إلى هارد خارجي فائق السرعة لنقل ملفاتك الضخمة في ثوانٍ.',
-          imageUrl: ''
-        },
-        {
-          id: 'p8',
-          name: 'طقم كيبورد وماوس احترافي Delux KA150 (سلكي / لاسلكي)',
-          category: 'الإكسسوارات والتخزين',
-          brand: 'Delux',
-          price: 16,
-          oldPrice: 20,
-          hidePrice: false,
-          badge: 'متوفر',
-          iconType: 'storage',
-          featured: false,
-          specs: ['تصميم مريح للاستخدام المكتبي الطويل', 'مفاتيح هادئة وعالية الاستجابة تدعم العربية والإنجليزية', 'متوفر بنسخة USB سلكية ونسخة لاسلكية', 'جودة تصنيع عالية من شركة Delux'],
-          desc: 'تشكيلة مميزة من كيبوردات وماوسات شركة Delux الأصلية للمكاتب والشركات.',
-          imageUrl: ''
-        },
-        {
-          id: 'p9',
-          name: 'لابتوب الأعمال HP ProBook 450 G10 - Core i7 الجيل 13',
-          category: 'لابتوبات وكمبيوترات',
-          brand: 'HP',
-          price: 820,
-          oldPrice: 880,
-          hidePrice: false,
-          badge: 'وصل حديثاً',
-          iconType: 'laptop',
-          featured: true,
-          specs: ['المعالج: Intel Core i7-1355U (الجيل الثالث عشر)', 'الذاكرة العشوائية: 16GB DDR4 قابلة للترقية', 'التخزين: 512GB PCIe NVMe M.2 SSD', 'شاشة 15.6 بوصة FHD IPS وهيكل ألمنيوم متين'],
-          desc: 'خيار مثالي للمهندسين، المدراء، ومشاريع المنظمات والشركات مع ضمان برونت كمبيوتر.',
-          imageUrl: ''
-        },
-        {
-          id: 'p10',
-          name: 'راوتر المؤسسات والشبكات MikroTik RB5009UG+S+IN',
-          category: 'الشبكات والربط الخارجي',
-          brand: 'MikroTik',
-          price: 235,
-          oldPrice: 255,
-          hidePrice: false,
-          badge: 'كمية محدودة',
-          iconType: 'router',
-          featured: true,
-          specs: ['معالج رباعي النواة Marvell Armada 1.4GHz', 'منفذ 2.5G Ethernet + منفذ 10G SFP+ Fiber', '7 منافذ جيجابت إيثرنت مع نظام RouterOS v7', 'مثالي لدمج الخطوط وإدارة الشبكات الكبرى'],
-          desc: 'الراوتر الأقوى من مايكروتيك لإدارة الشبكات ومزودي الخدمة والمؤسسات بكفاءة عالية.',
-          imageUrl: ''
-        },
-        {
-          id: 'p11',
-          name: 'منظومة كاميرات مراقبة شبكية Hikvision IP 4MP ColorVu (4 كاميرات + NVR)',
-          category: 'كاميرات المراقبة والأمن',
-          brand: 'Hikvision',
-          price: 310,
-          oldPrice: 345,
-          hidePrice: false,
-          badge: 'عرض خاص',
-          iconType: 'camera',
-          featured: false,
-          specs: ['4 كاميرات بدقة 4 ميجابكسل وتصوير ليلي ملون ColorVu', 'جهاز تسجيل شبكي NVR بـ 4 منافذ PoE مدمجة', 'مقاومة للعوامل الجوية بمعيار IP67', 'متابعة حية عبر الجوال من أي مكان عبر تطبيق Hik-Connect'],
-          desc: 'منظومة أمنية متكاملة للمحلات التجارية، الشركات، والمنازل مع إمكانية التركيب والبرمجة.',
-          imageUrl: ''
-        },
-        {
-          id: 'p12',
-          name: 'منظومة الإنترنت الفضائي Starlink Standard Kit V4',
-          category: 'الإنترنت الفضائي Starlink',
-          brand: 'Starlink',
-          price: 490,
-          oldPrice: 530,
-          hidePrice: false,
-          badge: 'متوفر',
-          iconType: 'starlink',
-          featured: true,
-          specs: ['الإصدار الرابع الحديث مع راوتر WiFi 6', 'سرعات تحميل عالية وبنج منخفض للأعمال والشبكات', 'مقاوم للغبار والأمطار والحرارة العالية', 'متوفر مع خدمة التفعيل والتركيب والدمج مع MikroTik'],
-          desc: 'حلول الإنترنت الفضائي المتكاملة للشركات، المنظمات، وأصحاب الشبكات في عدن وعموم اليمن.',
-          imageUrl: ''
-        }
-      ],
-      posts: [
-        {
-          id: 'post1',
-          title: 'لأصحاب الشبكات والموزعين في عدن.. وحش الربط والبث الخارجي Moon Link وصل!',
-          tag: 'حلول الشبكات',
-          date: 'يوليو 2026',
-          content: 'تشتي ترفع كفاءة شبكتك وتريح رأسك من شكاوى المشتركين؟ وصل جهاز البث والاستقبال الجبار Moon Link (ML-WA360) الأصلي بتقنية WiFi 6 (AX1800) وأنتن مزدوج 16dBi ومنفذ جيجابت PoE مقاوم للرطوبة والحرارة.'
-        },
-        {
-          id: 'post2',
-          title: 'طوّر إنتاجية أعمالك مع الطابعة الليزرية المتكاملة HP Color LaserJet Pro MFP M479fdw',
-          tag: 'طابعات وشركات',
-          date: 'يونيو 2026',
-          content: 'الشريك المثالي للشركات والمكاتب الذكية: طباعة، مسح ضوئي، نسخ، وفاكس في جهاز واحد مع شاشة لمس ذكية ومخرجات ألوان احترافية متوفرة الآن لدى برونت كمبيوتر.'
-        },
-        {
-          id: 'post3',
-          title: 'نظّم مساحتك واحمِ جهاز ستارلينك بأناقة مع قاعدة Starlink الجدارية',
-          tag: 'ستارلينك',
-          date: 'سبتمبر 2026',
-          content: 'تخلص من فوضى الكابلات واحمِ الراوتر والمحول من الصدمات أو السقوط مع القاعدة الجدارية الأنيقة المتوفرة الآن في معرضنا بالمعلا.'
-        },
-        {
-          id: 'post4',
-          title: 'حماية متكاملة لأجهزتك من انقطاع الكهرباء مع Power Maxma 2500VA',
-          tag: 'حماية وطاقة',
-          date: 'أغسطس 2026',
-          content: 'ودّع القلق من تذبذب وانقطاع التيار الكهربائي؛ يوفر جهاز Power Maxma 2500VA تنظيماً تلقائياً للجهد (AVR) وإدارة ذكية للبطارية لضمان استقرار أجهزتك.'
-        }
-      ]
+      management: {
+        username: 'management',
+        displayName: 'م. عمار محمد سعيد الأسدي',
+        roleTitle: 'الإدارة العامة — كامل الصلاحية',
+        icon: '👨‍💼',
+        badgeClass: 'bg-amber-500 text-slate-950',
+        description: 'كامل الصلاحية (100%): المدير التنفيذي - تحكم شامل في الأصناف، التسعير، العملات وسعر الصرف، الأقسام والماركات، المنشورات، المستخدمين والصلاحيات، والتصدير.',
+        allowedTabs: ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'],
+        canEditPrices: true,
+        canDeleteItems: true,
+        canExportSite: true
+      },
+      sales: {
+        username: 'sales',
+        displayName: 'موظف قسم المبيعات',
+        roleTitle: 'المبيعات — الأصناف والتسعير والعروض',
+        icon: '💼',
+        badgeClass: 'bg-emerald-500 text-white',
+        description: 'صلاحيات المبيعات: إدارة الأصناف والتسعير والخصومات، تحديث حالة التوفر، وإضافة المنشورات والعروض الترويجية للعملاء.',
+        allowedTabs: ['products', 'categories', 'posts'],
+        canEditPrices: true,
+        canDeleteItems: false,
+        canExportSite: false
+      },
+      support: {
+        username: 'support',
+        displayName: 'مهندس الدعم الفني والصيانة',
+        roleTitle: 'الدعم الفني — المواصفات والمشاريع والصيانة',
+        icon: '🛠️',
+        badgeClass: 'bg-purple-500 text-white',
+        description: 'صلاحيات الدعم الفني: تحديث المواصفات الفنية للأجهزة، متابعة تذاكر الصيانة والتركيبات الهندسية، ونشر الإرشادات التقنية (بدون صلاحية تعديل الأسعار).',
+        allowedTabs: ['products', 'support', 'posts'],
+        canEditPrices: false,
+        canDeleteItems: false,
+        canExportSite: false
+      }
     };
 
     // Runtime State
     let storeData = loadStoreData();
     let activeCurrency = storeData.settings.defaultCurrency || 'USD';
     let selectedCategory = 'ALL';
+    let homeShowcaseFilter = 'ALL';
+    let currentSlideIdx = 0;
+    let heroSlideInterval = null;
     let cart = [];
     let compareList = [];
+    let currentAdminUser = null; // null when logged out
 
     function loadStoreData() {
       try {
@@ -262,6 +68,10 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
         if (raw) {
           const parsed = JSON.parse(raw);
           if (parsed && parsed.products && parsed.settings) {
+            if (!parsed.slides) parsed.slides = DEFAULT_STORE_DATA.slides;
+            if (!parsed.businessAreas) parsed.businessAreas = DEFAULT_STORE_DATA.businessAreas;
+            if (!parsed.projects) parsed.projects = DEFAULT_STORE_DATA.projects;
+            if (!parsed.supportTickets) parsed.supportTickets = DEFAULT_STORE_DATA.supportTickets;
             return parsed;
           }
         }
@@ -275,6 +85,39 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       } catch (e) {}
       applySiteSettingsToDOM();
       renderAllViews();
+    }
+
+    // Custom Brand Logo SVGs for the Brands Bar below Hero Slider
+    function getBrandLogoBadgeSvg(brand) {
+      const b = (brand || '').toLowerCase();
+      let color = '#00A8FF';
+      let sub = 'OFFICIAL PARTNER';
+      if (b.includes('hp')) { color = '#0096D6'; sub = 'BUSINESS & LASERJET'; }
+      else if (b.includes('dell')) { color = '#007DB8'; sub = 'LATITUDE & OPTIPLEX'; }
+      else if (b.includes('lenovo')) { color = '#E2231A'; sub = 'THINKPAD & IDEAPAD'; }
+      else if (b.includes('asus')) { color = '#00539B'; sub = 'EXPERTBOOK & ROG'; }
+      else if (b.includes('mikrotik')) { color = '#29B6F6'; sub = 'ROUTEROS & SWITCHING'; }
+      else if (b.includes('ubiquiti')) { color = '#0559C9'; sub = 'UNIFI & AIRMAX'; }
+      else if (b.includes('starlink')) { color = '#38BDF8'; sub = 'SATELLITE INTERNET'; }
+      else if (b.includes('hikvision')) { color = '#EF4444'; sub = 'COLORVU & IP SECURITY'; }
+      else if (b.includes('dahua')) { color = '#DC2626'; sub = 'CCTV & ACCESS CONTROL'; }
+      else if (b.includes('tp-link')) { color = '#06B6D4'; sub = 'WIFI & 4G ROUTERS'; }
+      else if (b.includes('moon')) { color = '#F59E0B'; sub = 'OUTDOOR WIFI 6'; }
+      else if (b.includes('speeder')) { color = '#10B981'; sub = 'GIGABIT SWITCHES'; }
+      else if (b.includes('maxma')) { color = '#EAB308'; sub = 'AVR & POWER UPS'; }
+      else if (b.includes('delux')) { color = '#8B5CF6'; sub = 'ACCESSORIES & NVME'; }
+
+      return `
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-xs shrink-0 shadow-sm" style="background:${color}">
+            ${brand.slice(0, 2).toUpperCase()}
+          </div>
+          <div class="text-right overflow-hidden">
+            <div class="font-black text-xs sm:text-sm text-slate-900 dark:text-white truncate">${brand}</div>
+            <div class="text-[9px] font-mono text-slate-400 truncate">${sub}</div>
+          </div>
+        </div>
+      `;
     }
 
     // SVG Illustrations per Product IconType
@@ -349,7 +192,6 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       showToast('تم تغيير عملة العرض إلى ' + (curr === 'USD' ? 'الدولار الأمريكي ($)' : curr === 'YER' ? 'الريال اليمني (ر.ي)' : 'الريال السعودي (ر.س)'));
     }
 
-    // Apply CSS Variables & Text Settings
     function applySiteSettingsToDOM() {
       const s = storeData.settings;
       document.documentElement.style.setProperty('--pronet-primary', s.primaryColor || '#00A8FF');
@@ -363,54 +205,341 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       setTxt('announcementText', s.announcement);
       setTxt('headerBrandName', s.brandName);
       setTxt('headerSlogan', s.slogan);
-      setTxt('heroBadgeText', s.heroBadge);
-      setTxt('heroTitleText', s.heroTitle);
-      setTxt('heroSubtitleText', s.heroSubtitle);
       setTxt('aboutAddressText', s.address);
       setTxt('aboutLandlineText', s.landline);
       setTxt('aboutEmailText', s.email);
       setTxt('exchangeRateInfoBadge', `سعر الصرف: 1$ = ${s.rateYER} ر.ي | ${s.rateSAR} ر.س`);
 
-      const waLink = document.getElementById('topWhatsappLink');
-      if (waLink) waLink.href = 'https://wa.me/' + (s.whatsappNumber || '967775043020');
+      // Sync first slide text with settings
+      if (storeData.slides && storeData.slides.length > 0) {
+        storeData.slides[0].badge = s.heroBadge || storeData.slides[0].badge;
+        storeData.slides[0].title = s.heroTitle || storeData.slides[0].title;
+        storeData.slides[0].subtitle = s.heroSubtitle || storeData.slides[0].subtitle;
+      }
+      renderHeroSlider();
     }
 
-    // Navigation Tabs
+    // ==================== HERO SLIDER / CAROUSEL ====================
+    function renderHeroSlider() {
+      const slides = storeData.slides || DEFAULT_STORE_DATA.slides;
+      if (!slides.length) return;
+      if (currentSlideIdx >= slides.length) currentSlideIdx = 0;
+      const slide = slides[currentSlideIdx];
+
+      const imgEl = document.getElementById('heroSlideImg');
+      const badgeEl = document.getElementById('heroSlideBadge');
+      const titleEl = document.getElementById('heroSlideTitle');
+      const subEl = document.getElementById('heroSlideSubtitle');
+      const dotsEl = document.getElementById('heroSliderDots');
+
+      if (imgEl && slide.image) imgEl.src = slide.image;
+      if (badgeEl) badgeEl.textContent = slide.badge;
+      if (titleEl) titleEl.textContent = slide.title;
+      if (subEl) subEl.textContent = slide.subtitle;
+
+      if (dotsEl) {
+        dotsEl.innerHTML = slides.map((s, idx) => `
+          <button type="button" onclick="goToHeroSlide(${idx})" class="h-2.5 rounded-full transition-all ${idx === currentSlideIdx ? 'w-8 bg-cyan-400' : 'w-2.5 bg-slate-600 hover:bg-slate-400'}" title="شريحة ${idx + 1}"></button>
+        `).join('');
+      }
+    }
+
+    function nextHeroSlide() {
+      const slides = storeData.slides || DEFAULT_STORE_DATA.slides;
+      currentSlideIdx = (currentSlideIdx + 1) % slides.length;
+      renderHeroSlider();
+      restartHeroSliderTimer();
+    }
+
+    function prevHeroSlide() {
+      const slides = storeData.slides || DEFAULT_STORE_DATA.slides;
+      currentSlideIdx = (currentSlideIdx - 1 + slides.length) % slides.length;
+      renderHeroSlider();
+      restartHeroSliderTimer();
+    }
+
+    function goToHeroSlide(idx) {
+      currentSlideIdx = idx;
+      renderHeroSlider();
+      restartHeroSliderTimer();
+    }
+
+    function restartHeroSliderTimer() {
+      if (heroSlideInterval) clearInterval(heroSlideInterval);
+      heroSlideInterval = setInterval(() => {
+        const slides = storeData.slides || DEFAULT_STORE_DATA.slides;
+        currentSlideIdx = (currentSlideIdx + 1) % slides.length;
+        renderHeroSlider();
+      }, 6500);
+    }
+
+    // ==================== BRANDS LOGO STRIP BELOW HERO ====================
+    function renderBrandsLogoStrip() {
+      const container = document.getElementById('brandsLogoStripContainer');
+      if (!container) return;
+      container.innerHTML = storeData.brands.map(brand => `
+        <button type="button" onclick="filterByBrandFromHome('${brand}')" class="p-2.5 rounded-2xl bg-slate-50 dark:bg-[#1B263B] border border-slate-200 dark:border-slate-700/80 hover:border-cyan-400 dark:hover:border-cyan-400 hover:shadow-md transition group text-right">
+          ${getBrandLogoBadgeSvg(brand)}
+        </button>
+      `).join('');
+    }
+
+    function filterByBrandFromHome(brand) {
+      switchMainTab('store');
+      selectedCategory = 'ALL';
+      renderCategoriesAndBrands();
+      const brandSel = document.getElementById('brandFilterSelect');
+      if (brandSel) brandSel.value = brand;
+      applyStoreFilters();
+      if (brand !== 'ALL') {
+        showToast(`تم عرض منتجات الماركة العالمية: ${brand}`);
+      }
+    }
+
+    // ==================== BUSINESS AREAS & SERVICES ====================
+    function renderBusinessAreasAndServices() {
+      const areas = storeData.businessAreas || DEFAULT_STORE_DATA.businessAreas;
+      const homeGrid = document.getElementById('homeBusinessAreasGrid');
+      if (homeGrid) {
+        homeGrid.innerHTML = areas.map(a => `
+          <div class="bg-white dark:bg-[#1B263B] border border-slate-200 dark:border-slate-700 hover:border-cyan-400 rounded-2xl p-5 flex flex-col justify-between space-y-4 shadow-sm hover:shadow-lg transition group">
+            <div class="space-y-2">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">${a.icon}</div>
+              <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white">${a.title}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-300 leading-relaxed">${a.desc}</p>
+            </div>
+            <button type="button" onclick="openBusinessAreaCategory('${a.categoryFilter}')" class="text-xs font-extrabold text-cyan-500 hover:text-cyan-400 flex items-center gap-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+              <span>معرفة تفاصيل الخدمة وتصفح الأصناف</span>
+              <span>←</span>
+            </button>
+          </div>
+        `).join('');
+      }
+
+      const fullGrid = document.getElementById('fullServicesGrid');
+      if (fullGrid) {
+        fullGrid.innerHTML = areas.map(a => `
+          <div class="bg-white dark:bg-[#1B263B] border border-slate-200 dark:border-slate-700 rounded-3xl p-6 flex flex-col justify-between space-y-5 shadow-md">
+            <div class="space-y-3">
+              <div class="w-14 h-14 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-3xl">${a.icon}</div>
+              <h3 class="text-xl font-black text-slate-900 dark:text-white">${a.title}</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${a.desc}</p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+              <button type="button" onclick="openBusinessAreaCategory('${a.categoryFilter}')" class="flex-1 py-2.5 px-3 rounded-xl brand-gradient text-white font-bold text-xs">🛍️ تصفح منتجات القسم</button>
+              <button type="button" onclick="switchMainTab('projects')" class="py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 font-bold text-xs">📋 طلب عرض سعر</button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function openBusinessAreaCategory(cat) {
+      switchMainTab('store');
+      selectedCategory = cat || 'ALL';
+      renderCategoriesAndBrands();
+      applyStoreFilters();
+    }
+
+    // ==================== HOME STOREFRONT SHOWCASE ====================
+    function setHomeShowcaseFilter(filterType) {
+      homeShowcaseFilter = filterType;
+      const mapIds = {
+        'ALL': 'home-showcase-all',
+        'عرض خاص': 'home-showcase-offers',
+        'FEATURED': 'home-showcase-featured',
+        'وصل حديثاً': 'home-showcase-new'
+      };
+      Object.entries(mapIds).forEach(([k, id]) => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.className = k === filterType
+            ? 'home-showcase-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold brand-gradient text-white shadow-sm'
+            : 'home-showcase-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-[#1B263B] border border-slate-200 dark:border-slate-700';
+        }
+      });
+      renderHomeProductsShowcase();
+    }
+
+    function renderHomeProductsShowcase() {
+      const grid = document.getElementById('homeProductsShowcaseGrid');
+      if (!grid) return;
+      let list = storeData.products.filter(p => {
+        if (homeShowcaseFilter === 'ALL') return true;
+        if (homeShowcaseFilter === 'FEATURED') return !!p.featured;
+        return p.badge === homeShowcaseFilter;
+      });
+      if (list.length === 0) list = storeData.products.slice(0, 8);
+      else list = list.slice(0, 8);
+
+      grid.innerHTML = list.map(p => buildProductCardHtml(p)).join('');
+    }
+
+    // ==================== PROJECTS SHOWCASE ====================
+    function renderProjectsShowcase() {
+      const grid = document.getElementById('projectsShowcaseGrid');
+      if (!grid) return;
+      const projs = storeData.projects || DEFAULT_STORE_DATA.projects;
+      grid.innerHTML = projs.map(pr => `
+        <div class="bg-white dark:bg-[#1B263B] border border-slate-200 dark:border-slate-700 rounded-3xl p-6 flex flex-col justify-between space-y-4 shadow-sm">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between text-xs">
+              <span class="px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-400 font-bold">${pr.category}</span>
+              <span class="text-amber-400 font-semibold">📍 ${pr.location}</span>
+            </div>
+            <h3 class="text-base sm:text-lg font-black leading-snug">${pr.title}</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-300 leading-relaxed">${pr.desc}</p>
+          </div>
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <span class="text-emerald-400 font-bold">✔️ تم التنفيذ والتسليم بنجاح</span>
+            <button type="button" onclick="document.getElementById('rfqOrgName')?.focus()" class="text-cyan-400 font-bold hover:underline">اطلب مشروعاً مماثلاً ←</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ==================== PUBLIC NAVIGATION TABS ====================
     function switchMainTab(tab) {
-      const views = ['home', 'b2b', 'posts', 'about', 'admin'];
+      const views = ['home', 'about', 'services', 'store', 'projects', 'posts', 'contact'];
       views.forEach(v => {
         const sec = document.getElementById('view-' + v);
         if (sec) sec.classList.toggle('hidden', v !== tab);
         const btn = document.getElementById('nav-' + v);
         if (btn) {
-          if (v === tab) {
-            btn.className = 'nav-btn px-4 py-2 rounded-lg text-sm font-bold transition bg-cyan-500 text-white shadow-sm';
-          } else {
-            btn.className = 'nav-btn px-4 py-2 rounded-lg text-sm font-bold transition text-slate-700 dark:text-slate-200 hover:text-cyan-500';
-          }
+          btn.className = v === tab
+            ? 'nav-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-cyan-500 text-white shadow-sm'
+            : 'nav-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-slate-700 dark:text-slate-200 hover:text-cyan-500';
         }
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      if (tab === 'admin') populateAdminInputs();
+    }
+
+    // ==================== SEPARATE ADMIN PAGE ROUTING & RBAC ====================
+    function navigateToAdminPage() {
+      const pub = document.getElementById('publicSiteWrapper');
+      const adm = document.getElementById('adminPageWrapper');
+      if (pub) pub.classList.add('hidden');
+      if (adm) adm.classList.remove('hidden');
+      try { history.replaceState(null, '', '#/admin'); } catch (e) {}
+      renderAdminAuthView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function exitAdminPageToStore() {
+      const pub = document.getElementById('publicSiteWrapper');
+      const adm = document.getElementById('adminPageWrapper');
+      if (adm) adm.classList.add('hidden');
+      if (pub) pub.classList.remove('hidden');
+      try { history.replaceState(null, '', '#/'); } catch (e) {}
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function fillLoginRoleHint() {
+      const roleKey = document.getElementById('loginUsernameSelect')?.value || 'management';
+      const cfg = ADMIN_ROLES_CONFIG[roleKey] || ADMIN_ROLES_CONFIG.management;
+      const hintEl = document.getElementById('loginRolePermissionsHint');
+      if (hintEl) hintEl.textContent = cfg.description;
+    }
+
+    function handleAdminLogin() {
+      const roleKey = document.getElementById('loginUsernameSelect')?.value || 'management';
+      const pass = (document.getElementById('loginPasswordInput')?.value || '').trim();
+      if (!pass) {
+        showToast('يرجى إدخال كلمة المرور للدخول إلى لوحة التحكم');
+        return;
+      }
+      loginWithRoleKey(roleKey);
+    }
+
+    function quickLoginAsRole(roleKey) {
+      const sel = document.getElementById('loginUsernameSelect');
+      if (sel) sel.value = roleKey;
+      loginWithRoleKey(roleKey);
+    }
+
+    function loginWithRoleKey(roleKey) {
+      const cfg = ADMIN_ROLES_CONFIG[roleKey] || ADMIN_ROLES_CONFIG.management;
+      currentAdminUser = cfg;
+      renderAdminAuthView();
+      showToast(`مرحباً بك في لوحة التحكم (${cfg.roleTitle})`);
+    }
+
+    function logoutAdminUser() {
+      currentAdminUser = null;
+      renderAdminAuthView();
+      showToast('تم تسجيل الخروج من لوحة التحكم بنجاح');
+    }
+
+    function renderAdminAuthView() {
+      const loginBox = document.getElementById('adminLoginScreen');
+      const dashBox = document.getElementById('adminDashboardContent');
+      const userBadge = document.getElementById('adminActiveUserBadge');
+      const logoutBtn = document.getElementById('adminLogoutBtn');
+
+      if (!currentAdminUser) {
+        if (loginBox) loginBox.classList.remove('hidden');
+        if (dashBox) dashBox.classList.add('hidden');
+        if (userBadge) userBadge.classList.add('hidden');
+        if (logoutBtn) logoutBtn.classList.add('hidden');
+        fillLoginRoleHint();
+        return;
+      }
+
+      if (loginBox) loginBox.classList.add('hidden');
+      if (dashBox) dashBox.classList.remove('hidden');
+      if (userBadge) {
+        userBadge.classList.remove('hidden');
+        userBadge.classList.add('flex');
+      }
+      if (logoutBtn) logoutBtn.classList.remove('hidden');
+
+      document.getElementById('adminUserRoleIcon').textContent = currentAdminUser.icon;
+      document.getElementById('adminUserDisplayName').textContent = currentAdminUser.displayName;
+      document.getElementById('adminUserRoleBadge').textContent = currentAdminUser.roleTitle;
+
+      const roleTag = document.getElementById('admHeaderRoleTag');
+      if (roleTag) {
+        roleTag.textContent = currentAdminUser.roleTitle;
+        roleTag.className = `px-3 py-0.5 rounded-full text-xs font-black ${currentAdminUser.badgeClass}`;
+      }
+      document.getElementById('admHeaderPermissionsDesc').textContent = currentAdminUser.description;
+
+      // Show/Hide Admin Sub-Tabs based on Role Permissions
+      const allTabs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'];
+      allTabs.forEach(t => {
+        const btn = document.getElementById('adm-tab-' + t);
+        if (btn) {
+          const allowed = currentAdminUser.allowedTabs.includes(t);
+          btn.classList.toggle('hidden', !allowed);
+        }
+      });
+
+      const btnExport = document.getElementById('btnQuickExportSite');
+      if (btnExport) btnExport.classList.toggle('hidden', !currentAdminUser.canExportSite);
+
+      const noteEl = document.getElementById('adminProductsRoleNote');
+      if (noteEl) {
+        noteEl.textContent = currentAdminUser.canEditPrices
+          ? 'لديك صلاحية كاملة لتعديل الأسعار، المواصفات، وحالة التوفر.'
+          : 'صلاحية الدعم الفني: يمكنك تحديث المواصفات الفنية وحالة التوفر (تعديل الأسعار مخصص للإدارة والمبيعات والمصمم).';
+      }
+
+      populateAdminInputs();
+      switchAdminSubTab(currentAdminUser.allowedTabs[0] || 'products');
     }
 
     function switchAdminSubTab(sub) {
-      const subs = ['products', 'categories', 'posts', 'settings', 'github'];
+      const subs = ['products', 'categories', 'posts', 'support', 'settings', 'users', 'github'];
       subs.forEach(s => {
         const box = document.getElementById('admin-subview-' + s);
         if (box) box.classList.toggle('hidden', s !== sub);
         const btn = document.getElementById('adm-tab-' + s);
-        if (btn) {
+        if (btn && !btn.classList.contains('hidden')) {
           btn.className = s === sub
-            ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-500 text-white'
-            : 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-200 dark:bg-[#1B263B] text-slate-700 dark:text-slate-200';
+            ? 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-cyan-500 text-white whitespace-nowrap'
+            : 'adm-subtab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#1B263B] text-slate-200 whitespace-nowrap';
         }
       });
-    }
-
-    function scrollToCatalog() {
-      const el = document.getElementById('storeCatalogSection');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
 
     function toggleTheme() {
@@ -418,6 +547,11 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       const isDark = html.classList.toggle('dark');
       const icon = document.getElementById('themeIcon');
       if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+    }
+
+    function copyBankAccount(accNum, bankLabel) {
+      copyTextToClipboard(accNum);
+      showToast(`تم نسخ رقم الحساب (${accNum}) — ${bankLabel} ✅`);
     }
 
     // Render Hero Featured Product
@@ -447,7 +581,55 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       `;
     }
 
-    // Render Category Pills & Brand Filter
+    // Build Single Product Card HTML (Used in Home Showcase & Store Catalog)
+    function buildProductCardHtml(p) {
+      const badgeColor = p.badge === 'عرض خاص' ? 'bg-amber-500 text-slate-950' :
+                         p.badge === 'وصل حديثاً' ? 'bg-cyan-500 text-white' :
+                         p.badge === 'كمية محدودة' ? 'bg-rose-500 text-white' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+      const inCompare = compareList.includes(p.id);
+      return `
+        <div class="bg-white dark:bg-[#1B263B] border border-slate-200 dark:border-slate-700/80 hover:border-cyan-400 dark:hover:border-cyan-400 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between group">
+          <div>
+            <div class="relative bg-slate-100 dark:bg-[#0A1522] p-4 h-44 flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
+              <span class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${badgeColor}">${p.badge || 'متوفر'}</span>
+              <span class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-slate-900/80 text-cyan-300 text-[11px] font-mono font-bold">${p.brand}</span>
+              ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.name}" class="max-h-36 max-w-full object-contain group-hover:scale-105 transition" />` : `<div class="group-hover:scale-105 transition">${getProductSvgIllustration(p.iconType, p.brand)}</div>`}
+            </div>
+            <div class="p-4 space-y-2.5">
+              <div class="text-[11px] font-bold text-cyan-600 dark:text-cyan-400">${p.category}</div>
+              <h3 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white leading-snug line-clamp-2">${p.name}</h3>
+              <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                ${(p.specs || []).slice(0, 3).map(s => `<li class="truncate">• ${s}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          <div class="p-4 pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
+            <div class="flex items-baseline justify-between">
+              <div>
+                <span class="text-lg font-black text-cyan-600 dark:text-cyan-400">${formatPrice(p.price, p.hidePrice)}</span>
+                ${(!p.hidePrice && storeData.settings.showPricesGlobal && p.oldPrice && Number(p.oldPrice) > Number(p.price))
+                  ? `<span class="text-xs text-slate-400 line-through mr-1.5">${formatPrice(p.oldPrice, false)}</span>` : ''}
+              </div>
+              <button type="button" onclick="toggleCompareItem('${p.id}')" title="إضافة للمقارنة" class="text-xs px-2 py-1 rounded-lg border ${inCompare ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold' : 'border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400'}">
+                ⚖️ ${inCompare ? 'بالمقارنة' : 'قارن'}
+              </button>
+            </div>
+            <div class="grid grid-cols-12 gap-1.5">
+              <button type="button" onclick="addToCart('${p.id}')" class="col-span-7 py-2 px-3 rounded-xl brand-gradient text-white font-bold text-xs hover:opacity-95 transition flex items-center justify-center gap-1">
+                <span>🛒</span><span>أضف للسلة</span>
+              </button>
+              <button type="button" onclick="orderSingleProductWhatsapp('${p.id}')" title="طلب مباشر عبر واتساب المبيعات" class="col-span-3 py-2 px-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-500 hover:text-white border border-emerald-500/30 font-bold text-xs transition flex items-center justify-center">
+                💬 واتس
+              </button>
+              <button type="button" onclick="openProductDetailModal('${p.id}')" title="عرض المواصفات الكاملة" class="col-span-2 py-2 rounded-xl bg-slate-100 dark:bg-[#0D1B2A] hover:border-cyan-400 border border-slate-200 dark:border-slate-700 text-xs font-bold flex items-center justify-center">
+                👁️
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     function renderCategoriesAndBrands() {
       const catContainer = document.getElementById('categoryPillsContainer');
       if (catContainer) {
@@ -474,7 +656,6 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       applyStoreFilters();
     }
 
-    // Filter & Render Products Grid
     function applyStoreFilters() {
       const grid = document.getElementById('productsGrid');
       if (!grid) return;
@@ -512,59 +693,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
         return;
       }
 
-      grid.innerHTML = list.map(p => {
-        const badgeColor = p.badge === 'عرض خاص' ? 'bg-amber-500 text-slate-950' :
-                           p.badge === 'وصل حديثاً' ? 'bg-cyan-500 text-white' :
-                           p.badge === 'كمية محدودة' ? 'bg-rose-500 text-white' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
-        const inCompare = compareList.includes(p.id);
-        return `
-          <div class="bg-white dark:bg-[#1B263B] border border-slate-200 dark:border-slate-700/80 hover:border-cyan-400 dark:hover:border-cyan-400 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between group">
-            <div>
-              <!-- Top Visual Box -->
-              <div class="relative bg-slate-100 dark:bg-[#0A1522] p-4 h-44 flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
-                <span class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${badgeColor}">${p.badge || 'متوفر'}</span>
-                <span class="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-slate-900/80 text-cyan-300 text-[11px] font-mono font-bold">${p.brand}</span>
-                ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.name}" class="max-h-36 max-w-full object-contain group-hover:scale-105 transition" />` : `<div class="group-hover:scale-105 transition">${getProductSvgIllustration(p.iconType, p.brand)}</div>`}
-              </div>
-
-              <!-- Card Body -->
-              <div class="p-4 space-y-2.5">
-                <div class="text-[11px] font-bold text-cyan-600 dark:text-cyan-400">${p.category}</div>
-                <h3 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white leading-snug line-clamp-2">${p.name}</h3>
-                <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-1">
-                  ${(p.specs || []).slice(0, 3).map(s => `<li class="truncate">• ${s}</li>`).join('')}
-                </ul>
-              </div>
-            </div>
-
-            <!-- Price & Actions Footer -->
-            <div class="p-4 pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
-              <div class="flex items-baseline justify-between">
-                <div>
-                  <span class="text-lg font-black text-cyan-600 dark:text-cyan-400">${formatPrice(p.price, p.hidePrice)}</span>
-                  ${(!p.hidePrice && storeData.settings.showPricesGlobal && p.oldPrice && Number(p.oldPrice) > Number(p.price))
-                    ? `<span class="text-xs text-slate-400 line-through mr-1.5">${formatPrice(p.oldPrice, false)}</span>` : ''}
-                </div>
-                <button type="button" onclick="toggleCompareItem('${p.id}')" title="إضافة للمقارنة" class="text-xs px-2 py-1 rounded-lg border ${inCompare ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold' : 'border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400'}">
-                  ⚖️ ${inCompare ? 'بالمقارنة' : 'قارن'}
-                </button>
-              </div>
-
-              <div class="grid grid-cols-12 gap-1.5">
-                <button type="button" onclick="addToCart('${p.id}')" class="col-span-7 py-2 px-3 rounded-xl brand-gradient text-white font-bold text-xs hover:opacity-95 transition flex items-center justify-center gap-1">
-                  <span>🛒</span><span>أضف للسلة</span>
-                </button>
-                <button type="button" onclick="orderSingleProductWhatsapp('${p.id}')" title="طلب مباشر عبر واتساب" class="col-span-3 py-2 px-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-500 hover:text-white border border-emerald-500/30 font-bold text-xs transition flex items-center justify-center">
-                  💬 واتس
-                </button>
-                <button type="button" onclick="openProductDetailModal('${p.id}')" title="عرض المواصفات الكاملة" class="col-span-2 py-2 rounded-xl bg-slate-100 dark:bg-[#0D1B2A] hover:border-cyan-400 border border-slate-200 dark:border-slate-700 text-xs font-bold flex items-center justify-center">
-                  👁️
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
+      grid.innerHTML = list.map(p => buildProductCardHtml(p)).join('');
     }
 
     function resetFilters() {
@@ -576,7 +705,6 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       applyStoreFilters();
     }
 
-    // Product Detail Modal
     function openProductDetailModal(prodId) {
       const p = storeData.products.find(x => x.id === prodId);
       if (!p) return;
@@ -604,7 +732,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
         </div>
         <div class="flex flex-wrap gap-3 pt-2">
           <button type="button" onclick="addToCart('${p.id}'); closeProductDetailModal();" class="flex-1 py-3 rounded-xl brand-gradient text-white font-extrabold text-sm">🛒 إضافة إلى السلة</button>
-          <button type="button" onclick="orderSingleProductWhatsapp('${p.id}')" class="px-5 py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-sm">💬 استفسار / طلب عبر واتساب</button>
+          <button type="button" onclick="orderSingleProductWhatsapp('${p.id}')" class="px-5 py-3 rounded-xl bg-emerald-600 text-white font-extrabold text-sm">💬 طلب عبر واتساب المبيعات</button>
         </div>
       `;
       document.getElementById('productDetailModal').classList.remove('hidden');
@@ -698,8 +826,8 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
     function orderSingleProductWhatsapp(prodId) {
       const p = storeData.products.find(x => x.id === prodId);
       if (!p) return;
-      const msg = `مرحباً برونت كمبيوتر (ProNet Computer)،\nأود الاستفسار / طلب الصنف التالي:\n• الصنف: ${p.name}\n• القسم: ${p.category}\n• السعر المعروض: ${formatPrice(p.price, p.hidePrice)}`;
-      const url = `https://wa.me/${storeData.settings.whatsappNumber || '967775043020'}?text=${encodeURIComponent(msg)}`;
+      const msg = `مرحباً مبيعات برونت كمبيوتر (ProNet Computer)،\nأود الاستفسار / طلب الصنف التالي:\n• الصنف: ${p.name}\n• القسم: ${p.category}\n• السعر المعروض: ${formatPrice(p.price, p.hidePrice)}`;
+      const url = `https://wa.me/${storeData.settings.whatsappNumber || '967778163178'}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
     }
 
@@ -726,7 +854,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
         `📦 *الأصناف المطلوبة:*\n${lines}\n\n` +
         `💰 *الإجمالي التقديري:* ${formatPrice(sumUSD, false)} ($${sumUSD})`;
 
-      const url = `https://wa.me/${storeData.settings.whatsappNumber || '967775043020'}?text=${encodeURIComponent(msg)}`;
+      const url = `https://wa.me/${storeData.settings.whatsappNumber || '967778163178'}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
       showToast('تم تجهيز رسالة الطلب لواتساب المبيعات بنجاح!');
     }
@@ -805,6 +933,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
         badge.textContent = compareList.length;
         badge.classList.toggle('hidden', compareList.length === 0);
       }
+      renderHomeProductsShowcase();
       applyStoreFilters();
     }
 
@@ -850,6 +979,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       const badge = document.getElementById('compareCountBadge');
       if (badge) badge.classList.add('hidden');
       closeCompareModal();
+      renderHomeProductsShowcase();
       applyStoreFilters();
     }
 
@@ -865,9 +995,10 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
              `🏢 الجهة: ${org}\n👤 المسؤول: ${person}\n📱 الهاتف: ${phone}\n✉️ البريد: ${email}\n🛠️ نوع المشروع: ${type}\n📝 التفاصيل والكميات:\n${details}`;
     }
 
-    function submitRfqWhatsapp() {
+    function submitRfqWhatsapp(targetDept) {
       const msg = getFormattedRfqMessage();
-      window.open(`https://wa.me/${storeData.settings.whatsappNumber || '967775043020'}?text=${encodeURIComponent(msg)}`, '_blank');
+      const targetPhone = targetDept === 'mgmt' ? '967775043020' : (storeData.settings.whatsappNumber || '967778163178');
+      window.open(`https://wa.me/${targetPhone}?text=${encodeURIComponent(msg)}`, '_blank');
       showToast('تم فتح واتساب لإرسال طلب عرض السعر الرسمي');
     }
 
@@ -893,7 +1024,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
           </div>
           <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
             <span class="font-bold text-amber-400">برونت كمبيوتر... خدمات بإتقان</span>
-            <a href="https://wa.me/${storeData.settings.whatsappNumber || '967775043020'}?text=${encodeURIComponent('استفسار حول عرض: ' + post.title)}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 font-bold hover:underline">💬 اطلب العرض الآن</a>
+            <a href="https://wa.me/${storeData.settings.whatsappNumber || '967778163178'}?text=${encodeURIComponent('استفسار حول عرض: ' + post.title)}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 font-bold hover:underline">💬 اطلب العرض الآن</a>
           </div>
         </article>
       `).join('');
@@ -912,20 +1043,22 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       setVal('admRateSAR', s.rateSAR);
       setVal('admPrimaryColor', s.primaryColor || '#00A8FF');
       setVal('admSecondaryColor', s.secondaryColor || '#38B6FF');
-      setVal('admWhatsappNumber', s.whatsappNumber);
+      setVal('admWhatsappNumber', s.whatsappNumber || '967778163178');
       setVal('admSloganInput', s.slogan);
       const chk = document.getElementById('admShowPricesGlobal');
       if (chk) chk.checked = !!s.showPricesGlobal;
 
       // KPIs
       document.getElementById('kpiTotalProducts').textContent = storeData.products.length;
-      document.getElementById('kpiTotalCategories').textContent = storeData.categories.length;
+      document.getElementById('kpiTotalCategories').textContent = `${storeData.categories.length} أقسام / ${storeData.brands.length} ماركة`;
       document.getElementById('kpiTotalPosts').textContent = storeData.posts.length;
       document.getElementById('kpiExchangeRate').textContent = `${s.rateYER} ر.ي`;
 
       renderAdminProductsTable();
       renderAdminCategoriesAndBrands();
       renderAdminPostsList();
+      renderAdminSupportTickets();
+      renderUsersPermissionsMatrix();
     }
 
     function renderAdminProductsTable() {
@@ -933,30 +1066,39 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       if (!tbody) return;
       const q = (document.getElementById('adminProductSearch')?.value || '').trim().toLowerCase();
       const filtered = storeData.products.filter(p => !q || `${p.name} ${p.category} ${p.brand}`.toLowerCase().includes(q));
+      const canPrice = !currentAdminUser || currentAdminUser.canEditPrices;
+      const canDel = !currentAdminUser || currentAdminUser.canDeleteItems;
 
       tbody.innerHTML = filtered.map(p => `
-        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-          <td class="py-3 px-2 font-bold">${p.name}</td>
-          <td class="py-3 px-2">${p.category}</td>
+        <tr class="hover:bg-slate-800/40">
+          <td class="py-3 px-2 font-bold text-white">${p.name}</td>
+          <td class="py-3 px-2 text-slate-300">${p.category}</td>
           <td class="py-3 px-2 font-mono text-cyan-400">${p.brand}</td>
           <td class="py-3 px-2">
-            <input type="number" value="${p.price}" onchange="quickUpdateProductPrice('${p.id}', this.value)" class="w-20 rounded-lg bg-slate-100 dark:bg-[#0D1B2A] border border-slate-300 dark:border-slate-700 px-2 py-1 font-bold text-cyan-400" />
+            ${canPrice
+              ? `<input type="number" value="${p.price}" onchange="quickUpdateProductPrice('${p.id}', this.value)" class="w-20 rounded-lg bg-[#0D1B2A] border border-slate-700 px-2 py-1 font-bold text-cyan-400" />`
+              : `<span class="font-mono font-bold text-slate-400">$${p.price} (مقفل)</span>`
+            }
           </td>
           <td class="py-3 px-2">
-            <input type="checkbox" ${!p.hidePrice ? 'checked' : ''} onchange="quickToggleProductPriceVisibility('${p.id}', this.checked)" class="w-4 h-4 accent-cyan-500" />
+            <input type="checkbox" ${!p.hidePrice ? 'checked' : ''} ${!canPrice ? 'disabled' : ''} onchange="quickToggleProductPriceVisibility('${p.id}', this.checked)" class="w-4 h-4 accent-cyan-500" />
           </td>
           <td class="py-3 px-2">
             <span class="px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 text-xs font-bold">${p.badge}</span>
           </td>
           <td class="py-3 px-2 flex items-center gap-1.5">
             <button type="button" onclick="openProductEditorModal('${p.id}')" class="px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 font-bold text-xs">✏️ تعديل</button>
-            <button type="button" onclick="deleteProduct('${p.id}')" class="px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-400 font-bold text-xs">🗑️ حذف</button>
+            ${canDel ? `<button type="button" onclick="deleteProduct('${p.id}')" class="px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-400 font-bold text-xs">🗑️ حذف</button>` : ''}
           </td>
         </tr>
       `).join('');
     }
 
     function quickUpdateProductPrice(prodId, newPrice) {
+      if (currentAdminUser && !currentAdminUser.canEditPrices) {
+        showToast('عذراً، تعديل الأسعار غير متاح لصلاحية الدعم الفني');
+        return;
+      }
       const p = storeData.products.find(x => x.id === prodId);
       if (!p) return;
       p.price = Number(newPrice) || 0;
@@ -992,6 +1134,10 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       document.getElementById('editProdSpecs').value = p ? (p.specs || []).join('\n') : '';
       document.getElementById('editProdDesc').value = p ? (p.desc || '') : '';
       document.getElementById('editProdImageUrl').value = p ? (p.imageUrl || '') : '';
+
+      const canPrice = !currentAdminUser || currentAdminUser.canEditPrices;
+      document.getElementById('editProdPrice').disabled = !canPrice;
+      document.getElementById('editProdOldPrice').disabled = !canPrice;
 
       document.getElementById('productEditorModal').classList.remove('hidden');
     }
@@ -1054,13 +1200,12 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       showToast('تم حذف الصنف من المتجر');
     }
 
-    // Categories & Brands Admin
     function renderAdminCategoriesAndBrands() {
       const catList = document.getElementById('adminCategoriesList');
       if (catList) {
         catList.innerHTML = storeData.categories.map((c, idx) => `
-          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-200 dark:border-slate-800 text-xs sm:text-sm">
-            <span class="font-bold">${c}</span>
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-[#0D1B2A] border border-slate-800 text-xs sm:text-sm">
+            <span class="font-bold text-white">${c}</span>
             <button type="button" onclick="removeCategory(${idx})" class="text-rose-400 hover:underline text-xs font-bold">حذف</button>
           </div>
         `).join('');
@@ -1068,7 +1213,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       const brandList = document.getElementById('adminBrandsList');
       if (brandList) {
         brandList.innerHTML = storeData.brands.map((b, idx) => `
-          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-200 dark:border-slate-800 text-xs font-bold">
+          <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0D1B2A] border border-slate-800 text-xs font-bold text-white">
             <span>${b}</span>
             <button type="button" onclick="removeBrand(${idx})" class="text-rose-400">✕</button>
           </span>
@@ -1101,7 +1246,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       inp.value = '';
       saveStoreData();
       populateAdminInputs();
-      showToast('تمت إضافة الماركة بنجاح');
+      showToast('تمت إضافة الماركة إلى شريط الماركات بنجاح');
     }
 
     function removeBrand(idx) {
@@ -1110,25 +1255,24 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       populateAdminInputs();
     }
 
-    // Posts & Hero Admin
     function saveHeroSettings() {
       storeData.settings.announcement = document.getElementById('admAnnouncementInput').value.trim();
       storeData.settings.heroTitle = document.getElementById('admHeroTitleInput').value.trim();
       storeData.settings.heroBadge = document.getElementById('admHeroBadgeInput').value.trim();
       storeData.settings.heroSubtitle = document.getElementById('admHeroSubtitleInput').value.trim();
       saveStoreData();
-      showToast('تم تحديث نصوص البنر الرئيسي وشريط الإعلانات!');
+      showToast('تم تحديث نصوص السلايدر الرئيسي وشريط الإعلانات!');
     }
 
     function renderAdminPostsList() {
       const container = document.getElementById('adminPostsList');
       if (!container) return;
       container.innerHTML = storeData.posts.map(p => `
-        <div class="p-4 rounded-xl bg-slate-50 dark:bg-[#0D1B2A] border border-slate-200 dark:border-slate-800 space-y-2">
+        <div class="p-4 rounded-xl bg-[#0D1B2A] border border-slate-800 space-y-2">
           <div class="flex items-center justify-between text-xs text-cyan-400 font-bold">
             <span>${p.tag}</span><span>${p.date}</span>
           </div>
-          <div class="font-extrabold text-sm">${p.title}</div>
+          <div class="font-extrabold text-sm text-white">${p.title}</div>
           <p class="text-xs text-slate-400 line-clamp-2">${p.content}</p>
           <div class="flex gap-2 pt-2">
             <button type="button" onclick="openPostEditorModal('${p.id}')" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">✏️ تعديل</button>
@@ -1184,7 +1328,83 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       showToast('تم حذف المنشور');
     }
 
-    // Theme & Currency Settings
+    // Technical Support Tickets in Admin
+    function renderAdminSupportTickets() {
+      const box = document.getElementById('adminSupportTicketsList');
+      if (!box) return;
+      const tickets = storeData.supportTickets || DEFAULT_STORE_DATA.supportTickets;
+      box.innerHTML = tickets.map((t, idx) => `
+        <div class="p-4 rounded-xl bg-[#0D1B2A] border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-cyan-400">${t.engineer}</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">${t.status}</span>
+          </div>
+          <div class="font-extrabold text-sm text-white">${t.title}</div>
+          <div class="text-xs text-slate-400">العميل / الجهة: ${t.client}</div>
+          <div class="pt-2">
+            <button type="button" onclick="toggleTicketStatus(${idx})" class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold">🔄 تبديل حالة الإنجاز</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleTicketStatus(idx) {
+      if (!storeData.supportTickets) storeData.supportTickets = JSON.parse(JSON.stringify(DEFAULT_STORE_DATA.supportTickets));
+      const cur = storeData.supportTickets[idx];
+      if (!cur) return;
+      cur.status = cur.status.includes('مكتمل') ? 'قيد التنفيذ ⏳' : 'مكتمل ✅';
+      saveStoreData();
+      populateAdminInputs();
+      showToast('تم تحديث حالة تذكرة الدعم الفني');
+    }
+
+    function addDemoSupportTicket() {
+      if (!storeData.supportTickets) storeData.supportTickets = [];
+      storeData.supportTickets.unshift({
+        id: 't' + Date.now(),
+        title: 'فحص وصيانة دورية لشبكة وأجهزة مؤسسة — عدن',
+        client: 'عميل قسم الدعم الفني',
+        status: 'قيد التنفيذ ⏳',
+        engineer: 'مهندس الدعم الفني والشبكات'
+      });
+      saveStoreData();
+      populateAdminInputs();
+      showToast('تمت إضافة تذكرة صيانة ودعم فني جديدة');
+    }
+
+    // Users & Permissions Matrix in Admin
+    function renderUsersPermissionsMatrix() {
+      const box = document.getElementById('adminUsersPermissionsTable');
+      if (!box) return;
+      const roles = Object.values(ADMIN_ROLES_CONFIG);
+      box.innerHTML = `
+        <table class="w-full text-right text-xs sm:text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-slate-700 text-slate-400">
+              <th class="py-3 px-3">الدور الوظيفي</th>
+              <th class="py-3 px-3">اسم الحساب</th>
+              <th class="py-3 px-3">مستوى الصلاحية</th>
+              <th class="py-3 px-3">الأقسام المسموحة في اللوحة</th>
+              <th class="py-3 px-3">معاينة فورية</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            ${roles.map(r => `
+              <tr>
+                <td class="py-3 px-3 font-black text-white">${r.icon} ${r.roleTitle}</td>
+                <td class="py-3 px-3 font-mono text-cyan-400">${r.username}</td>
+                <td class="py-3 px-3"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${r.badgeClass}">${r.canExportSite ? 'كامل الصلاحية (Full)' : 'صلاحية مخصصة'}</span></td>
+                <td class="py-3 px-3 text-xs text-slate-300">${r.description}</td>
+                <td class="py-3 px-3">
+                  <button type="button" onclick="quickLoginAsRole('${r.username}')" class="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-white font-bold text-xs transition">تبديل لهذا الحساب</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
     function applyThemePreset(primary, secondary, navy) {
       storeData.settings.primaryColor = primary;
       storeData.settings.secondaryColor = secondary;
@@ -1205,7 +1425,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       storeData.settings.rateYER = Number(document.getElementById('admRateYER').value) || 2050;
       storeData.settings.rateSAR = Number(document.getElementById('admRateSAR').value) || 3.75;
       storeData.settings.showPricesGlobal = document.getElementById('admShowPricesGlobal').checked;
-      storeData.settings.whatsappNumber = document.getElementById('admWhatsappNumber').value.trim() || '967775043020';
+      storeData.settings.whatsappNumber = document.getElementById('admWhatsappNumber').value.trim() || '967778163178';
       storeData.settings.slogan = document.getElementById('admSloganInput').value.trim() || 'خدمات بإتقان';
       activeCurrency = storeData.settings.defaultCurrency;
       const sel = document.getElementById('currencySelect');
@@ -1224,7 +1444,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       if (statusBox) statusBox.classList.remove('hidden');
 
       if (!token) {
-        if (statusBox) statusBox.textContent = '⚠️ يرجى إدخال رمز الوصول الشخصي (GitHub Personal Access Token) للدفع المباشر، أو اضغط على زر "تنزيل الموقع الكامل المحدث (index.html)" لرفعه يدوياً إلى مستودع ProNetComputer/ProNet_Store.';
+        if (statusBox) statusBox.textContent = '⚠️ يرجى إدخال رمز الوصول الشخصي (GitHub Personal Access Token) للدفع المباشر، أو اضغط على زر "تنزيل الموقع الكامل المحدث (index.html)" لرفعه يدوياً.';
         showToast('أدخل GitHub Token أو قم بتنزيل ملف index.html المحدث');
         return;
       }
@@ -1233,7 +1453,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
         if (statusBox) statusBox.textContent = '⏳ جاري الاتصال بـ GitHub API وتحديث ملف data/store_data.json...';
         const apiUrl = `https://api.github.com/repos/${repo}/contents/data/store_data.json`;
         let sha = undefined;
-        const getRes = await fetch(`${apiUrl}?ref=${branch}`, {
+        const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/store_data.json?ref=${branch}`, {
           headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
         });
         if (getRes.ok) {
@@ -1241,7 +1461,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
           sha = existing.sha;
         }
         const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(storeData, null, 2))));
-        const putRes = await fetch(apiUrl, {
+        const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/data/store_data.json`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -1296,7 +1516,7 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
       htmlSource = htmlSource.replace(/const DEFAULT_STORE_DATA = \{[\s\S]*?\n    \};/, `const DEFAULT_STORE_DATA = ${updatedDefaultJson};`);
       const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' });
       triggerDownload(blob, 'index.html');
-      showToast('تم تنزيل ملف index.html المحدث والجاهز للرفع المباشر إلى GitHub!');
+      showToast('تم تنزيل ملف index.html المحدث والجاهز للرفع المباشر!');
     }
 
     function importStoreJson(event) {
@@ -1367,17 +1587,36 @@ const STORAGE_KEY = 'pronet_store_cms_v1';
     }
 
     function renderAllViews() {
+      renderHeroSlider();
       renderHeroFeatured();
+      renderBrandsLogoStrip();
+      renderBusinessAreasAndServices();
+      renderHomeProductsShowcase();
       renderCategoriesAndBrands();
       applyStoreFilters();
+      renderProjectsShowcase();
       renderPostsSection();
       updateCartBadge();
     }
 
-    // Initialize on load
+    function checkHashForAdminRoute() {
+      const h = window.location.hash || '';
+      const s = window.location.search || '';
+      if (h === '#/admin' || h === '#admin' || s.includes('page=admin') || window.PRONET_FORCE_ADMIN_PAGE) {
+        navigateToAdminPage();
+      }
+    }
+
+    window.addEventListener('hashchange', checkHashForAdminRoute);
+
     window.addEventListener('DOMContentLoaded', () => {
       applySiteSettingsToDOM();
       const sel = document.getElementById('currencySelect');
       if (sel) sel.value = activeCurrency;
       renderAllViews();
+      restartHeroSliderTimer();
+      checkHashForAdminRoute();
     });
+  </script>
+</body>
+</html>
